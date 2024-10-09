@@ -7,6 +7,13 @@
 </head>
 <body>
     <h1>This is the About Page</h1>
+    <p>This data is coming from the server: <?php echo htmlspecialchars($catFact); ?></p>
+    <h2>Users</h2>
+    <ul>
+        <?php foreach ($users as $user): ?>
+            <li><?php echo htmlspecialchars($user['username']); ?></li>
+        <?php endforeach; ?>
+    </ul>
     <a href="/"><button>Back to Home</button></a>
 </body>
 </html>

@@ -3,6 +3,6 @@
 
 class HomeController {
     public function index() {
-        include __DIR__ . '/../public/views/home.php';
+        include __DIR__ . '/../resources/views/home.php';
     }
 }
