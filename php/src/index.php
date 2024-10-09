@@ -1,13 +1,13 @@
 <?php
 
 require_once __DIR__ . '/routes.php';
-
+require_once __DIR__ . '/autoload.php';
 function route($uri, $routes) {
     if (array_key_exists($uri, $routes)) {
         $controller = $routes[$uri][0];
         $method = $routes[$uri][1];
         
-        require_once __DIR__ . "/controllers/{$controller}.php";
+        $controller = 'controllers\\' . $controller;
         
         $controllerInstance = new $controller();
         $controllerInstance->$method();

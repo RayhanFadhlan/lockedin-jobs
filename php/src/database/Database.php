@@ -1,6 +1,8 @@
 <?php
+namespace database;
 
-
+use PDO;
+use PDOException;
 class Database {
     private static $instance = null;
     private $connection;

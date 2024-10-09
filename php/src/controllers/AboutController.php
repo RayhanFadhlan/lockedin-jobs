@@ -1,6 +1,6 @@
 <?php
-
-require __DIR__ . '/../models/User.php';
+namespace controllers;
+use models\User;
 
 class AboutController {
     public function index() {

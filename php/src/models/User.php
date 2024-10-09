@@ -1,5 +1,7 @@
 <?php
-require __DIR__ . '/../database/Database.php';
+namespace models;
+
+use database\Database;
 class User {
     private $db;
 
