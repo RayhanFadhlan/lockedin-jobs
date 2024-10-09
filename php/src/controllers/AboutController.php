@@ -9,7 +9,8 @@ class AboutController {
             'users' => $this->getUsers()
         ];
         
-        $this->render( $data);
+        extract($data);
+        include VIEW_PATH . 'about.php';
     }
 
     private function getCatFact() {
@@ -21,8 +22,5 @@ class AboutController {
         return $user->all();
     }
 
-    private function render($data) {
-        extract($data);
-        include __DIR__ . '/../resources/views/about.php';
-    }
+    
 }

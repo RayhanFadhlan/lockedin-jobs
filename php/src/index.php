@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/routes.php';
 require_once __DIR__ . '/autoload.php';
+require_once __DIR__ . '/config/config.php';
 function route($uri, $routes) {
     if (array_key_exists($uri, $routes)) {
         $controller = $routes[$uri][0];
