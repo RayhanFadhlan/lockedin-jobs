@@ -10,7 +10,6 @@ services:
       - "8000:80"
     volumes:
       - ./app:/var/www/html
-      - ./.env:/var/www/html/.env
     depends_on:
       - db
     env_file:
