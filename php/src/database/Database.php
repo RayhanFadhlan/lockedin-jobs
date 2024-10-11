@@ -9,7 +9,7 @@ class Database {
     private $config;
 
     private function __construct() {
-        $this->config = require __DIR__ . '/../config/database.php';
+        $this->config = require __DIR__ . '/../config/setup.php';
         $host = $this->config['host'];
         $port = $this->config['port'];
         $database = $this->config['name'];
