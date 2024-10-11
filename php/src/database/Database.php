@@ -12,10 +12,9 @@ class Database {
         $this->config = require __DIR__ . '/../config/database.php';
         $host = $this->config['host'];
         $port = $this->config['port'];
-        $database = $this->config['database'];
+        $database = $this->config['name'];
         $username = $this->config['username'];
         $password = $this->config['password'];
-        
         try {
             $this->connection = new PDO("pgsql:host=$host;port=$port;dbname=$database;user=$username;password=$password");
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

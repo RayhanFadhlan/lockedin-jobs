@@ -7,8 +7,11 @@ RUN a2enmod rewrite
 
 WORKDIR /var/www/html
 
-COPY . /var/www/html
+COPY php/src /var/www/html
+COPY .env /var/www/html/.env
 
-EXPOSE 80
+COPY php/php.ini /usr/local/etc/php/
 
-CMD ["apache2-foreground"]
+
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
