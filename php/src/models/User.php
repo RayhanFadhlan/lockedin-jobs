@@ -1,14 +1,7 @@
 <?php
 namespace models;
-
 use database\Database;
-class User {
-    private $db;
-
-    public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
-    }
-
+class User extends Model {
     public function all() {
         $stmt = $this->db->prepare('SELECT * FROM Users');
         $stmt->execute();
