@@ -9,7 +9,8 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./php/src:/var/www/html
+      - ./app:/var/www/html
+      - ./.env:/var/www/html/.env
     depends_on:
       - db
     env_file:

@@ -9,8 +9,7 @@ ENV DOCKER_ENV=true
 
 WORKDIR /var/www/html
 
-COPY .env /var/www/html/.env
-COPY php/php.ini /usr/local/etc/php/
+COPY php.ini /usr/local/etc/php/
 
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html

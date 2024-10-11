@@ -1,6 +1,7 @@
 <?php
 namespace controllers;
 use models\User;
+use models\UserModel;
 
 class AboutController extends Controller {
     public function index() {
@@ -17,7 +18,7 @@ class AboutController extends Controller {
     }
 
     private function getUsers() {
-        $user = new User();
+        $user = new UserModel();
         return $user->all();
     }
 
