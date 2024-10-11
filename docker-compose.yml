@@ -4,10 +4,12 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: php-apache
+    environment:
+      - DOCKER_ENV=true
     ports:
       - "8000:80"
     volumes:
-      - ./php/src:/var/www/html
+      - ./php/src:/var/www/html/php/src
     depends_on:
       - db
     env_file:
