@@ -2,15 +2,14 @@
 namespace controllers;
 use models\User;
 
-class AboutController {
+class AboutController extends Controller {
     public function index() {
         $data = [
             'catFact' => $this->getCatFact(),
             'users' => $this->getUsers()
         ];
         
-        extract($data);
-        include VIEW_PATH . 'about.php';
+        $this->views('about', $data);
     }
 
     private function getCatFact() {

@@ -1,6 +1,6 @@
 <?php
 namespace controllers;
 
-class UserController {
+class UserController extends Controller {
 
 }

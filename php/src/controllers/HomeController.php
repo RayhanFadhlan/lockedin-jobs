@@ -1,8 +1,8 @@
 <?php
 namespace controllers;
 
-class HomeController {
+class HomeController extends Controller {
     public function index() {
-        include VIEW_PATH . 'home.php';
+        $this->views('home');
     }
 }
