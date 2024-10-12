@@ -16,7 +16,7 @@ class SignupController extends Controller {
     }
 
     public function index() {
-        return $this->views('signup', ['title' => 'Sign Up - FindIn']);
+        return $this->views('signup');
     }
 
     public function register(Request $request) {
