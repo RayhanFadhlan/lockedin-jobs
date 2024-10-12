@@ -13,7 +13,7 @@
     ?>
     
 </head>
-<body>
+<body>  
     <?= $content ?>
 </body>
 </html>

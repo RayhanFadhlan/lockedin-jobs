@@ -1,6 +1,7 @@
 <?php
 namespace core;
 use Exception;
+use core\Request;
 class Router
 {
     private $routes = [];
@@ -31,23 +32,24 @@ class Router
 
     public function dispatch($uri, $method)
     {
+        $request = new Request(); // Create a new Request object
+
         foreach ($this->routes as $route) {
             $pattern = $this->getPatternFromUri($route['uri']);
             if (preg_match($pattern, $uri, $params) && $route['method'] === $method) {
                 array_shift($params); 
                 foreach ($route['middleware'] as $middleware) {
                     $middlewareInstance = $this->resolveMiddleware($middleware);
-                    $middlewareInstance->handle($uri, function(){});
+                    $result = $middlewareInstance->handle($request, function(){});
                     if ($result !== null) {
                         return $result;
                     }
                 }
                 
-                return $this->callHandler($route['handler'], $params);
+                return $this->callHandler($route['handler'], array_merge([$request], $params));
             }
         }
 
-       
         header("HTTP/1.0 404 Not Found");
         echo "404 Not Found";
     }

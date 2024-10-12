@@ -26,4 +26,8 @@ class Request {
     public function getParams() {
         return $this->params;
     }
+
+    public function getBody($key) {
+        return $this->params[$key] ?? null;
+    }
 }

@@ -3,85 +3,77 @@
 namespace controllers;
 
 use models\UserModel;
+use core\Request;
+use core\Response;
+use helpers\Redirect;
 
 class SignupController extends Controller {
     protected $userModel;
 
     public function __construct() {
-        $this->userModel = new UserModel(); 
+       
+        $this->userModel = new UserModel();
     }
 
     public function index() {
-        $this->views('signup');
+        return $this->views('signup', ['title' => 'Sign Up - FindIn']);
     }
 
-    public function register() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = json_decode(file_get_contents("php://input"), true);
-            
-            if (isset($data['field']) && isset($data['value'])) {
-                $this->handleValidation($data['field'], $data['value']);
-                return;
+    public function register(Request $request) {
+      
+            $email = $request->getBody('email');
+            $username = $request->getBody('username');
+            $password = $request->getBody('password');
+            $role = $request->getBody('role');
+
+            // Server-side validation
+            $errors = $this->validateInput($email, $username, $password, $role);
+
+            if (empty($errors)) {
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                $userCreated = $this->userModel->createUser($email, $username, $hashedPassword, $role);
+
+                if ($userCreated) {
+                    return Redirect::to('/login')->with('success', 'Account created successfully. Please log in.');
+                } else {
+                    $errors[] = 'Failed to create user. Please try again.';
+                }
             }
 
-            if (isset($_POST['email'], $_POST['username'], $_POST['password'], $_POST['role'])) {
-                $this->handleFormSubmission();
-            }
-        }
+            // If there are errors, re-render the form with error messages
+            return $this->views('signup');
+        
+
+      
     }
 
-    private function handleValidation($field, $value) {
-        if ($field === 'email') {
-            if ($this->userModel->checkEmailExists($value)) {
-                echo json_encode(['status' => 'error', 'message' => 'Email is already taken']);
-            } else {
-                echo json_encode(['status' => 'success']);
-            }
-        }
+    private function validateInput($email, $username, $password, $role) {
+        $errors = [];
 
-        if ($field === 'username') {
-            if ($this->userModel->checkUsernameExists($value)) {
-                echo json_encode(['status' => 'error', 'message' => 'Username is already taken']);
-            } else {
-                echo json_encode(['status' => 'success']);
-            }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Invalid email format';
         }
-    }
-
-    private function handleFormSubmission() {
-        $email = $_POST['email'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $role = $_POST['role'];
 
         if ($this->userModel->checkEmailExists($email)) {
-            $_SESSION['error'] = 'Email already exists';
-            header('Location: /signup');
-            exit;
+            $errors[] = 'Email already exists';
+        }
+
+        if (strlen($username) < 5) {
+            $errors[] = 'Username must be at least 5 characters long';
         }
 
         if ($this->userModel->checkUsernameExists($username)) {
-            $_SESSION['error'] = 'Username already exists';
-            header('Location: /signup');
-            exit;
+            $errors[] = 'Username already exists';
+        }
+
+        if (strlen($password) < 8) {
+            $errors[] = 'Password must be at least 8 characters long';
         }
 
         if (empty($role)) {
-            $_SESSION['error'] = 'Please select a role';
-            header('Location: /signup');
-            exit;
+            $errors[] = 'Please select a role';
         }
 
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $userCreated = $this->userModel->createUser($email, $username, $hashedPassword, $role);
-
-        if ($userCreated) {
-            header('Location: /?login');
-            exit;
-        } else {
-            $_SESSION['error'] = 'Failed to create user';
-            header('Location: /signup');
-            exit;
-        }
+        return $errors;
     }
 }

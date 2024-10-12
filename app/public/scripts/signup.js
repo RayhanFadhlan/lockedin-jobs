@@ -7,87 +7,67 @@ function checkSubmitButton() {
     document.getElementById('signup-button').disabled = !(emailError && usernameError && passwordError && roleError);
 }
 
-// Validate email format and check availability
 function checkEmail() {
     const email = document.getElementById('email').value;
+    const emailErrorMsg = document.getElementById('email-errmsg');
+    const emailInput = document.getElementById('email');
 
-    // Validate email format
     if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-        document.getElementById('email-errmsg').innerHTML = 'Invalid email';
-        document.getElementById('email').style.borderColor = 'red';
-        checkSubmitButton();
-        return;
+        emailErrorMsg.innerHTML = 'Invalid email';
+        emailInput.style.borderColor = 'red';
+    } else {
+        emailErrorMsg.innerHTML = '';
+        emailInput.style.borderColor = 'blue';
     }
 
-    sendValidationRequest('email', email);
+    checkSubmitButton();
 }
 
-// Validate username length and check availability
 function checkUsername() {
     const username = document.getElementById('username').value;
+    const usernameErrorMsg = document.getElementById('username-errmsg');
+    const usernameInput = document.getElementById('username');
 
     if (username.length < 5) {
-        document.getElementById('username-errmsg').innerHTML = 'Username must be at least 5 characters long';
-        document.getElementById('username').style.borderColor = 'red';
-        checkSubmitButton();
-        return;
+        usernameErrorMsg.innerHTML = 'Username must be at least 5 characters long';
+        usernameInput.style.borderColor = 'red';
+    } else {
+        usernameErrorMsg.innerHTML = '';
+        usernameInput.style.borderColor = 'blue';
     }
 
-    sendValidationRequest('username', username);
+    checkSubmitButton();
 }
 
-// Validate password length
 function checkPassword() {
     const password = document.getElementById('password').value;
+    const passwordErrorMsg = document.getElementById('password-errmsg');
+    const passwordInput = document.getElementById('password');
 
     if (password.length >= 8) {
-        document.getElementById('password-errmsg').innerHTML = '';
-        document.getElementById('password').style.borderColor = 'blue';
+        passwordErrorMsg.innerHTML = '';
+        passwordInput.style.borderColor = 'blue';
     } else {
-        document.getElementById('password-errmsg').innerHTML = 'Password must be at least 8 characters long';
-        document.getElementById('password').style.borderColor = 'red';
+        passwordErrorMsg.innerHTML = 'Password must be at least 8 characters long';
+        passwordInput.style.borderColor = 'red';
     }
 
     checkSubmitButton();
 }
 
-// Validate role selection
 function checkRole() {
     const role = document.getElementById('role').value;
+    const roleErrorMsg = document.getElementById('role-errmsg');
+    const roleSelect = document.getElementById('role');
 
     if (role === '') {
-        document.getElementById('role-errmsg').innerHTML = 'Please select a role';
-        document.getElementById('role').style.borderColor = 'red';
+        roleErrorMsg.innerHTML = 'Please select a role';
+        roleSelect.style.borderColor = 'red';
     } else {
-        document.getElementById('role-errmsg').innerHTML = '';
-        document.getElementById('role').style.borderColor = 'blue';
+        roleErrorMsg.innerHTML = '';
+        roleSelect.style.borderColor = 'blue';
     }
 
     checkSubmitButton();
 }
 
-function sendValidationRequest(field, value) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/signup/register', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-
-            if (response.status === 'error') {
-                document.getElementById(`${field}-errmsg`).innerHTML = response.message;
-                document.getElementById(field).style.borderColor = 'red';
-            } else {
-                document.getElementById(`${field}-errmsg`).innerHTML = '';
-                document.getElementById(field).style.borderColor = 'blue';
-            }
-
-            checkSubmitButton();
-        }
-    };
-    xhr.onerror = function () {
-        console.error('Request failed');
-    };
-
-    xhr.send(JSON.stringify({ field: field, value: value }));
-}
