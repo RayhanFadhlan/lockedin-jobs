@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="/public/styles/signup.css">
-    <script src="/public/scripts/signup.js" defer></script>
-</head>
+
 <body>
     <div class="signup-container">
         <div class="signup-box">
@@ -40,4 +32,4 @@
         </div>
     </div>
 </body>
-</html>
+
