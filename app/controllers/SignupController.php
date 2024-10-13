@@ -3,16 +3,19 @@
 namespace controllers;
 
 use models\UserModel;
+use models\CompanyModel;
 use core\Request;
 use core\Response;
 use helpers\Redirect;
 
 class SignupController extends Controller {
     protected $userModel;
+    protected $companyModel;
 
     public function __construct() {
        
         $this->userModel = new UserModel();
+        $this->companyModel = new CompanyModel();
     }
 
     public function index() {
@@ -20,60 +23,82 @@ class SignupController extends Controller {
     }
 
     public function register(Request $request) {
-      
-            $email = $request->getBody('email');
-            $username = $request->getBody('username');
-            $password = $request->getBody('password');
+
+        try {
+
             $role = $request->getBody('role');
 
-            // Server-side validation
-            $errors = $this->validateInput($email, $username, $password, $role);
+            if ($role === 'jobseeker'){
 
-            if (empty($errors)) {
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-                $userCreated = $this->userModel->createUser($email, $username, $hashedPassword, $role);
-
-                if ($userCreated) {
-                    return Redirect::to('/login')->with('success', 'Account created successfully. Please log in.');
-                } else {
-                    $errors[] = 'Failed to create user. Please try again.';
+                $request->validate([
+                    'email' => ['required', 'email'],
+                    'name' => ['required', ['min', 5]],
+                    'password' => ['required', ['min', 8]],
+                    'role' => ['required']
+                ]);
+                $email = $request->getBody('email');
+                $name = $request->getBody('name');
+                $password = $request->getBody('password');
+    
+                if($this->userModel->checkEmailExists($email)) {
+                    throw new \Exception('Email already exists');
                 }
+    
+                if($this->userModel->checkUsernameExists($name)) {
+                    throw new \Exception('Name already exists');
+                }
+                
+                
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    
+                $this->userModel->createUser($email, $name, $hashedPassword, $role);
+
+                Redirect::withToast('/', 'User created successfully');
+
             }
+            else if($role === 'company'){
+                $companyName = $request->getBody('company_name');
+                $companyEmail = $request->getBody('company_email');
+                $location = $request->getBody('location');
+                $about = $request->getBody('about');
+                $password = $request->getBody('password');
 
-            // If there are errors, re-render the form with error messages
-            return $this->views('signup');
+                $request->validate( [
+                    'company_name' => ['required', 'min:3'],
+                    'company_email' => ['required', 'email'],
+                    'location' => ['required'],
+                    'about' => ['required', 'min:10'],
+                    'password' => ['required', 'min:8']
+                ]);
+                if($this->userModel->checkEmailExists($companyEmail)) {
+                    throw new \Exception('Email already exists');
+                }
+    
+                if($this->userModel->checkUsernameExists($companyName)) {
+                    throw new \Exception('Name already exists');
+                }
+
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                $userId = $this->userModel->createUser($companyEmail, $companyName, $hashedPassword, $role);
+
+                if (!$userId) {
+                    throw new \Exception('Failed to create user');
+                }
+                
+                $this->companyModel->createCompany($userId, $location, $about);
+
+                Redirect::withToast('/', 'Company created successfully');
+            }
+           
+            
+                   
         
-
+        } catch (\Exception $e) {
+            return Redirect::withToast('/signup', $e->getMessage());
+        }
       
     }
 
-    private function validateInput($email, $username, $password, $role) {
-        $errors = [];
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = 'Invalid email format';
-        }
-
-        if ($this->userModel->checkEmailExists($email)) {
-            $errors[] = 'Email already exists';
-        }
-
-        if (strlen($username) < 5) {
-            $errors[] = 'Username must be at least 5 characters long';
-        }
-
-        if ($this->userModel->checkUsernameExists($username)) {
-            $errors[] = 'Username already exists';
-        }
-
-        if (strlen($password) < 8) {
-            $errors[] = 'Password must be at least 8 characters long';
-        }
-
-        if (empty($role)) {
-            $errors[] = 'Please select a role';
-        }
-
-        return $errors;
-    }
+  
 }

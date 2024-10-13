@@ -1,7 +1,7 @@
 <?php
 
 namespace models;
-
+use PDO;
 class UserModel extends Model {
      public function checkEmailExists($email) {
         $stmt = $this->db->prepare('SELECT * FROM "User" WHERE email = ?');
@@ -17,6 +17,9 @@ class UserModel extends Model {
 
     public function createUser($email, $username, $password, $role) {
         $stmt = $this->db->prepare('INSERT INTO "User" (email, nama, password, role) VALUES (?, ?, ?, ?)');
-        return $stmt->execute([$email, $username, $password, $role]);
+        $stmt->execute([$email, $username, $password, $role]);
+        return $this->db->lastInsertId();
     }
+
+
 }

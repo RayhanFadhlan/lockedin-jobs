@@ -2,7 +2,14 @@
 namespace controllers;
 
 class Controller {
+    
     public function views($view, $data = []) {
+
+        if(isset($_SESSION['toastMessage'])) {
+            $data['toastMessage'] = $_SESSION['toastMessage'];        
+            unset($_SESSION['toastMessage']);
+        }
+
         $content = $this->renderView($view, $data);
         $this->renderLayout($content, $view, $data);
     }

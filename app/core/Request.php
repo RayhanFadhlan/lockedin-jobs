@@ -1,11 +1,14 @@
 <?php
 
 namespace core;
-
+use Exception;
+use services\ValidationService;
 class Request {
     private $method;
     private $uri;
     private $params;
+
+    private $validationService;
 
     public function __construct() {
         $this->method = $_SERVER['REQUEST_METHOD'];
@@ -13,6 +16,7 @@ class Request {
         $this->uri = rtrim($this->uri, '/');
         $this->uri = empty($this->uri) ? '/' : $this->uri;
         $this->params = $_REQUEST;
+        $this->validationService = new ValidationService();
     }
 
     public function getMethod() {
@@ -29,5 +33,13 @@ class Request {
 
     public function getBody($key) {
         return $this->params[$key] ?? null;
+    }
+
+    public function validate($rules)
+    {
+        if (!$this->validationService->validate($this->params, $rules)) {
+            throw new Exception( $this->validationService->getStringErrors());
+        }
+        return true;
     }
 }

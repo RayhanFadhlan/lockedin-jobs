@@ -12,6 +12,8 @@ class App
 
     public function run()
     {
+        session_start();
+
         $uri = $this->getUri();
         $method = $_SERVER['REQUEST_METHOD'];
         $this->router->dispatch($uri, $method);

@@ -1,73 +1,66 @@
-function checkSubmitButton() {
-    const emailError = document.getElementById('email-errmsg').innerHTML === '';
-    const usernameError = document.getElementById('username-errmsg').innerHTML === '';
-    const passwordError = document.getElementById('password-errmsg').innerHTML === '';
-    const roleError = document.getElementById('role-errmsg').innerHTML === ''; 
+document.addEventListener("DOMContentLoaded", function () {
+  const tabs = document.querySelectorAll(".tab");
+  const contents = document.querySelectorAll(".tab-content");
+  const form = document.getElementById("signupForm");
+  const roleInput = document.getElementById("role");
+  const password = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirm-password");
+  const confirmPasswordErrMsg = document.getElementById(
+    "confirm-password-errmsg"
+  );
 
-    document.getElementById('signup-button').disabled = !(emailError && usernameError && passwordError && roleError);
-}
+  function setRequiredFields(tabId) {
+    const jobseekerFields = form.querySelectorAll("#jobseekerContent input");
+    const companyFields = form.querySelectorAll(
+      "#companyContent input, #companyContent textarea"
+    );
 
-function checkEmail() {
-    const email = document.getElementById('email').value;
-    const emailErrorMsg = document.getElementById('email-errmsg');
-    const emailInput = document.getElementById('email');
-
-    if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-        emailErrorMsg.innerHTML = 'Invalid email';
-        emailInput.style.borderColor = 'red';
+    if (tabId === "jobseeker") {
+      jobseekerFields.forEach((field) => (field.required = true));
+      companyFields.forEach((field) => (field.required = false));
     } else {
-        emailErrorMsg.innerHTML = '';
-        emailInput.style.borderColor = 'blue';
+      jobseekerFields.forEach((field) => (field.required = false));
+      companyFields.forEach((field) => (field.required = true));
     }
+  }
 
-    checkSubmitButton();
-}
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const tabId = tab.getAttribute("data-tab");
 
-function checkUsername() {
-    const username = document.getElementById('username').value;
-    const usernameErrorMsg = document.getElementById('username-errmsg');
-    const usernameInput = document.getElementById('username');
+      tabs.forEach((t) => t.classList.remove("active"));
+      contents.forEach((c) => c.classList.remove("active"));
 
-    if (username.length < 5) {
-        usernameErrorMsg.innerHTML = 'Username must be at least 5 characters long';
-        usernameInput.style.borderColor = 'red';
-    } else {
-        usernameErrorMsg.innerHTML = '';
-        usernameInput.style.borderColor = 'blue';
+      tab.classList.add("active");
+      document.getElementById(tabId + "Content").classList.add("active");
+
+      // Update the role input value
+      roleInput.value = tabId;
+
+      setRequiredFields(tabId);
+    });
+  });
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    validatePasswords();
+    if (!confirmPasswordErrMsg.textContent) {
+      this.submit();
+      
     }
+  });
 
-    checkSubmitButton();
-}
+  function validatePasswords() {
+   
+    confirmPasswordErrMsg.textContent = "";
 
-function checkPassword() {
-    const password = document.getElementById('password').value;
-    const passwordErrorMsg = document.getElementById('password-errmsg');
-    const passwordInput = document.getElementById('password');
-
-    if (password.length >= 8) {
-        passwordErrorMsg.innerHTML = '';
-        passwordInput.style.borderColor = 'blue';
-    } else {
-        passwordErrorMsg.innerHTML = 'Password must be at least 8 characters long';
-        passwordInput.style.borderColor = 'red';
+   
+    if (password.value !== confirmPassword.value) {
+      confirmPasswordErrMsg.textContent = "Passwords do not match";
     }
+  }
 
-    checkSubmitButton();
-}
-
-function checkRole() {
-    const role = document.getElementById('role').value;
-    const roleErrorMsg = document.getElementById('role-errmsg');
-    const roleSelect = document.getElementById('role');
-
-    if (role === '') {
-        roleErrorMsg.innerHTML = 'Please select a role';
-        roleSelect.style.borderColor = 'red';
-    } else {
-        roleErrorMsg.innerHTML = '';
-        roleSelect.style.borderColor = 'blue';
-    }
-
-    checkSubmitButton();
-}
-
+  setRequiredFields("jobseeker");
+  password.addEventListener("input", validatePasswords);
+  confirmPassword.addEventListener("input", validatePasswords);
+});

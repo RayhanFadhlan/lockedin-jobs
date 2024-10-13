@@ -13,12 +13,9 @@ class Redirect
         self::to($_SERVER['HTTP_REFERER'] ?? '/');
     }
 
-    public static function withMessage($url, $message, $type = 'info')
+    public static function withToast($url, $message)
     {
-        $_SESSION['flash_message'] = [
-            'message' => $message,
-            'type' => $type
-        ];
+        $_SESSION['toastMessage'] = $message;
         self::to($url);
     }
 }
