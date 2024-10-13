@@ -71,11 +71,11 @@ class AuthController extends Controller {
                 $password = $request->getBody('password');
 
                 $request->validate( [
-                    'company_name' => ['required', 'min:3'],
+                    'company_name' => ['required', ['min', 5]],
                     'company_email' => ['required', 'email'],
                     'location' => ['required'],
-                    'about' => ['required', 'min:10'],
-                    'password' => ['required', 'min:8']
+                    'about' => ['required', ],
+                    'password' => ['required', ['min', 8]],
                 ]);
                 if($this->userModel->checkEmailExists($companyEmail)) {
                     throw new \Exception('Email already exists');
