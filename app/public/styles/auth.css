@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 h2 {
     font-size: 22px;
     margin-bottom: 20px;
@@ -35,30 +29,29 @@ input, textarea {
     margin-bottom: 12px;
 }
 
+.redborder {
+    border: 1px solid red !important;
+}
+
 input:focus, textarea:focus {
     outline: none;
     border-color: #0073b1;
 }
 
 
-
-.signup-btn:hover {
-    background-color: #005582;
-}
-
-.signin-link {
+.box-link {
     margin-top: 15px;
     font-size: 12px;
     color: #333;
     text-align: center;
 }
 
-.signin-link a {
+.box-link a {
     color: #0073b1;
     text-decoration: none;
 }
 
-.signin-link a:hover {
+.box-link a:hover {
     text-decoration: underline;
 }
 

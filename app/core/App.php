@@ -12,7 +12,8 @@ class App
 
     public function run()
     {
-        session_start();
+        
+        $this->initSession();
 
         $uri = $this->getUri();
         $method = $_SERVER['REQUEST_METHOD'];
@@ -25,5 +26,21 @@ class App
         $uri = strtok($uri, '?');
         $uri = rtrim($uri, '/');
         return empty($uri) ? '/' : $uri;
+    }
+    private function initSession()
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            
+            session_set_cookie_params([
+                'lifetime' => 24 * 60 * 60,
+                'path' => '/',
+                'domain' => '',
+                'secure' => true,   
+                'httponly' => true, 
+                'samesite' => 'Lax' 
+            ]);
+            
+            session_start();
+        }
     }
 }

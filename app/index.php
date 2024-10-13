@@ -6,11 +6,16 @@ use core\App;
 
 $app = new App();
 
-// Define routes
+
 $app->router->get('/', ['HomeController', 'index']);
 $app->router->get('/about', ['AboutController', 'index']);
-$app->router->get('/signup', ['SignupController', 'index']);
-$app->router->post('/signup', ['SignupController', 'register']);
+
+// Auth
+$app->router->get('/signup', ['AuthController', 'viewRegister']);
+$app->router->post('/signup', ['AuthController', 'register']);
+$app->router->get('/login', ['AuthController', 'viewLogin']);
+$app->router->post('/login', ['AuthController', 'login']);
+
 
 
 $app->run();

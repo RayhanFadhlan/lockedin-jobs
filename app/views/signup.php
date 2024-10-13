@@ -1,10 +1,3 @@
-<?php if (!empty($errors)): ?>
-    <div class="error-messages">
-        <?php foreach ($errors as $error): ?>
-            <p class="error"><?php echo htmlspecialchars($error); ?></p>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
 <div class="container">
         <div class="form-box">
 
@@ -42,15 +35,16 @@
                 
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
+                <span id="password-errmsg" class="errmsg"></span>
                 
                 <label for="confirm-password">Confirm Password</label>
-                <input type="password" id="confirm-password" name="confirm_password" required>
+                <input type="password" id="confirm-password" name="confirm_password"  required>
                 <span id="confirm-password-errmsg" class="errmsg"></span>
                 
                 <button type="submit" class="primary-btn">Agree & Join</button>
             </form>
 
-            <p class="signin-link">Already on FindIn? <a href="/login">Sign in</a></p>
+            <p class="box-link">Already on FindIn? <a href="/login">Sign in</a></p>
         </div>
     </div>
 <script src="/public/scripts/signup.js" defer></script>

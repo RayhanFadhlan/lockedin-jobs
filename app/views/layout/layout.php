@@ -12,6 +12,10 @@
         if (file_exists($_SERVER['DOCUMENT_ROOT'] . $cssPath)) {
             echo '<link rel="stylesheet" href="' . $cssPath . '">';
         }
+
+        if(isset($css)){
+            echo '<link rel="stylesheet" href="/public/styles/' . $css . '.css' . '">';
+        }
     ?>
 </head>
 <body>

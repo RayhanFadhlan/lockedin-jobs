@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const confirmPasswordErrMsg = document.getElementById(
     "confirm-password-errmsg"
   );
+  const passwordErrMsg = document.getElementById("password-errmsg");
+  const email = document.getElementById("email");
 
   function setRequiredFields(tabId) {
     const jobseekerFields = form.querySelectorAll("#jobseekerContent input");
@@ -34,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
       tab.classList.add("active");
       document.getElementById(tabId + "Content").classList.add("active");
 
-      // Update the role input value
       roleInput.value = tabId;
 
       setRequiredFields(tabId);
@@ -43,21 +44,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
-    validatePasswords();
-    if (!confirmPasswordErrMsg.textContent) {
+    if (validatePasswords()) {
       this.submit();
-      
     }
   });
 
   function validatePasswords() {
-   
+    let isValid = true;
     confirmPasswordErrMsg.textContent = "";
+    passwordErrMsg.textContent = "";
 
-   
     if (password.value !== confirmPassword.value) {
       confirmPasswordErrMsg.textContent = "Passwords do not match";
+      isValid = false;
     }
+
+    if (password.value.length < 8) {
+      passwordErrMsg.textContent = "Password must be at least 8 characters long";
+      password.classList.add("redborder");
+      isValid = false;
+    } else {
+      password.classList.remove("redborder");
+    }
+
+    return isValid;
   }
 
   setRequiredFields("jobseeker");

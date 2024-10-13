@@ -8,7 +8,7 @@ use core\Request;
 use core\Response;
 use helpers\Redirect;
 
-class SignupController extends Controller {
+class AuthController extends Controller {
     protected $userModel;
     protected $companyModel;
 
@@ -18,8 +18,15 @@ class SignupController extends Controller {
         $this->companyModel = new CompanyModel();
     }
 
-    public function index() {
-        return $this->views('signup');
+    public function viewRegister() {
+        return $this->views('signup', ['css' => 'auth']);
+    }
+
+    public function viewLogin() {
+        if(isset($_SESSION['user'])) {
+            Redirect::to('/');
+        }
+        return $this->views('login', ['css' => 'auth']);
     }
 
     public function register(Request $request) {
@@ -91,13 +98,46 @@ class SignupController extends Controller {
                 Redirect::withToast('/', 'Company created successfully');
             }
            
-            
                    
         
         } catch (\Exception $e) {
             return Redirect::withToast('/signup', $e->getMessage());
         }
       
+    }
+
+    public function login(Request $request) {
+        try {
+            $request->validate([
+                'email' => ['required', 'email'],
+                'password' => ['required', ['min', 8]]
+            ]);
+
+            $email = $request->getBody('email');
+            $password = $request->getBody('password');
+
+            $user = $this->userModel->checkEmailExists($email);
+
+            if (!$user) {
+                throw new \Exception('User not found');
+            }
+
+            if (!password_verify($password, $user['password'])) {
+                throw new \Exception('Invalid password');
+            }
+
+            $_SESSION['user'] = [
+                'id' => $user['user_id'],
+                'email' => $user['email'],
+                'name' => $user['nama'],
+                'role' => $user['role'],
+            ];
+
+            Redirect::withToast('/', 'Login successful');
+
+        } catch (\Exception $e) {
+            return Redirect::withToast('/login', $e->getMessage());
+        }
     }
 
   
