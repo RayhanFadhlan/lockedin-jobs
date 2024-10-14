@@ -6,26 +6,43 @@ use core\Request;
 
 class HomeController extends Controller {
     protected $lowonganModel;
+    protected $itemsPerPage = 10;
 
     public function __construct() {
         $this->lowonganModel = new LowonganModel();
     }
 
     public function index() {
-        $this->views('home');
+        $request = new Request();
+        
+        if ($request->getMethod() === 'GET' && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $this->getLowongan($request);
+        } else {
+            $this->views('home');
+        }
     }
 
-    public function getLowongan() {
+    protected function getLowongan($request) {
         try {
-            $search = $_GET['search'] ?? ''; 
-            $jobType = isset($_GET['jobType']) ? explode(',', $_GET['jobType']) : [];  
-            $locationType = isset($_GET['jobPlace']) ? explode(',', $_GET['jobPlace']) : []; 
-            $sort = $_GET['sort'] ?? 'asc'; 
+            $search = $request->getBody('search') ?? '';
+            $jobType = isset($_GET['jobType']) ? explode(',', $_GET['jobType']) : [];
+            $locationType = isset($_GET['jobPlace']) ? explode(',', $_GET['jobPlace']) : [];
+            $sort = $request->getBody('sort') ?? 'asc';
+            $page = max(1, intval($request->getBody('page') ?? 1));
 
-            $lowonganList = $this->lowonganModel->getFilteredLowongan($search, $jobType, $locationType, $sort);
+            $offset = ($page - 1) * $this->itemsPerPage;
+
+            $lowonganList = $this->lowonganModel->getFilteredLowongan($search, $jobType, $locationType, $sort, $offset, $this->itemsPerPage);
+            $totalJobs = $this->lowonganModel->getTotalFilteredJobs($search, $jobType, $locationType);
+
+            $totalPages = ceil($totalJobs / $this->itemsPerPage);
 
             header('Content-Type: application/json');
-            echo json_encode($lowonganList);
+            echo json_encode([
+                'jobs' => $lowonganList,
+                'currentPage' => $page,
+                'totalPages' => $totalPages
+            ]);
         } catch (\Exception $e) {
             header('Content-Type: application/json', true, 500);
             echo json_encode(['error' => $e->getMessage()]);

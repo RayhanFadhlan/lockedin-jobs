@@ -4,37 +4,81 @@ namespace models;
 
 class LowonganModel extends Model {
 
-    public function getFilteredLowongan($search = '', $jobType = [], $locationType = [], $sort = 'asc') {
+    public function getFilteredLowongan($search = '', $jobType = [], $locationType = [], $sort = 'asc', $offset = 0, $limit = 10) {
         $query = 'SELECT * FROM "Lowongan" WHERE is_open = TRUE';
+        $params = [];
 
         if (!empty($search)) {
             $query .= " AND LOWER(posisi) LIKE :search";
+            $params[':search'] = '%' . strtolower($search) . '%';
         }
 
         if (!empty($jobType)) {
-            $query .= " AND LOWER(jenis_pekerjaan) IN (" . implode(',', array_fill(0, count($jobType), '?')) . ")";
+            $placeholders = implode(',', array_map(function($i) { return ':jobType'.$i; }, array_keys($jobType)));
+            $query .= " AND LOWER(jenis_pekerjaan) IN ($placeholders)";
+            foreach ($jobType as $i => $type) {
+                $params[':jobType'.$i] = strtolower($type);
+            }
         }
 
         if (!empty($locationType)) {
-            $query .= " AND LOWER(jenis_lokasi) IN (" . implode(',', array_fill(0, count($locationType), '?')) . ")";
+            $placeholders = implode(',', array_map(function($i) { return ':locationType'.$i; }, array_keys($locationType)));
+            $query .= " AND LOWER(jenis_lokasi) IN ($placeholders)";
+            foreach ($locationType as $i => $type) {
+                $params[':locationType'.$i] = strtolower($type);
+            }
         }
 
         $query .= " ORDER BY created_at " . ($sort === 'desc' ? 'DESC' : 'ASC');
+        $query .= " LIMIT :limit OFFSET :offset";
 
         $stmt = $this->db->prepare($query);
 
-        $paramIndex = 1;
-        if (!empty($search)) {
-            $stmt->bindValue(':search', '%' . strtolower($search) . '%');
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
         }
 
-        foreach (array_merge($jobType, $locationType) as $param) {
-            $stmt->bindValue($paramIndex++, $param);
-        }
+        $stmt->bindValue(':limit', $limit,);
+        $stmt->bindValue(':offset', $offset);
 
         $stmt->execute();
         
         return $stmt->fetchAll();
     }
 
+    public function getTotalFilteredJobs($search = '', $jobType = [], $locationType = []) {
+        $query = 'SELECT COUNT(*) FROM "Lowongan" WHERE is_open = TRUE';
+        $params = [];
+
+        if (!empty($search)) {
+            $query .= " AND LOWER(posisi) LIKE :search";
+            $params[':search'] = '%' . strtolower($search) . '%';
+        }
+
+        if (!empty($jobType)) {
+            $placeholders = implode(',', array_map(function($i) { return ':jobType'.$i; }, array_keys($jobType)));
+            $query .= " AND LOWER(jenis_pekerjaan) IN ($placeholders)";
+            foreach ($jobType as $i => $type) {
+                $params[':jobType'.$i] = strtolower($type);
+            }
+        }
+
+        if (!empty($locationType)) {
+            $placeholders = implode(',', array_map(function($i) { return ':locationType'.$i; }, array_keys($locationType)));
+            $query .= " AND LOWER(jenis_lokasi) IN ($placeholders)";
+            foreach ($locationType as $i => $type) {
+                $params[':locationType'.$i] = strtolower($type);
+            }
+        }
+
+        $stmt = $this->db->prepare($query);
+
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+
+        $stmt->execute();
+        
+        return $stmt->fetchColumn();
+    }
 }

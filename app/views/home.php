@@ -33,7 +33,16 @@
         </div>
     </div>
 
-    <div class="right-content"> </div>
+    <div class="right-content"> 
+
+        <div class="pagination">
+            <button class="pagination-button" id="prev-page" disabled>&lt;</button>
+            <div class="page-numbers">
+            </div>
+            <button class="pagination-button" id="next-page">&gt;</button>
+        </div>
+    </div>
 </div>
+
 
 <script src="/public/scripts/home.js"></script>
