@@ -6,29 +6,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const rightContent = document.querySelector('.right-content');
     let currentPage = 1;
 
-    document.querySelectorAll('.dropdown-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const dropdownContent = this.nextElementSibling;
-            const dropdownId = this.dataset.dropdownId;
+document.querySelectorAll('.dropdown-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const dropdownContent = this.nextElementSibling;
+        dropdownContent.classList.toggle('open');
 
-            const isOpen = dropdownContent.style.display === 'block';
-            dropdownContent.style.display = isOpen ? 'none' : 'block';
-
-            localStorage.setItem(`dropdownState_${dropdownId}`, isOpen ? 'closed' : 'open');
-        });
+        const dropdownId = this.dataset.dropdownId;
+        const isOpen = dropdownContent.classList.contains('open');
+        localStorage.setItem(`dropdownState_${dropdownId}`, isOpen ? 'open' : 'closed');
     });
+});
 
-    document.querySelectorAll('.dropdown-btn').forEach(button => {
-        const dropdownContent = button.nextElementSibling;
-        const dropdownId = button.dataset.dropdownId;
-        const state = localStorage.getItem(`dropdownState_${dropdownId}`);
+document.querySelectorAll('.dropdown-btn').forEach(button => {
+    const dropdownContent = button.nextElementSibling;
+    const dropdownId = button.dataset.dropdownId;
+    const state = localStorage.getItem(`dropdownState_${dropdownId}`);
 
-        if (state === 'open') {
-            dropdownContent.style.display = 'block';
-        } else {
-            dropdownContent.style.display = 'none';
-        }
-    });
+    if (state === 'open') {
+        dropdownContent.classList.add('open');
+    } else {
+        dropdownContent.classList.remove('open');
+    }
+});
+
 
     function getFilterValues() {
         return {

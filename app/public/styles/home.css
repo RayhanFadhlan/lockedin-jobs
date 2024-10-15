@@ -87,6 +87,14 @@
     margin-top: 5px;
 }
 
+.dropdown-content {
+    display: none;
+}
+
+.dropdown-content.open {
+    display: block;
+}
+
 .dropdown-content label {
     display: block;
     margin-bottom: 10px;
