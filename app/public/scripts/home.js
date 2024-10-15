@@ -1,16 +1,33 @@
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.querySelector('.search-input');
     const sortSelect = document.querySelector('#sort');
-    const jobTypeCheckboxes = document.querySelectorAll('input[type="checkbox"][value="full time"], input[type="checkbox"][value="part time"], input[type="checkbox"][value="internship"]');
-    const jobPlaceCheckboxes = document.querySelectorAll('input[type="checkbox"][value="on site"], input[type="checkbox"][value="remote"], input[type="checkbox"][value="hybrid"]');
+    const jobTypeCheckboxes = document.querySelectorAll('input[type="checkbox"][value="Full-time"], input[type="checkbox"][value="Part-time"], input[type="checkbox"][value="internship"]');
+    const jobPlaceCheckboxes = document.querySelectorAll('input[type="checkbox"][value="On-site"], input[type="checkbox"][value="remote"], input[type="checkbox"][value="hybrid"]');
     const rightContent = document.querySelector('.right-content');
     let currentPage = 1;
 
     document.querySelectorAll('.dropdown-btn').forEach(button => {
         button.addEventListener('click', function() {
             const dropdownContent = this.nextElementSibling;
-            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            const dropdownId = this.dataset.dropdownId;
+
+            const isOpen = dropdownContent.style.display === 'block';
+            dropdownContent.style.display = isOpen ? 'none' : 'block';
+
+            localStorage.setItem(`dropdownState_${dropdownId}`, isOpen ? 'closed' : 'open');
         });
+    });
+
+    document.querySelectorAll('.dropdown-btn').forEach(button => {
+        const dropdownContent = button.nextElementSibling;
+        const dropdownId = button.dataset.dropdownId;
+        const state = localStorage.getItem(`dropdownState_${dropdownId}`);
+
+        if (state === 'open') {
+            dropdownContent.style.display = 'block';
+        } else {
+            dropdownContent.style.display = 'none';
+        }
     });
 
     function getFilterValues() {
@@ -38,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function fetchData() {
         const filters = getFilterValues();
         const queryString = buildQueryString(filters);
+        window.history.pushState({}, '', `?${queryString}`);
         const xhr = new XMLHttpRequest();
 
         xhr.open('GET', `/?${queryString}`, true);
@@ -115,6 +133,45 @@ document.addEventListener('DOMContentLoaded', function() {
         return button;
     }
 
+    function setFiltersFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Set the search input
+        searchInput.value = urlParams.get('search') || '';
+
+        // Set the sort select
+        sortSelect.value = urlParams.get('sort') || '';
+
+        // Reset and set job type checkboxes
+        jobTypeCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+            if (urlParams.has('jobType')) {
+                const jobTypes = urlParams.get('jobType').split(',');
+                if (jobTypes.includes(checkbox.value)) {
+                    checkbox.checked = true;
+                }
+            }
+        });
+
+        // Reset and set job place checkboxes
+        jobPlaceCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+            if (urlParams.has('jobPlace')) {
+                const jobPlaces = urlParams.get('jobPlace').split(',');
+                if (jobPlaces.includes(checkbox.value)) {
+                    checkbox.checked = true;
+                }
+            }
+        });
+
+        // Set the current page
+        currentPage = parseInt(urlParams.get('page')) || 1;
+    }
+
+    setFiltersFromURL();
+    fetchData();
+
+    // Event listeners
     searchInput.addEventListener('input', () => {
         currentPage = 1;
         fetchData();
@@ -132,5 +189,11 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchData();
     }));
 
+    window.addEventListener('popstate', function(event) {
+        setFiltersFromURL();
+        fetchData();
+    });
+
+    
     fetchData();
 });

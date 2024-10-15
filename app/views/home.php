@@ -14,18 +14,18 @@
 
         <div class="filter-by">
             <div class="dropdown">
-                <button class="dropdown-btn">Job Type</button>
+                <button class="dropdown-btn" data-dropdown-id="jobType">Job Type</button>
                 <div class="dropdown-content">
-                    <label><input type="checkbox" value="full time"> Full Time</label>
-                    <label><input type="checkbox" value="part time"> Part Time</label>
+                    <label><input type="checkbox" value="Full-time"> Full Time</label>
+                    <label><input type="checkbox" value="Part-time"> Part Time</label>
                     <label><input type="checkbox" value="internship"> Internship</label>
                 </div>
             </div>
 
             <div class="dropdown">
-                <button class="dropdown-btn">Job Place</button>
+                <button class="dropdown-btn" data-dropdown-id="jobPlace">Job Place</button>
                 <div class="dropdown-content">
-                    <label><input type="checkbox" value="on site"> On Site</label>
+                    <label><input type="checkbox" value="On-site"> On Site</label>
                     <label><input type="checkbox" value="remote"> Remote</label>
                     <label><input type="checkbox" value="hybrid"> Hybrid</label>
                 </div>
