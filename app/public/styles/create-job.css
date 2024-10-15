@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+.job-form-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 50vw;
+
+}
+h1 {
+    color: #0a66c2;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+input[type="text"],
+select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+.quill-editor {
+    min-height: 100px;
+    margin-bottom: 1.5rem;
+}
+.file-input-container {
+    border: 2px dashed #ced4da;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    transition: border-color 0.3s ease-in-out;
+}
+.file-input-container:hover {
+    border-color: #0a66c2;
+}
+.file-input {
+    display: none;
+}
+.file-label {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.file-list {
+    list-style-type: none; 
+    padding: 0;
+    margin: 0; 
+}

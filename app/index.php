@@ -18,5 +18,7 @@ $app->router->post('/login', ['AuthController', 'login']);
 
 $app->router->get('/home', ['HomeController', 'getLowongan']);
 
+// Job
+$app->router->get('/company/createjob', ['JobController', 'viewCreateJob']);
 
 $app->run();
