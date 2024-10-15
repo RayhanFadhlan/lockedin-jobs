@@ -5,30 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const jobPlaceCheckboxes = document.querySelectorAll('input[type="checkbox"][value="On-site"], input[type="checkbox"][value="remote"], input[type="checkbox"][value="hybrid"]');
     const rightContent = document.querySelector('.right-content');
     let currentPage = 1;
+    let debounceTimer;
 
-document.querySelectorAll('.dropdown-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        const dropdownContent = this.nextElementSibling;
-        dropdownContent.classList.toggle('open');
-
-        const dropdownId = this.dataset.dropdownId;
-        const isOpen = dropdownContent.classList.contains('open');
-        localStorage.setItem(`dropdownState_${dropdownId}`, isOpen ? 'open' : 'closed');
-    });
-});
-
-document.querySelectorAll('.dropdown-btn').forEach(button => {
-    const dropdownContent = button.nextElementSibling;
-    const dropdownId = button.dataset.dropdownId;
-    const state = localStorage.getItem(`dropdownState_${dropdownId}`);
-
-    if (state === 'open') {
-        dropdownContent.classList.add('open');
-    } else {
-        dropdownContent.classList.remove('open');
+    function debounce(func, delay) {
+        return function(...args) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(this, args), delay);
+        };
     }
-});
-
 
     function getFilterValues() {
         return {
@@ -135,14 +119,8 @@ document.querySelectorAll('.dropdown-btn').forEach(button => {
 
     function setFiltersFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
-
-        // Set the search input
         searchInput.value = urlParams.get('search') || '';
-
-        // Set the sort select
         sortSelect.value = urlParams.get('sort') || '';
-
-        // Reset and set job type checkboxes
         jobTypeCheckboxes.forEach(checkbox => {
             checkbox.checked = false;
             if (urlParams.has('jobType')) {
@@ -153,7 +131,6 @@ document.querySelectorAll('.dropdown-btn').forEach(button => {
             }
         });
 
-        // Reset and set job place checkboxes
         jobPlaceCheckboxes.forEach(checkbox => {
             checkbox.checked = false;
             if (urlParams.has('jobPlace')) {
@@ -164,36 +141,34 @@ document.querySelectorAll('.dropdown-btn').forEach(button => {
             }
         });
 
-        // Set the current page
         currentPage = parseInt(urlParams.get('page')) || 1;
     }
 
     setFiltersFromURL();
     fetchData();
 
-    // Event listeners
-    searchInput.addEventListener('input', () => {
+     searchInput.addEventListener('input', debounce(() => {
         currentPage = 1;
         fetchData();
-    });
-    sortSelect.addEventListener('change', () => {
+    }, 800)); 
+
+    sortSelect.addEventListener('change', debounce(() => {
         currentPage = 1;
         fetchData();
-    });
-    jobTypeCheckboxes.forEach(checkbox => checkbox.addEventListener('change', () => {
+    }, 800)); 
+
+    jobTypeCheckboxes.forEach(checkbox => checkbox.addEventListener('change', debounce(() => {
         currentPage = 1;
         fetchData();
-    }));
-    jobPlaceCheckboxes.forEach(checkbox => checkbox.addEventListener('change', () => {
+    }, 800))); 
+
+    jobPlaceCheckboxes.forEach(checkbox => checkbox.addEventListener('change', debounce(() => {
         currentPage = 1;
         fetchData();
-    }));
+    }, 800))); 
 
     window.addEventListener('popstate', function(event) {
         setFiltersFromURL();
         fetchData();
     });
-
-    
-    fetchData();
 });

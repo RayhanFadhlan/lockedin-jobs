@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="left-content">
+    <div class="top-bar">
         <div class="search-box">
             <input type="text" placeholder="Search for jobs..." class="search-input">
         </div>
@@ -11,7 +11,9 @@
                 <option value="desc">Descending</option>
             </select>
         </div>
+    </div>
 
+    <div class="left-content">
         <div class="filter-by">
             <div class="dropdown">
                 <button class="dropdown-btn" data-dropdown-id="jobType">Job Type</button>
