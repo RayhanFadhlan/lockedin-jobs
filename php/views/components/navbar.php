@@ -52,7 +52,7 @@
                     </a>
                     <div class="dropdown-menu" id="profileDropdownMenu">
                         <a href="/profile" class="dropdown-item">View Profile</a>
-                        <a href="/signup" class="dropdown-item">Sign Out</a>
+                        <a href="/signout" class="dropdown-item">Sign Out</a>
                     </div>
                 </div>
             <?php else: ?>

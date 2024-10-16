@@ -7,11 +7,16 @@ use helpers\Storage;
 use models\LowonganModel;
 class JobController extends Controller
 {
+
+    public function viewJobDetail($id){
+        return $this->views('company/job-detail' );
+    }
     public function viewCreateJob()
     {
-        return $this->views('create-job');
+        return $this->views('company/create-job');
         
     }
+
 
     public function createJob(Request $request)
     {
