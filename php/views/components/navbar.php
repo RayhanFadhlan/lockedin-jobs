@@ -1,4 +1,5 @@
 <nav class="navbar">
+    <div class="navbar-container">
     <div class="navbar-left">
         <span class="logo"> <img src="../../public/images/logo.png"></span>
     </div>
@@ -58,5 +59,6 @@
                 <button>
             <?php endif; ?>
         <?php endif; ?>
+    </div>
     </div>
 </nav>

@@ -1,7 +1,11 @@
 const fileInput = document.getElementById('attachment');
 const fileLabel = document.querySelector('.file-label');
 const fileInputContainer = document.querySelector('.file-input-container');
+const form = document.getElementById('jobPostingForm');
 
+const quill = new Quill('#editor', {
+    theme: 'snow'
+  });
 
 let selectedFiles = [];
 
@@ -65,3 +69,48 @@ function updateFileList() {
 function getSelectedFiles() {
     return selectedFiles;
 }
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault(); 
+
+    const formData = new FormData(form);
+    formData.append('jobDescription', quill.root.innerHTML);
+
+    const fileInput = document.getElementById('attachment');
+    if (fileInput.files.length > 0) {
+        for (let i = 0; i < fileInput.files.length; i++) {
+            formData.append('attachment[]', fileInput.files[i]);
+        }
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', form.action);
+    xhr.setRequestHeader('Accept', 'application/json');
+
+    xhr.onload = function() {
+        try {
+            const response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                
+                window.location.href = '/company' 
+                showToast(response.message);
+                
+            } else {
+                console.error('Error creating job:', response.message);
+                showToast(response.message);
+            }
+        } catch (e) {
+            console.error('Failed to parse JSON response:', e);
+            console.error('Response text:', xhr.responseText);
+            showToast('An error occured.');
+        }
+    };
+
+    xhr.onerror = function() {
+        console.error('Network Error');
+        showToast('A network error occurred.');
+    };
+
+    xhr.send(formData);
+});
+
