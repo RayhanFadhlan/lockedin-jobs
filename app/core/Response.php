@@ -1,5 +1,5 @@
 <?php
-
+namespace core;
 class Response
 {
     private $content;
