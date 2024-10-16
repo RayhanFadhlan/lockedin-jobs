@@ -81,4 +81,23 @@ class LowonganModel extends Model {
         
         return $stmt->fetchColumn();
     }
+
+    public function getLowonganById($lowonganId) {
+        $query = 'SELECT * FROM "Lowongan" WHERE lowongan_id = :lowonganId';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':lowonganId', $lowonganId);
+        $stmt->execute();
+        
+        return $stmt->fetch();
+    }
+
+    public function getLamaranByJobSeeker($userId, $lowonganId) {
+        $query = 'SELECT * FROM "Lamaran" WHERE user_id = :userId AND lowongan_id = :lowonganId';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':userId', $userId);
+        $stmt->bindValue(':lowonganId', $lowonganId);
+        $stmt->execute();
+        
+        return $stmt->fetch();
+    }
 }
