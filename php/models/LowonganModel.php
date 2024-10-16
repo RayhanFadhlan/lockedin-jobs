@@ -82,24 +82,22 @@ class LowonganModel extends Model {
         return $stmt->fetchColumn();
     }
 
-    public function insertLowongan($userId,$jobPosition, $jobType, $jobLocation, $jobDescription) {
-        $stmt = $this->db->prepare('INSERT INTO "Lowongan" (company_id, posisi, deskripsi, jenis_pekerjaan, jenis_lokasi) VALUES (:company_id, :posisi, :deskripsi, :jenis_pekerjaan, :jenis_lokasi)');
-        $stmt->bindValue(':company_id', $userId);
-        $stmt->bindValue(':posisi', $jobPosition);
-        $stmt->bindValue(':deskripsi', $jobDescription);
-        $stmt->bindValue(':jenis_pekerjaan', $jobType);
-        $stmt->bindValue(':jenis_lokasi', $jobLocation);
+    public function getLowonganById($lowonganId) {
+        $query = 'SELECT * FROM "Lowongan" WHERE lowongan_id = :lowonganId';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':lowonganId', $lowonganId);
         $stmt->execute();
-
-        return $this->db->lastInsertId();
+        
+        return $stmt->fetch();
     }
 
-    public function insertAttachmentLowongan($lowonganId, $attachmentPaths) {
-        $stmt = $this->db->prepare('INSERT INTO "AttachmentLowongan" (lowongan_id, file_path) VALUES (:lowongan_id, :path)');
-        foreach ($attachmentPaths as $path) {
-            $stmt->bindValue(':lowongan_id', $lowonganId);
-            $stmt->bindValue(':path', $path);
-            $stmt->execute();
-        }
+    public function getLamaranByJobSeeker($userId, $lowonganId) {
+        $query = 'SELECT * FROM "Lamaran" WHERE user_id = :userId AND lowongan_id = :lowonganId';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':userId', $userId);
+        $stmt->bindValue(':lowonganId', $lowonganId);
+        $stmt->execute();
+        
+        return $stmt->fetch();
     }
 }

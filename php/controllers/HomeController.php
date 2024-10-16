@@ -22,7 +22,7 @@ class HomeController extends Controller {
         }
     }
 
-    protected function getLowongan($request) {
+    public function getLowongan($request) {
         try {
             $search = $request->getBody('search') ?? '';
             $jobType = isset($_GET['jobType']) ? explode(',', $_GET['jobType']) : [];

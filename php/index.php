@@ -23,4 +23,6 @@ $app->router->get('/company/createjob', ['JobController', 'viewCreateJob'], ['Co
 $app->router->post('/company/createjob', ['JobController', 'createJob'], ['CompanyMiddleware']);
 
 
+$app->router->get('/detaillowongan/:id', ['LowonganController','index']);
+
 $app->run();
