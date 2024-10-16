@@ -19,7 +19,7 @@
     ?>
 </head>
 <body>
-    <div class="container">
+    <div class="layout-container">
         <?php include __DIR__ . '/../components/navbar.php'; ?> 
         <main class="content-wrapper">
             <?php include __DIR__ . '/../components/toaster.php'; ?> 
