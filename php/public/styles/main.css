@@ -47,13 +47,46 @@ body {
   color: white;
   padding: 10px;
   font-size: 16px;
-  border: none;
   border-radius: 4px;
   cursor: pointer;
   width: 100%;
+  border: 1px solid #0a66c2;
+
+}
+
+.secondary-btn {
+  background-color: #ffffff;
+  color: #0a66c2;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  border: 1px solid #0a66c2;
+}
+
+.danger-btn{
+  background-color: #d9534f;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  border: 1px solid #ff0000;
+}
+
+.secondary-btn:hover {
+  background-color: #f3f2ef;
+  transition: background-color 0.3s;
 }
 
 .primary-btn:hover {
   background-color: #005582;
+  transition: background-color 0.3s;
+}
+
+.danger-btn:hover {
+  background-color: #ff3333;
   transition: background-color 0.3s;
 }
