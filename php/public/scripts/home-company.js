@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.history.pushState({}, "", `?${queryString}`);
     const xhr = new XMLHttpRequest();
 
-    xhr.open("GET", `/?${queryString}`, true);
+    xhr.open("GET", `/company?${queryString}`, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 
     xhr.onreadystatechange = function () {
@@ -72,20 +72,71 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateJobListings(jobs) {
     rightContent.innerHTML = "";
-
+    const filters = getFilterValues();
+    const queryString = buildQueryString(filters);
+    
     if (jobs.length > 0) {
       jobs.forEach((job) => {
         const jobContainer = document.createElement("div");
         jobContainer.classList.add("job-container");
+
         jobContainer.innerHTML = `
-                    <h3>${job.posisi}</h3>
-                    <p>${job.deskripsi}</p>
-                    <p>Location: ${job.jenis_lokasi}</p>
-                    <p>Job Type: ${job.jenis_pekerjaan}</p>
-                    <p>Posted on: ${job.created_at}</p>
-                `;
+            <button class="delete-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
+                    <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/>
+                    <line x1="14" x2="14" y1="11" y2="17"/>
+                </svg>
+            </button>
+            <h3>${job.posisi}</h3>
+            <p>${job.deskripsi}</p>
+            <p>Location: ${job.jenis_lokasi}</p>
+            <p>Job Type: ${job.jenis_pekerjaan}</p>
+            <p>Posted on: ${job.created_at}</p>
+            <button class="update-button" data-id="${job.lowongan_id}">
+                Edit
+            </button>
+        `;
+
+        const deleteButton = jobContainer.querySelector(".delete-button");
+        deleteButton.addEventListener("click", function (e) {
+          e.stopPropagation();
+
+          if (confirm("Are you sure you want to delete this job?")) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", `/company?${queryString}`, true);
+            xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onreadystatechange = function () {
+              if (
+                xhr.readyState === XMLHttpRequest.DONE &&
+                xhr.status === 200
+              ) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                  jobContainer.remove();
+                } else {
+                  console.error(response.message);
+                  alert("Failed to delete job listing.");
+                }
+              } else if (xhr.readyState === XMLHttpRequest.DONE) {
+                alert("Error deleting job listing.");
+              }
+            };
+            xhr.send(JSON.stringify({ lowongan_id: job.lowongan_id }));
+          }
+        });
+
+        const updateButton = jobContainer.querySelector(".update-button");
+        updateButton.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const lowonganId = updateButton.getAttribute("data-id");
+            window.location.href = `/company/edit-lowongan/${lowonganId}`;
+        });
+
         jobContainer.addEventListener("click", function () {
-          window.location.href = `/detail-lowongan/${job.lowongan_id}`;
+          window.location.href = `/company/detail-lowongan/${job.lowongan_id}`;
         });
 
         rightContent.appendChild(jobContainer);

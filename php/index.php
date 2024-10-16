@@ -21,6 +21,8 @@ $app->router->get('/home', ['HomeController', 'getLowongan']);
 // Job
 $app->router->get('/company/createjob', ['JobController', 'viewCreateJob']);
 
-$app->router->get('/detaillowongan/:id', ['LowonganController','index']);
+$app->router->get('/company', ['HomeController','indexCompany']);
+$app->router->get('/home/company', ['HomeController', 'getLowonganCompany']);
+$app->router->post('/company', ['HomeController', 'deleteLowonganCompany']);
 
 $app->run();

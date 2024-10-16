@@ -11,10 +11,7 @@ class CompanyModel extends Model {
     }
 
     public function createCompany($userId, $lokasi, $about) {
-
-        
         $stmt = $this->db->prepare('INSERT INTO "CompanyDetail" (user_id, lokasi, about) VALUES (?, ?, ?)');
         return $stmt->execute([$userId, $lokasi, $about]);
     }
-
 }

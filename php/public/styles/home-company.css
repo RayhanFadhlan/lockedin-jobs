@@ -42,9 +42,9 @@ body {
   .search-input::placeholder {
     color: #7f8c8d;
   }
-  
+    
   .sort-by {
-    margin-left: 40px;
+    margin-left: 30px;
     display: flex;
     align-items: center;
   }
@@ -65,6 +65,20 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
+  .add-job-btn {
+    margin-left: 50px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0A66C2;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .add-job-btn:hover {
+    background-color: #2980b9;
+  }
+
   .main-content {
     width: 60%;
     display: flex;
@@ -127,6 +141,7 @@ body {
   }
   
   .job-container {
+    position: relative;
     background-color: #fff;
     padding: 20px;
     margin-bottom: 20px;
@@ -136,6 +151,41 @@ body {
     transition: box-shadow 0.3s ease;
   }
   
+  .delete-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .delete-button svg {
+    width: 26x;
+    height: 26px;
+    color: red;
+  }
+
+  .delete-button svg:hover {
+    scale: 1.2;
+  }
+  
+  .update-button {
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    background-color: #0A66C2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .update-button:hover {
+    background-color: #2980b9;
+  }
+
   .job-container:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   }
