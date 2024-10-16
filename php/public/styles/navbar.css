@@ -9,7 +9,7 @@
     padding: 0 24px;
     background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-    height: 52px;
+    height: 54px;
     z-index: 1000;
 }
 
@@ -21,11 +21,13 @@
 }
 
 .navbar-left {
+    margin-top: 5px;
     display: flex;
     align-items: center;
 }
 
 .navbar-right {
+    gap: 20px;
     display: flex;
     align-items: center;
 }

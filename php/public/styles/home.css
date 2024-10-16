@@ -15,9 +15,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
     width: 100%;
-    margin-top: 20px;
     box-sizing: border-box;
     gap: 10px;
   }
@@ -68,13 +67,11 @@
     width: 60%;
     display: flex;
     flex: 1;
-    overflow: hidden;
   }
   
   .left-content {
     color: #2c3e50;
     width: 30%;
-    overflow-y: auto;
     padding: 20px;
   }
   
@@ -120,7 +117,6 @@
     flex: 1;
     margin-top: 10px;
     padding: 30px;
-    overflow-y: auto;
     scrollbar-width: none;
     margin-bottom: 40px;
   }
@@ -154,7 +150,7 @@
   .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 30px;
   }
   
   .pagination-button {
@@ -166,7 +162,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    margin: 4px 2px;
+    margin: 4px 4px;
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s;
