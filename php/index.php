@@ -16,6 +16,7 @@ $app->router->post('/signup', ['AuthController', 'register']);
 $app->router->get('/login', ['AuthController', 'viewLogin']);
 $app->router->post('/login', ['AuthController', 'login']);
 $app->router->get('/signout', ['AuthController', 'signout']);
+$app->router->get('/signout', ['AuthController', 'signout']);
 
 $app->router->get('/home', ['HomeController', 'getLowongan']);
 
