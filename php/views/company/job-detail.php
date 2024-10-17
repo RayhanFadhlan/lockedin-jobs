@@ -23,6 +23,30 @@
                     develop innovative solutions.
                 </p>
             </div>
+            <div class="image-gallery">
+            <img src="/public/images/placeholder.png" alt="Office Space" class="main-image">
+                <div class="thumbnails">
+                    <div class="thumbnail" tabindex="0">
+                        <img src="/public/images/placeholder.png" alt="Office Space">
+                    </div>
+                    <div class="thumbnail" tabindex="0">
+                        <img src="/public/images/placeholder.png" alt="Team Building">
+                    </div>
+                    <div class="thumbnail" tabindex="0">
+                        <img src="/public/images/placeholder.png" alt="Work Environment">
+                    </div>
+                    <div class="thumbnail" tabindex="0">
+                        <img src="/public/images/placeholder.png" alt="Company Culture">
+                    </div>
+                    <div class="thumbnail" tabindex="0">
+                        <img src="/public/images/placeholder.png" alt="Work Environment">
+                    </div>
+                    <div class="thumbnail" tabindex="0">
+                        <img src="/public/images/placeholder.png" alt="Company Culture">
+                    </div>
+                </div>
+
+            </div>
         </section>
 
         <section class="applicants">

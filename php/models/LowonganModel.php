@@ -118,4 +118,12 @@ class LowonganModel extends Model {
             $stmt->execute();
         }
     }
+
+    public function getAttachments($id){
+        $stmt = $this->db->prepare('SELECT * FROM "AttachmentLowongan" WHERE lowongan_id = ?');
+        $stmt->execute([$id]);
+        return $stmt->fetchAll();
+    }
+
+    
 }
