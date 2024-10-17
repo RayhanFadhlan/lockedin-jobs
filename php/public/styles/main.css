@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Source Sans 3", sans-serif;
+}
+
+body {
+  background-color: #f3f2ef;
+  /* min-height: 100vh; */
+  /* padding-top: 62px; Add padding to account for fixed navbar */
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+}
+
+.content-wrapper {
+  width: 100%;
+  flex: 1;
+  margin-top: 62px;
+  padding-top: 20px;
+}
+
+.form-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+.primary-btn {
+  background-color: #0073b1;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  border: 1px solid #0a66c2;
+
+}
+
+.secondary-btn {
+  background-color: #ffffff;
+  color: #0a66c2;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  border: 1px solid #0a66c2;
+}
+
+.danger-btn{
+  background-color: #cb112d;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  border: 1px solid #d9534f;
+}
+
+.secondary-btn:hover {
+  background-color: #f3f2ef;
+  transition: background-color 0.3s;
+}
+
+.primary-btn:hover {
+  background-color: #005582;
+  transition: background-color 0.3s;
+}
+
+.danger-btn:hover {
+  background-color: #d9534f;
+  transition: background-color 0.3s;
+}
