@@ -76,6 +76,8 @@
   }
   
   .filter-by {
+    position: sticky;
+    top: 100px;
     margin-top: 20px;
   }
   

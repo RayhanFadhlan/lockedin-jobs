@@ -28,15 +28,17 @@
             <?php elseif ($_SESSION['user']['role'] === 'company'): ?>
                 <a href="/profile" class="nav-item"> 
                     <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="8.5" cy="7" r="4"/>
-                            <path d="M20 8v6M23 11h-6"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 16v-4"/>
+                            <path d="M12 8h.01"/>
                         </svg>
                     </span>
-                    Sign Up
+                    Profile
                 </a>
             <?php endif; ?>
+        <?php else:?>
+            <a href="/signup" class="btn btn-join">Join now</a>
         <?php endif; ?>
         
         <?php if (isset($_SESSION['user']['role'])): ?>
@@ -51,13 +53,13 @@
                         Me
                     </a>
                     <div class="dropdown-menu" id="profileDropdownMenu">
-                        <a href="/profile" class="dropdown-item">View Profile</a>
-                        <a href="/signout" class="dropdown-item">Sign Out</a>
+                    <div class="dropdown-name"><?php echo $_SESSION['user']['name']?></div>
+                        <a href="/signup" class="dropdown-item">Sign Out</a>
                     </div>
                 </div>
-            <?php else: ?>
-                <button>
             <?php endif; ?>
+        <?php else:?>
+            <a href="/login" class="btn btn-signin">Sign in</a>
         <?php endif; ?>
     </div>
     </div>

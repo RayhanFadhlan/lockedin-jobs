@@ -92,6 +92,8 @@
   
   .filter-by {
     margin-top: 20px;
+    position: sticky;
+    top: 100px;
   }
   
   .dropdown {

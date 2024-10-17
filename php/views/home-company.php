@@ -13,7 +13,7 @@
         </div>
 
         <div class="add-job">
-            <a href="/company/add-job" class="add-job-btn">Add New Job</a>
+            <a href="/company/createjob" class="add-job-btn">Add New Job</a>
         </div>
     </div>
     <div class="main-content">
