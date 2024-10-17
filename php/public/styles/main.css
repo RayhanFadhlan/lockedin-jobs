@@ -66,14 +66,14 @@ body {
 }
 
 .danger-btn{
-  background-color: #d9534f;
+  background-color: #cb112d;
   color: white;
   padding: 10px;
   font-size: 16px;
   border-radius: 4px;
   cursor: pointer;
   width: 100%;
-  border: 1px solid #ff0000;
+  border: 1px solid #d9534f;
 }
 
 .secondary-btn:hover {
@@ -87,6 +87,6 @@ body {
 }
 
 .danger-btn:hover {
-  background-color: #ff3333;
+  background-color: #d9534f;
   transition: background-color 0.3s;
 }
