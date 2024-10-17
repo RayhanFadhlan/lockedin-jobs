@@ -21,4 +21,7 @@ $app->router->get('/home', ['HomeController', 'getLowongan']);
 // Job
 $app->router->get('/company/createjob', ['JobController', 'viewCreateJob']);
 
+// Lamaran
+$app->router->get('/lamaran/riwayat', ['LamaranController', 'viewHistory']);
+$app->router->get('/lamaran/datariwayat', ['LamaranController', 'getLamaran']);
 $app->run();

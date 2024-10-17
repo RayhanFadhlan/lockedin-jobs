@@ -15,12 +15,19 @@ class LamaranController extends Controller {
     }
 
     public function viewHistory() {
-        return $this->views('history', ['css' => 'auth']);
+        $request = new Request();
+        
+        if ($request->getMethod() === 'GET' && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            $this->getLamaran($request);
+        } else {
+            $this->views('history', ['css' => 'home']);
+        }
     }
 
     public function getLamaran(Request $request) {
         try {
-            $userId = $request->getBody('user_id') ?? -999;
+            // $userId = $_SESSION('user_id') ?? -999;
+            $userId = 1;
             if ($userId === -999) {return new UnauthorizedException('Login untuk melihat riwayat lamaran');}
 
             $search = $request->getBody('search') ?? '';
@@ -29,8 +36,8 @@ class LamaranController extends Controller {
             $page = max(1, intval($request->getBody('page') ?? 1));
 
             $offset = ($page - 1) * $this->itemsPerPage;
-            $lamaranList = $this->lamaranModel->getFilteredLamaran($userId, $search, $status, $sort, $offset);
-            $totalLamaran = $this->lamaranModel->getTotalFilteredLamaran($userId, $search, $status);
+            $lamaranList = $this->lamaranModel->getDetailLamaran($userId, $search, $status, $sort, $offset);
+            $totalLamaran = $this->lamaranModel->getTotalLamaran($userId, $search, $status);
             
             $totalPages = ceil($totalLamaran / $this->itemsPerPage);
 
