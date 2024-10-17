@@ -29,6 +29,11 @@ class AuthController extends Controller {
         return $this->views('login', ['css' => 'auth']);
     }
 
+    public function signout() {
+        session_destroy();
+        Redirect::to('/');
+    }
+
     public function register(Request $request) {
 
         try {

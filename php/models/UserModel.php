@@ -21,5 +21,11 @@ class UserModel extends Model {
         return $this->db->lastInsertId();
     }
 
+    public function find($id) {
+        $stmt = $this->db->prepare('SELECT * FROM "User" WHERE user_id = ?');
+        $stmt->execute([$id]);
+        return $stmt->fetch();
+    }
+
 
 }

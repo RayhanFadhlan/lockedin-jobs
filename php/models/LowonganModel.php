@@ -165,4 +165,30 @@ class LowonganModel extends Model {
         $stmt->bindParam(':lowonganId', $lowonganId);
         $stmt->execute();
     }
+    public function insertLowongan($userId,$jobPosition, $jobType, $jobLocation, $jobDescription) {
+        $stmt = $this->db->prepare('INSERT INTO "Lowongan" (company_id, posisi, deskripsi, jenis_pekerjaan, jenis_lokasi) VALUES (:company_id, :posisi, :deskripsi, :jenis_pekerjaan, :jenis_lokasi)');
+        $stmt->bindValue(':company_id', $userId);
+        $stmt->bindValue(':posisi', $jobPosition);
+        $stmt->bindValue(':deskripsi', $jobDescription);
+        $stmt->bindValue(':jenis_pekerjaan', $jobType);
+        $stmt->bindValue(':jenis_lokasi', $jobLocation);
+        $stmt->execute();
+        return $this->db->lastInsertId();
+    }
+    public function insertAttachmentLowongan($lowonganId, $attachmentPaths) {
+        $stmt = $this->db->prepare('INSERT INTO "AttachmentLowongan" (lowongan_id, file_path) VALUES (:lowongan_id, :path)');
+        foreach ($attachmentPaths as $path) {
+            $stmt->bindValue(':lowongan_id', $lowonganId);
+            $stmt->bindValue(':path', $path);
+            $stmt->execute();
+        }
+    }
+
+    public function getAttachments($id){
+        $stmt = $this->db->prepare('SELECT * FROM "AttachmentLowongan" WHERE lowongan_id = ?');
+        $stmt->execute([$id]);
+        return $stmt->fetchAll();
+    }
+
+    
 }
