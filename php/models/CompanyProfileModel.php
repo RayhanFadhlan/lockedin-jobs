@@ -16,10 +16,6 @@ class CompanyProfileModel extends Model {
         return $stmt->fetch();
     }
 
-    public function getCompanyProfile($userId) {
-        
-    }
-
     public function setCompanyProfile($lokasi, $about) {
 
     }

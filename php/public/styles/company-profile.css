@@ -1,4 +1,28 @@
-.company-profile {
-    margin: auto;
-    text-align: center;
+.container {
+    padding: 0 20vw;
+    min-height: 100%;
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
+}
+
+.company-name {
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+.about-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card {
+    border: 1px grey solid;
+    padding: 5%;
+    flex: 1;
+    width: 100%;
+}
+
+.setting {
+    margin-left: auto;
 }
