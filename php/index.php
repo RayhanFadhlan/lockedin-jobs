@@ -35,5 +35,6 @@ $app->router->get('/lamaran/datariwayat', ['LamaranController', 'getLamaran']);
 
 // Company Profile
 $app->router->get('/profile', ['CompanyProfileController', 'viewCompanyProfile'], ['CompanyMiddleware']);
-
+$app->router->get('/profile/edit', ['CompanyProfileController', 'viewCompanyProfileEdit'], ['CompanyMiddleware']);
+$app->router->post('/profile/edit', ['CompanyProfileController', 'editCompanyProfile'], ['CompanyMiddleware']);
 $app->run();

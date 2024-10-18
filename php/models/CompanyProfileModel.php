@@ -16,7 +16,11 @@ class CompanyProfileModel extends Model {
         return $stmt->fetch();
     }
 
-    public function setCompanyProfile($lokasi, $about) {
-
+    public function setCompanyProfile($userId, $name, $lokasi, $about) {
+        $stmt = $this->db->prepare('UPDATE "User" SET nama = ? WHERE user_id = ?');
+        $stmt->execute([$name, $userId]);
+        $stmt = $this->db->prepare('UPDATE "CompanyDetail" SET lokasi = ?, about = ? WHERE user_id = ?');
+        $stmt->execute([$lokasi, $about, $userId]);
+        return $stmt->rowCount();
     }
 }
