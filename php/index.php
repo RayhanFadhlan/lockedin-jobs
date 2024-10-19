@@ -29,4 +29,7 @@ $app->router->get('/home/company', ['HomeController', 'getLowonganCompany']);
 $app->router->delete('/company/job', ['JobController', 'deleteLowonganCompany']);
 $app->router->patch('/company/job/changeopen', ['JobController', 'changeopenlowongan']);
 
+// Lamaran
+$app->router->get('/lamaran/riwayat', ['LamaranController', 'viewHistory']);
+$app->router->get('/lamaran/datariwayat', ['LamaranController', 'getLamaran']);
 $app->run();

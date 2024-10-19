@@ -186,6 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
       button.addEventListener("click", () => {
         currentPage = page;
         fetchData();
+        window.scrollTo(0, 0);
       });
     } else {
       button.disabled = true;
