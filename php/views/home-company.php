@@ -18,6 +18,23 @@
     </div>
     <div class="main-content">
         <div class="left-content">
+            <div class="profile-card">
+                <div class="profile-header">
+                <img src="../public/images/profile.png" alt="Profile Picture" class="profile-picture">
+                </div>
+                <div class="profile-info">
+                    <?php if (isset($_SESSION['user'])) : ?>
+                        <h2 class="profile-name"><?php echo $_SESSION['user']['name']?></h2>
+                    <?php else : ?>
+                        <h2 class="profile-name">Guest</h2>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['user'])) : ?>
+                        <p class="profile-title"><?php echo $_SESSION['user']['role']?></p>
+                    <?php else : ?>
+                        <p class="profile-title">No Role</p>
+                    <?php endif; ?>
+                </div>
+            </div>
             <div class="filter-by">
                 <div class="dropdown">
                     <button class="dropdown-btn" data-dropdown-id="jobType">Job Type</button>

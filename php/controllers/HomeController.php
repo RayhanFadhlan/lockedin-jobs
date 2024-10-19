@@ -63,8 +63,8 @@ class HomeController extends Controller {
 
     public function getLowonganCompany($request) {
         try {
-            $companyId = 28;
-            //$companyId = $_SESSION['user']['id'];
+            // $companyId = 28;
+            $companyId = $_SESSION['user']['id'];
             $search = $request->getBody('search') ?? '';
             $jobType = isset($_GET['jobType']) ? explode(',', $_GET['jobType']) : [];
             $locationType = isset($_GET['jobPlace']) ? explode(',', $_GET['jobPlace']) : [];
