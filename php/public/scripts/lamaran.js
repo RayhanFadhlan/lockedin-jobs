@@ -31,6 +31,10 @@ document.getElementById('application-form').addEventListener('submit', function 
     const cvFile = document.getElementById('pdf-file');
     const videoFile = document.getElementById('video-file');
 
+    const maxPdfSize = 10 * 1024 * 1024; 
+    const maxVideoSize = 250 * 1024 * 1024;
+
+
     if (email.value === '' || !email.value.includes('@')) {
         document.getElementById('email-error').textContent = 'Please enter a valid email address';
         isValid = false;
@@ -44,12 +48,18 @@ document.getElementById('application-form').addEventListener('submit', function 
     } else if (!cvFile.files[0].name.toLowerCase().endsWith('.pdf')) {
         document.getElementById('pdf-error').textContent = 'Please upload a valid PDF file';
         isValid = false;
+    } else if (cvFile.size > maxPdfSize) {
+        document.getElementById('pdf-error').textContent = 'PDF file must be less than 10 MB';
+        isValid = false;
     } else {
         document.getElementById('pdf-error').textContent = '';
     }
 
     if (videoFile.files.length > 0 && !videoFile.files[0].type.startsWith('video/')) {
         document.getElementById('video-error').textContent = 'Please upload a valid video file';
+        isValid = false;
+    } else if (videoFile.size > maxVideoSize) {
+        document.getElementById('video-error').textContent = 'Video file must be less than 250 MB';
         isValid = false;
     } else {
         document.getElementById('video-error').textContent = '';
