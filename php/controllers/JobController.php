@@ -2,6 +2,7 @@
 namespace controllers;
 use core\Request;
 use core\Response;
+use Exception;
 use helpers\HTMLSanitizer;
 use helpers\Redirect;
 use helpers\Storage;
@@ -11,8 +12,10 @@ class JobController extends Controller
 {
 
     public function viewJobDetail(Request $request, $id){
-  
-        $userId = $_SESSION['user']['id'];
+        
+        try {
+
+        $this->verifySpecificCompanyWithLowongan($id);
         
     
         $lowonganModel = new LowonganModel();
@@ -23,9 +26,7 @@ class JobController extends Controller
             Redirect::withToast('/', 'Job not found');
         }
         $company = $userModel->find($job['company_id']);
-        if($job['company_id']!=$userId){
-            Redirect::withToast('/', 'You are not authorized to view this page');
-        }
+        
 
         $attachments = $lowonganModel->getAttachments($id);
 
@@ -44,6 +45,7 @@ class JobController extends Controller
 
       
         return $this->views('company/job-detail', [
+            'jobId' => $id,
             'company_name' => $company['nama'],
             'position' => $job['posisi'],
             'description' => $cleanHtml,
@@ -54,6 +56,10 @@ class JobController extends Controller
             'created_at' => $formattedCreatedAt,
             'images' => $imgPaths
         ] );
+        }
+        catch (Exception $e) {
+            Redirect::withToast('/', $e->getMessage());
+        }
     }
     public function viewCreateJob()
     {
@@ -98,7 +104,7 @@ class JobController extends Controller
             ])
             ->send();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             
             Response::json([
                 'success' => false,
@@ -115,18 +121,11 @@ class JobController extends Controller
             $data = json_decode(file_get_contents('php://input'), true);
             $lowonganId = $data['lowongan_id'] ?? null;
 
-            $userId = $_SESSION['user']['id'];
-
+            
+            $this->verifySpecificCompanyWithLowongan($lowonganId);
+            
             $lowonganModel = new LowonganModel();
-            $lowongan = $lowonganModel->getLowonganById($lowonganId);
 
-            if($lowongan['company_id'] != $userId) {
-                Response::json([
-                    'success' => false,
-                    'message' => 'You are not authorized to perform this action'
-                ], 403)
-                ->send();
-            }
             $attachments = $lowonganModel->getAttachments($lowonganId);
             $storage = new Storage();
 
@@ -138,7 +137,7 @@ class JobController extends Controller
     
             header('Content-Type: application/json');
             echo json_encode(['success' => true, 'message' => 'Job listing deleted successfully']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             header('Content-Type: application/json', true, 500);
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
@@ -150,23 +149,14 @@ class JobController extends Controller
 
             $lowonganId = $data['lowongan_id'] ?? null;
 
+            $this->verifySpecificCompanyWithLowongan($lowonganId);
+
+            
             $lowonganModel = new LowonganModel();
             $job = $lowonganModel->getLowonganById($lowonganId);
-            if (!$job) {
-                Response::json([
-                    'success' => false,
-                    'message' => 'Job not found'
-                ], 404)
-                ->send();
-            }
             
-            if($job['company_id'] != $_SESSION['user']['id']) {
-                Response::json([
-                    'success' => false,
-                    'message' => 'You are not authorized to perform this action'
-                ], 403)
-                ->send();
-            }
+
+
 
             if($job['is_open']) {
                 $lowonganModel->closeLowongan($lowonganId);
@@ -185,7 +175,7 @@ class JobController extends Controller
             }
 
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             Response::json([
                 'success' => false,
                 'message' => $e->getMessage()
@@ -194,6 +184,102 @@ class JobController extends Controller
         }
     }
 
+    
+    public function verifySpecificCompanyWithLowongan($lowonganId){
+        try {
+            $userId = $_SESSION['user']['id'];
+            $lowonganModel = new LowonganModel();
+            $lowongan = $lowonganModel->getLowonganById($lowonganId);
+            if (!$lowongan) {
+                throw new Exception('Job not found');
+            }
+            if($lowongan['company_id'] != $userId) {
+                throw new Exception('You are not authorized to perform this action');
+            }
+            return true;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
  
+
+    public function viewEditJob(Request $request, $id){
+        try {
+
+            $this->verifySpecificCompanyWithLowongan($id);
+
+            $lowonganModel = new LowonganModel();
+            $job = $lowonganModel->getLowonganById($id);
+
+            
+
+            return $this->views('company/edit-job', [
+                'jobPosition' => $job['posisi'],
+                'jobType' => $job['jenis_pekerjaan'],
+                'jobLocation' => $job['jenis_lokasi'],
+                'jobDescription' => $job['deskripsi'],
+            ]);
+
+
+        }
+        catch (Exception $e) {
+            Redirect::withToast('/', $e->getMessage());
+        }
+
+    }
+    
+    public function editJob(Request $request, $id){
+        try {
+            $this->verifySpecificCompanyWithLowongan($id);
+
+            $request->validate([
+                'jobPosition' => ['required'],
+                'jobType' => ['required'],
+                'jobLocation' => ['required'],
+                'jobDescription' => ['required'],
+            ]);
+
+            $jobPosition = $request->getBody('jobPosition');
+            $jobType = $request->getBody('jobType');
+            $jobLocation = $request->getBody('jobLocation');
+            $jobDescription = $request->getBody('jobDescription');
+            
+            $lowonganModel = new LowonganModel();
+            $lowonganModel->updateLowongan($id, $jobPosition, $jobType, $jobLocation, $jobDescription);
+
+
+            $attachments = $lowonganModel->getAttachments($id);
+            $storage = new Storage();
+
+            foreach ($attachments as $attachment) {
+                $storage->delete($attachment['file_path']);
+            }
+
+            $lowonganModel->deleteAttachments($id);
+
+
+            $attachmentPaths = $storage->store($_FILES);
+
+            $lowonganModel->insertAttachmentLowongan($id, $attachmentPaths);
+
+
+
+
+            Response::json([
+                'success' => true,
+                'message' => 'Job updated successfully',
+            ])
+            ->send();
+
+        } catch (Exception $e) {
+            
+            Response::json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 400)
+            ->send();
+
+        }
+    }
   
 }

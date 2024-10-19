@@ -57,7 +57,9 @@
     <div class="right-container">
         <aside class="job-actions">
             <h2>Job Actions</h2>
-            <button href="/" class="primary-btn" id="edit-button">Edit Job</button>
+            <a href="/company/job/<?= $jobId ?>/editjob" >
+                <button class="primary-btn" id="edit-button">Edit Job</button>
+            </a>
           
             <button  class="secondary-btn" id="close-button"><?= $data['is_open'] ? 'Close Job' : 'Open Job' ?></button>
 

@@ -217,4 +217,20 @@ class LowonganModel extends Model {
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    public function updateLowongan($lowonganId, $jobPosition, $jobType, $jobLocation, $jobDescription) {
+        $stmt = $this->db->prepare('UPDATE "Lowongan" SET posisi = :posisi, deskripsi = :deskripsi, jenis_pekerjaan = :jenis_pekerjaan, jenis_lokasi = :jenis_lokasi WHERE lowongan_id = :lowonganId');
+        $stmt->bindParam(':lowonganId', $lowonganId);
+        $stmt->bindParam(':posisi', $jobPosition);
+        $stmt->bindParam(':deskripsi', $jobDescription);
+        $stmt->bindParam(':jenis_pekerjaan', $jobType);
+        $stmt->bindParam(':jenis_lokasi', $jobLocation);
+        $stmt->execute();
+    }
+
+    public function deleteAttachments($lowonganId) {
+        $stmt = $this->db->prepare('DELETE FROM "AttachmentLowongan" WHERE lowongan_id = :lowonganId');
+        $stmt->bindParam(':lowonganId', $lowonganId);
+        $stmt->execute();
+    }
 }

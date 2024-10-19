@@ -22,6 +22,8 @@ $app->router->get('/home', ['HomeController', 'getLowongan']);
 // Job
 $app->router->get('/company/createjob', ['JobController', 'viewCreateJob'], ['CompanyMiddleware']);
 $app->router->post('/company/createjob', ['JobController', 'createJob'], ['CompanyMiddleware']);
+$app->router->get('/company/job/:id/editjob', ['JobController', 'viewEditJob']);
+$app->router->post('/company/job/:id/editjob', ['JobController', 'editJob']);
 $app->router->get('/company/job/:id', ['JobController', 'viewJobDetail'], ['CompanyMiddleware']);
 
 $app->router->get('/company', ['HomeController','indexCompany']);

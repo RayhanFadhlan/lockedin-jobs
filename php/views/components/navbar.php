@@ -1,7 +1,7 @@
 <nav class="navbar">
     <div class="navbar-container">
     <div class="navbar-left">
-        <span class="logo"> <img src="../../public/images/logo.png" alt="logo web"></span>
+        <span class="logo"> <img src="/public/images/logo.png" alt="logo web"></span>
     </div>
     <div class="navbar-right">
         <a href="/" class="nav-item">

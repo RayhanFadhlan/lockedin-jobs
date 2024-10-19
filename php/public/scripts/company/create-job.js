@@ -2,6 +2,7 @@ const fileInput = document.getElementById("attachment");
 const fileLabel = document.querySelector(".file-label");
 const fileInputContainer = document.querySelector(".file-input-container");
 const form = document.getElementById("jobPostingForm");
+const editform = document.getElementById("jobEditForm");
 
 const quill = new Quill("#editor", {
     theme: "snow",
@@ -102,3 +103,4 @@ form.addEventListener("submit", function (event) {
 
     xhr.send(formData);
 });
+
