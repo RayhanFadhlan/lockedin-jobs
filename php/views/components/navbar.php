@@ -54,7 +54,7 @@
                     </a>
                     <div class="dropdown-menu" id="profileDropdownMenu">
                     <div class="dropdown-name"><?php echo $_SESSION['user']['name']?></div>
-                        <a href="/signup" class="dropdown-item">Sign Out</a>
+                        <a href="/signout" class="dropdown-item">Sign Out</a>
                     </div>
                 </div>
             <?php endif; ?>

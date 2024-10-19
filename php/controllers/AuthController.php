@@ -63,7 +63,19 @@ class AuthController extends Controller {
                 
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     
-                $this->userModel->createUser($email, $name, $hashedPassword, $role);
+                $user = $this->userModel->createUser($email, $name, $hashedPassword, $role);
+
+                if (!$user) {
+                    throw new \Exception('Failed to create user');
+                }
+
+                $_SESSION['user'] = [
+                    'id' => $user['user_id'],
+                    'email' => $user['email'],
+                    'name' => $user['nama'],
+                    'role' => $user['role'],
+                ];
+
 
                 Redirect::withToast('/', 'User created successfully');
 
@@ -92,13 +104,20 @@ class AuthController extends Controller {
 
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-                $userId = $this->userModel->createUser($companyEmail, $companyName, $hashedPassword, $role);
+                $user = $this->userModel->createUser($companyEmail, $companyName, $hashedPassword, $role);
 
-                if (!$userId) {
+                if (!$user) {
                     throw new \Exception('Failed to create user');
                 }
                 
-                $this->companyModel->createCompany($userId, $location, $about);
+                $this->companyModel->createCompany($user['user_id'], $location, $about);
+
+                $_SESSION['user'] = [
+                    'id' => $user['user_id'],
+                    'email' => $user['email'],
+                    'name' => $user['nama'],
+                    'role' => $user['role'],
+                ];
 
                 Redirect::withToast('/', 'Company created successfully');
             }

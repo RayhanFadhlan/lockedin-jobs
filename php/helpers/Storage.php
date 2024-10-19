@@ -69,13 +69,20 @@ class Storage
             throw new \Exception("Failed to upload file: $name");
         }
 
-        return $filePath;
+        return '/' . $filePath;
     }
 
     private function validateFileType($type, $name)
     {
         if (!in_array($type, $this->allowedTypes)) {
             throw new \Exception("Invalid file type for $name. Only " . implode(', ', $this->allowedTypes) . " are allowed.");
+        }
+    }
+
+    private function delete($path)
+    {
+        if (file_exists($path)) {
+            unlink($path);
         }
     }
 

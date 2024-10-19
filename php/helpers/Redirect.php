@@ -15,7 +15,8 @@ class Redirect
 
     public static function withToast($url, $message)
     {
-        $_SESSION['toastMessage'] = $message;
+    
+        setcookie('toastMessage', $message, time() + 60, '/');
         self::to($url);
     }
 }

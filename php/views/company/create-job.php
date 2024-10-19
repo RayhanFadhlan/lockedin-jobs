@@ -1,6 +1,6 @@
 <div class="container">
     <div class="job-form-box">
-        <h1>Create a Job Posting</h1>
+        <h1 class="form-title">Create a Job Posting</h1>
         <form id="jobPostingForm" method="POST" action="/company/createjob">
             <div class="form-group">
                 <label for="jobPosition">Job Position</label>

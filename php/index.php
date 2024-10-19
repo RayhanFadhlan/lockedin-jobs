@@ -16,7 +16,6 @@ $app->router->post('/signup', ['AuthController', 'register']);
 $app->router->get('/login', ['AuthController', 'viewLogin']);
 $app->router->post('/login', ['AuthController', 'login']);
 $app->router->get('/signout', ['AuthController', 'signout']);
-$app->router->get('/signout', ['AuthController', 'signout']);
 
 $app->router->get('/home', ['HomeController', 'getLowongan']);
 
@@ -27,6 +26,7 @@ $app->router->get('/company/job/:id', ['JobController', 'viewJobDetail'], ['Comp
 
 $app->router->get('/company', ['HomeController','indexCompany']);
 $app->router->get('/home/company', ['HomeController', 'getLowonganCompany']);
-$app->router->post('/company', ['HomeController', 'deleteLowonganCompany']);
+$app->router->delete('/company/job', ['JobController', 'deleteLowonganCompany']);
+$app->router->patch('/company/job/changeopen', ['JobController', 'changeopenlowongan']);
 
 $app->run();

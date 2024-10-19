@@ -18,6 +18,23 @@ class Router
         return $this;
     }
 
+    public function put($uri, $handler, $middleware = [])
+    {
+        $this->addRoute('PUT', $uri, $handler, $middleware);
+        return $this;
+    }
+
+    public function delete($uri, $handler, $middleware = [])
+    {
+        $this->addRoute('DELETE', $uri, $handler, $middleware);
+        return $this;
+    }
+
+    public function patch($uri, $handler, $middleware = [])
+    {
+        $this->addRoute('PATCH', $uri, $handler, $middleware);
+        return $this;
+    }
     
 
     private function addRoute($method, $uri, $handler, $middleware)

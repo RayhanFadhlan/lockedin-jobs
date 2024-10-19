@@ -10,10 +10,10 @@ class CompanyMiddleware extends Middleware
     public function handle($request, $next)
     {
         if (!isset($_SESSION['user'])) {
-            Redirect::withToast('/', 'only company can access');
+            Redirect::withToast('/', 'Only Job Seeker can access');
         }
-        if ($_SESSION['user']['role'] !== 'company') {
-            Redirect::withToast('/', 'only company can access');
+        if ($_SESSION['user']['role'] !== 'jobseeker') {
+            Redirect::withToast('/', 'Only Job Seeker can access');
         }
         return $next($request);
     }

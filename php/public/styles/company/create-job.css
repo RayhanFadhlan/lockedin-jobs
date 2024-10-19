@@ -16,7 +16,7 @@ body {
     width: 50vw;
 
 }
-h1 {
+.form-title {
     color: #0a66c2;
     margin-bottom: 1.5rem;
     text-align: center;
