@@ -50,6 +50,7 @@ class CompanyProfileController extends Controller {
             }
 
             $this->companyProfileModel->setCompanyProfile($userId, $companyName, $location, $about);
+            $_SESSION['user']['name'] = $request->getBody('company_name');
 
             Redirect::withToast('/profile', 'User created successfully');
         } catch (\Exception $e) {
