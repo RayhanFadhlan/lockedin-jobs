@@ -6,7 +6,7 @@ class Storage
     private $uploadDir;
     private $allowedTypes;
 
-    public function __construct($uploadDir = 'public/uploads/', $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'])
+    public function __construct($uploadDir = 'storage/uploads/', $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'])
     {
         $this->uploadDir = $uploadDir;
         $this->allowedTypes = $allowedTypes;
@@ -69,7 +69,7 @@ class Storage
             throw new \Exception("Failed to upload file: $name");
         }
 
-        return '/' . $filePath;
+        return $filePath;
     }
 
     private function validateFileType($type, $name)
@@ -79,7 +79,7 @@ class Storage
         }
     }
 
-    private function delete($path)
+    public function delete($path)
     {
         if (file_exists($path)) {
             unlink($path);

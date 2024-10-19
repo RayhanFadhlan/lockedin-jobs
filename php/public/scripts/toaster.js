@@ -29,7 +29,7 @@ function deleteCookie(name) {
 //PAKE INI KALO MAU NAMPILIN TOAST DARI JS
 function showToast(message){
     setCookie('toastMessage', message, 1);
-    showToast(message);
+    toast(message);
 }
 
 window.onload = function() {

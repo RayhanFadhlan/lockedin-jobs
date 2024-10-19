@@ -57,13 +57,13 @@ class HomeController extends Controller {
     }
 
     public function indexCompany() {
+        
+
         $request = new Request();
         
         if ($request->getMethod() === 'GET' && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $this->getLowonganCompany($request);
-        } elseif($request->getMethod() === 'POST' && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $this->deleteLowonganCompany($request);
-        }else {
+        } else {
             $this->views('home-company');
         }
     }
@@ -97,19 +97,5 @@ class HomeController extends Controller {
         }
     }
 
-    public function deleteLowonganCompany() {
-        try {
-            $data = json_decode(file_get_contents('php://input'), true);
-            $lowonganId = $data['lowongan_id'] ?? null;
-            
-            
-            $this->lowonganModel->deleteLowonganById($lowonganId);
-    
-            header('Content-Type: application/json');
-            echo json_encode(['success' => true, 'message' => 'Job listing deleted successfully']);
-        } catch (\Exception $e) {
-            header('Content-Type: application/json', true, 500);
-            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
-        }
-    }
+
 }

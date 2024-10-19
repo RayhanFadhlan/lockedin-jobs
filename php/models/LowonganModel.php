@@ -1,7 +1,7 @@
 <?php
 
 namespace models;
-
+use PDO;
 class LowonganModel extends Model {
 
     public function getFilteredLowongan($search = '', $jobType = [], $locationType = [], $sort = 'asc', $offset = 0, $limit = 10) {
@@ -211,5 +211,10 @@ class LowonganModel extends Model {
         $stmt->execute();
     }
 
-    
+    public function getLowonganAttachments($lowonganId) {
+        $stmt = $this->db->prepare('SELECT "file_path" FROM "AttachmentLowongan" WHERE lowongan_id = :lowonganId');
+        $stmt->bindParam(':lowonganId', $lowonganId);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }

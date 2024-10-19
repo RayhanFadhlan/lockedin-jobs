@@ -114,8 +114,25 @@ class JobController extends Controller
         try {
             $data = json_decode(file_get_contents('php://input'), true);
             $lowonganId = $data['lowongan_id'] ?? null;
-            
+
+            $userId = $_SESSION['user']['id'];
+
             $lowonganModel = new LowonganModel();
+            $lowongan = $lowonganModel->getLowonganById($lowonganId);
+
+            if($lowongan['company_id'] != $userId) {
+                Response::json([
+                    'success' => false,
+                    'message' => 'You are not authorized to perform this action'
+                ], 403)
+                ->send();
+            }
+            $attachments = $lowonganModel->getAttachments($lowonganId);
+            $storage = new Storage();
+
+            foreach ($attachments as $attachment) {
+                $storage->delete($attachment['file_path']);
+            }
             
             $lowonganModel->deleteLowonganById($lowonganId);
     
