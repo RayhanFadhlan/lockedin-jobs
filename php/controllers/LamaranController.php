@@ -85,9 +85,12 @@ class LamaranController extends Controller {
         $lamaranModel = new LamaranModel();
         $lamaranId = $lamaranModel->insertLamaran($userId, $lowonganId, $cvPath, $videoPath);
 
+        Redirect::withToast('/', 'Application submitted successfully');
+
         Response::json([
             'success' => true,
             'message' => 'Application submitted successfully',
+            
         ])->send();
 
     } catch (\Exception $e) {
