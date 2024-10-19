@@ -34,4 +34,7 @@ $app->router->patch('/company/job/changeopen', ['JobController', 'changeopenlowo
 // Lamaran
 $app->router->get('/lamaran/riwayat', ['LamaranController', 'viewHistory']);
 $app->router->get('/lamaran/datariwayat', ['LamaranController', 'getLamaran']);
+$app->router->get('/lamaran/:id', ['LamaranController', 'viewCreateLamaran']);
+$app->router->post('/lamaran/:id', ['LamaranController', 'createLamaran']);
+
 $app->run();

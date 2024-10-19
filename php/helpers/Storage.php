@@ -6,7 +6,7 @@ class Storage
     private $uploadDir;
     private $allowedTypes;
 
-    public function __construct($uploadDir = 'storage/uploads/', $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'])
+    public function __construct($uploadDir = 'storage/uploads/', $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf', 'video/mp4'])
     {
         $this->uploadDir = $uploadDir;
         $this->allowedTypes = $allowedTypes;
