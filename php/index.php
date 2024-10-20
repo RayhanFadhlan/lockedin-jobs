@@ -34,5 +34,6 @@ $app->router->get('/lamaran/riwayat', ['LamaranController', 'viewHistory']);
 $app->router->get('/lamaran/datariwayat', ['LamaranController', 'getLamaran']);
 
 // Lowongan
-$app->router->get('/lowongan/:id', ['LamaranController', 'viewHistory']);
+$app->router->get('/lowongan/:id', ['LowonganController', 'getDetailLowongan']);
+$app->router->get('/datalowongan/:id', ['LowonganController', 'viewDetailLowongan']);
 $app->run();

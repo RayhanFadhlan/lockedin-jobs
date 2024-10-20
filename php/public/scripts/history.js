@@ -64,6 +64,7 @@ document.querySelectorAll('.dropdown-btn').forEach(button => {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 console.log(xhr.responseText);
                 const response = JSON.parse(xhr.responseText);
+                console.log(response);
                 updateLamaranList(response.lamaran);
                 updatePagination(response.currentPage, response.totalPages);
             }
@@ -87,7 +88,7 @@ document.querySelectorAll('.dropdown-btn').forEach(button => {
                     <pre>Posisi                 : ${lamar.posisi}</pre>
                     <pre>Submitted on : ${lamar.created_at}</pre>
                     <pre>Status                : <b id="status-${lamar.status}">${lamar.status.toUpperCase()}</b></pre>
-                    <a href="/lowongan?lowongan_id=${lamar.lowongan_id}">>>> Lihat detail lamaran...</a>
+                    <a href="/lowongan/${lamar.lowongan_id}">>>> Lihat detail lamaran...</a>
                 `;
                 rightContent.appendChild(jobContainer);
             });

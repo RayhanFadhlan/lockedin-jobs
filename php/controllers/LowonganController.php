@@ -18,22 +18,23 @@ class LowonganController extends Controller {
         $this->companyModel = new CompanyModel();
     }
 
-    public function viewDetailLowongan($lowongan_id) {
+    public function viewDetailLowongan() {
+        $this->views('detail-lowongan');
+    }
+    public function getDetailLowongan($request, $lowongan_id) {
         try {
-            $userId = $_SESSION['user']['id'];
+            $userId = 1;
 
             $lowongan = $this->lowonganModel->getLowonganById( $lowongan_id );
             $lamaran = $this->lamaranModel->getLamaranByUserId( $userId, $lowongan_id );
-            $company = $this->companyModel->getCompany($lowongan[0].company_id);
+            $company = $this->companyModel->getCompany($lowongan[0]['company_id']);
 
             header('Content-Type: application/json');
-            return $this->views('detail-lowongan', 
-                [
-                    'lamaran' => $lamaran,
-                    'lowongan' => $lowongan,
-                    'company' => $company,
-                ]
-            );
+            echo json_encode([
+                'lamaran' => $lamaran,
+                'lowongan' => $lowongan,
+                'company' => $company,
+            ]);
         } catch (\Exception $e) {
             return Redirect::withToast('/login', $e->getMessage());
         }
