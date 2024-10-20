@@ -89,4 +89,29 @@ class LamaranModel extends Model {
         $stmt->execute([$cv_path, $video_path, $lamaran_id]);
         return $stmt->rowCount();
     }
+
+    public function insertLamaran($userId, $lowonganId, $cvPath = null, $videoPath = null) {
+        $stmt = $this->db->prepare('INSERT INTO "Lamaran" (user_id, lowongan_id, cv_path, video_path, status, created_at) 
+                                    VALUES (?, ?, ?, ?, ?, NOW())');
+        $stmt->execute([$userId, $lowonganId, $cvPath, $videoPath, 'waiting']);
+        return $this->db->lastInsertId();
+    }
+    
+    public function getLamaranByUserId($userId) {
+        $stmt = $this->db->prepare('SELECT * FROM "Lamaran" WHERE user_id = ? ORDER BY created_at DESC');
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll();
+    }
+
+    public function getLamaranById($id) {
+        $stmt = $this->db->prepare('SELECT * FROM "Lamaran" WHERE lamaran_id = ?');
+        $stmt->execute([$id]);
+        return $stmt->fetch();
+    }
+
+    public function getLamaransByLowonganId($lowonganId) {
+        $stmt = $this->db->prepare('SELECT * FROM "Lamaran" WHERE lowongan_id = ? ORDER BY created_at DESC');
+        $stmt->execute([$lowonganId]);
+        return $stmt->fetchAll();
+    }
 }

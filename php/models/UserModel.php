@@ -18,7 +18,12 @@ class UserModel extends Model {
     public function createUser($email, $username, $password, $role) {
         $stmt = $this->db->prepare('INSERT INTO "User" (email, nama, password, role) VALUES (?, ?, ?, ?)');
         $stmt->execute([$email, $username, $password, $role]);
-        return $this->db->lastInsertId();
+        $userId = $this->db->lastInsertId();
+    
+    
+        $stmt = $this->db->prepare('SELECT * FROM "User" WHERE user_id = ?');
+        $stmt->execute([$userId]);
+        return $stmt->fetch();
     }
 
     public function find($id) {

@@ -5,6 +5,8 @@ use exceptions\UnauthorizedException;
 use models\LamaranModel;
 use helpers\Redirect;
 use core\Request;
+use core\Response;
+use helpers\Storage;
 
 class LamaranController extends Controller {
     protected $lamaranModel;
@@ -50,4 +52,53 @@ class LamaranController extends Controller {
             $this->views('/login');
         }
     }
+
+    public function viewCreateLamaran($lowonganId)
+    {
+        return $this->views("lamaran", [
+            'lowonganId' => $lowonganId
+        ]);
+    }
+
+    public function createLamaran(Request $request, $lowonganId){
+    try {
+        if (empty($request->getBody('email')) || !filter_var($request->getBody('email'), FILTER_VALIDATE_EMAIL)) {
+            throw new \Exception('Email is required and must be a valid email.');
+        }
+
+        if (!isset($_FILES['pdf-file']) || $_FILES['pdf-file']['error'] !== UPLOAD_ERR_OK) {
+            throw new \Exception('PDF file is required and must be a valid PDF.');
+        }
+
+        $userId = $_SESSION['user']['id'];
+
+        $storage = new Storage();
+
+        $cvPath = $storage->store(['attachment' => $_FILES['pdf-file']])[0];
+
+        $videoPath = null;
+        if (isset($_FILES['video-file']) && $_FILES['video-file']['error'] === UPLOAD_ERR_OK) {
+            $videoPath = $storage->store(['attachment' => $_FILES['video-file']])[0];
+        }
+
+        $lamaranModel = new LamaranModel();
+        $lamaranId = $lamaranModel->insertLamaran($userId, $lowonganId, $cvPath, $videoPath);
+
+        Redirect::withToast('/', 'Application submitted successfully');
+
+        Response::json([
+            'success' => true,
+            'message' => 'Application submitted successfully',
+            
+        ])->send();
+
+    } catch (\Exception $e) {
+        Response::json([
+            'success' => false,
+            'message' => $e->getMessage()
+        ], 400)->send();
+    }
+}
+
+
 }

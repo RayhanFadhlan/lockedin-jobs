@@ -79,7 +79,12 @@ document.addEventListener("DOMContentLoaded", function () {
       jobs.forEach((job) => {
         const jobContainer = document.createElement("div");
         jobContainer.classList.add("job-container");
-
+        
+        const date = new Date(job.created_at);
+        const formattedDate = new Intl.DateTimeFormat("en-US", {
+          dateStyle: "medium",
+        }).format(date);
+  
         jobContainer.innerHTML = `
             <button class="delete-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
@@ -89,10 +94,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 </svg>
             </button>
             <h3>${job.posisi}</h3>
-            <p>${job.deskripsi}</p>
             <p>Location: ${job.jenis_lokasi}</p>
             <p>Job Type: ${job.jenis_pekerjaan}</p>
-            <p>Posted on: ${job.created_at}</p>
+            <p>Posted on: ${formattedDate}</p>
             <button class="update-button" data-id="${job.lowongan_id}">
                 Edit
             </button>
@@ -104,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           if (confirm("Are you sure you want to delete this job?")) {
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", `/company?${queryString}`, true);
+            xhr.open("DELETE", `/company/job?${queryString}`, true);
             xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
             xhr.setRequestHeader("Content-Type", "application/json");
 
@@ -136,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         jobContainer.addEventListener("click", function () {
-          window.location.href = `/company/detail-lowongan/${job.lowongan_id}`;
+          window.location.href = `/company/job/${job.lowongan_id}`;
         });
 
         rightContent.appendChild(jobContainer);
@@ -182,6 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
       button.addEventListener("click", () => {
         currentPage = page;
         fetchData();
+        window.scrollTo(0, 0);
       });
     } else {
       button.disabled = true;
@@ -215,6 +220,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     currentPage = parseInt(urlParams.get("page")) || 1;
   }
+
+  
 
   setFiltersFromURL();
   fetchData();

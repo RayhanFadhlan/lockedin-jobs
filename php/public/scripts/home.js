@@ -77,12 +77,17 @@ document.addEventListener("DOMContentLoaded", function () {
       jobs.forEach((job) => {
         const jobContainer = document.createElement("div");
         jobContainer.classList.add("job-container");
+
+        const date = new Date(job.created_at);
+        const formattedDate = new Intl.DateTimeFormat("en-US", {
+          dateStyle: "medium",
+        }).format(date);
+
         jobContainer.innerHTML = `
                     <h3>${job.posisi}</h3>
-                    <p>${job.deskripsi}</p>
                     <p>Location: ${job.jenis_lokasi}</p>
                     <p>Job Type: ${job.jenis_pekerjaan}</p>
-                    <p>Posted on: ${job.created_at}</p>
+                    <p>Posted on: ${formattedDate}</p>
                 `;
         jobContainer.addEventListener("click", function () {
           window.location.href = `/detail-lowongan/${job.lowongan_id}`;
@@ -131,6 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
       button.addEventListener("click", () => {
         currentPage = page;
         fetchData();
+        window.scrollTo(0, 0);
       });
     } else {
       button.disabled = true;

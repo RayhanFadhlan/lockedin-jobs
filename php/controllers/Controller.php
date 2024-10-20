@@ -5,9 +5,12 @@ class Controller {
     
     public function views($view, $data = []) {
 
-        if(isset($_SESSION['toastMessage'])) {
-            $data['toastMessage'] = $_SESSION['toastMessage'];        
-            unset($_SESSION['toastMessage']);
+        // if(isset($_SESSION['toastMessage'])) {
+        //     $data['toastMessage'] = $_SESSION['toastMessage'];        
+        //     unset($_SESSION['toastMessage']);
+        // }
+        if(isset($data['toastMessage'])) {
+            setcookie('toastMessage', $data['toastMessage'], time() + 60, '/');
         }
 
         $content = $this->renderView($view, $data);

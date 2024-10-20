@@ -16,7 +16,7 @@ body {
     width: 50vw;
 
 }
-h1 {
+.form-title {
     color: #0a66c2;
     margin-bottom: 1.5rem;
     text-align: center;
@@ -74,4 +74,26 @@ select {
     list-style-type: none; 
     padding: 0;
     margin: 0; 
+}
+
+@media screen and (max-width: 1024px){
+    .job-form-box {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 70vw;
+    
+    }
+}
+
+@media screen and (max-width: 400px){
+    .job-form-box {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 90vw;
+    
+    }
 }

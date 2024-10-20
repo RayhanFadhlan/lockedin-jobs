@@ -1,51 +1,31 @@
 <div class="content">
     <div class="main-container">
         <section class="job-details">
-            <h1>Software Engineer</h1>
+            <h1><?= htmlspecialchars($data['position'])?></h1>
             <div class="job-meta">
-                <span>Tech Innovations Inc.</span> •
-                <span>On-site</span><br />
-                <span>Full-time</span> • <span>Posted 2 weeks ago</span> •
-                <span>150 applicants</span><br />
-                <span>Listing open</span>
+                <span><?= htmlspecialchars($data['company_name'])?></span> •
+                <span><?= htmlspecialchars($data['locationType'])?></span><br />
+                <span><?= htmlspecialchars($data['jobType'])?></span> • <span>Listing <?php 
+                    if($data['is_open'] == 0) {
+                        echo "closed";
+                    } else {
+                        echo "open";
+                    }
+                ?></span><br />
+                <span>Created at : <?= htmlspecialchars($data['created_at'])?>
             </div>
             <div class="job-description">
-                <p>
-                    We are seeking a talented Software Engineer to join our
-                    dynamic team. The ideal candidate will have strong
-                    problem-solving skills and experience in developing scalable
-                    web applications.
-                </p>
-                <p>
-                    Responsibilities include designing and implementing new
-                    features, optimizing application performance, and
-                    collaborating with cross-functional teams to define and
-                    develop innovative solutions.
-                </p>
+                <?= ($data['description'])?>
             </div>
             <div class="image-gallery">
-            <img src="/public/images/placeholder.png" alt="Office Space" class="main-image">
+                <img src="<?= htmlspecialchars($data['images'][0]) ?>" alt="Lowongan Image" class="main-image">
                 <div class="thumbnails">
-                    <div class="thumbnail" tabindex="0">
-                        <img src="/public/images/placeholder.png" alt="Office Space">
-                    </div>
-                    <div class="thumbnail" tabindex="0">
-                        <img src="/public/images/placeholder.png" alt="Team Building">
-                    </div>
-                    <div class="thumbnail" tabindex="0">
-                        <img src="/public/images/placeholder.png" alt="Work Environment">
-                    </div>
-                    <div class="thumbnail" tabindex="0">
-                        <img src="/public/images/placeholder.png" alt="Company Culture">
-                    </div>
-                    <div class="thumbnail" tabindex="0">
-                        <img src="/public/images/placeholder.png" alt="Work Environment">
-                    </div>
-                    <div class="thumbnail" tabindex="0">
-                        <img src="/public/images/placeholder.png" alt="Company Culture">
-                    </div>
+                    <?php foreach (($data['images']) as $thumbnail): ?>
+                        <div class="thumbnail" tabindex="0">
+                            <img src="<?= htmlspecialchars($thumbnail) ?>" alt="Thumbnail">
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-
             </div>
         </section>
 
@@ -75,12 +55,17 @@
         </section>
     </div>
     <div class="right-container">
+        <h2>Job Actions</h2>
         <aside class="job-actions">
-            <h2>Job Actions</h2>
-            <button href="/" class="primary-btn">Edit Job</button>
-            <button class="secondary-btn">Close Job</button>
-            <button class="danger-btn">Delete Job</button>
+            <a href="/company/job/<?= $jobId ?>/editjob" >
+                <button class="primary-btn" id="edit-button">Edit Job</button>
+            </a>
+          
+            <button  class="secondary-btn" id="close-button"><?= $data['is_open'] ? 'Close Job' : 'Open Job' ?></button>
+
+          
+            <button class="danger-btn" id="delete-button">Delete Job</button>
         </aside>
     </div>
 </div>
-<!-- lowongan Attachment belum ada -->
+<script src="/public/scripts/company/job-detail.js"></script>
