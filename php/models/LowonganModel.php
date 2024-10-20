@@ -12,7 +12,7 @@ class LowonganModel extends Model {
 
         $stmt->execute();
         
-        return $stmt->fetchAll();
+        return $stmt->fetch();
     }
     public function getFilteredLowongan($search = '', $jobType = [], $locationType = [], $sort = 'asc', $offset = 0, $limit = 10) {
         $query = 'SELECT * FROM "Lowongan" WHERE is_open = TRUE';
@@ -198,15 +198,6 @@ class LowonganModel extends Model {
         $stmt = $this->db->prepare('SELECT * FROM "AttachmentLowongan" WHERE lowongan_id = ?');
         $stmt->execute([$id]);
         return $stmt->fetchAll();
-    }
-
-    public function getLowonganById($lowonganId) {
-        $query = 'SELECT * FROM "Lowongan" WHERE lowongan_id = :lowonganId';
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':lowonganId', $lowonganId);
-        $stmt->execute();
-        
-        return $stmt->fetch();
     }
 
     public function closeLowongan($lowonganId) {
