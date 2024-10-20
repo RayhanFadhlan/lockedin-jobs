@@ -6,7 +6,7 @@ class Storage
     private $uploadDir;
     private $allowedTypes;
 
-    public function __construct($uploadDir = 'public/uploads/', $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'])
+    public function __construct($uploadDir = 'storage/uploads/', $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf', 'video/mp4'])
     {
         $this->uploadDir = $uploadDir;
         $this->allowedTypes = $allowedTypes;
@@ -76,6 +76,13 @@ class Storage
     {
         if (!in_array($type, $this->allowedTypes)) {
             throw new \Exception("Invalid file type for $name. Only " . implode(', ', $this->allowedTypes) . " are allowed.");
+        }
+    }
+
+    public function delete($path)
+    {
+        if (file_exists($path)) {
+            unlink($path);
         }
     }
 

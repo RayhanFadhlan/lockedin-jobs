@@ -1,7 +1,7 @@
 <?php
 
 namespace models;
-
+use PDO;
 class LowonganModel extends Model {
 
     public function getFilteredLowongan($search = '', $jobType = [], $locationType = [], $sort = 'asc', $offset = 0, $limit = 10) {
@@ -190,5 +190,47 @@ class LowonganModel extends Model {
         return $stmt->fetchAll();
     }
 
-    
+    public function getLowonganById($lowonganId) {
+        $query = 'SELECT * FROM "Lowongan" WHERE lowongan_id = :lowonganId';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':lowonganId', $lowonganId);
+        $stmt->execute();
+        
+        return $stmt->fetch();
+    }
+
+    public function closeLowongan($lowonganId) {
+        $stmt = $this->db->prepare('UPDATE "Lowongan" SET is_open = FALSE WHERE lowongan_id = :lowonganId');
+        $stmt->bindParam(':lowonganId', $lowonganId);
+        $stmt->execute();
+    }
+
+    public function openLowongan($lowonganId) {
+        $stmt = $this->db->prepare('UPDATE "Lowongan" SET is_open = TRUE WHERE lowongan_id = :lowonganId');
+        $stmt->bindParam(':lowonganId', $lowonganId);
+        $stmt->execute();
+    }
+
+    public function getLowonganAttachments($lowonganId) {
+        $stmt = $this->db->prepare('SELECT "file_path" FROM "AttachmentLowongan" WHERE lowongan_id = :lowonganId');
+        $stmt->bindParam(':lowonganId', $lowonganId);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function updateLowongan($lowonganId, $jobPosition, $jobType, $jobLocation, $jobDescription) {
+        $stmt = $this->db->prepare('UPDATE "Lowongan" SET posisi = :posisi, deskripsi = :deskripsi, jenis_pekerjaan = :jenis_pekerjaan, jenis_lokasi = :jenis_lokasi WHERE lowongan_id = :lowonganId');
+        $stmt->bindParam(':lowonganId', $lowonganId);
+        $stmt->bindParam(':posisi', $jobPosition);
+        $stmt->bindParam(':deskripsi', $jobDescription);
+        $stmt->bindParam(':jenis_pekerjaan', $jobType);
+        $stmt->bindParam(':jenis_lokasi', $jobLocation);
+        $stmt->execute();
+    }
+
+    public function deleteAttachments($lowonganId) {
+        $stmt = $this->db->prepare('DELETE FROM "AttachmentLowongan" WHERE lowongan_id = :lowonganId');
+        $stmt->bindParam(':lowonganId', $lowonganId);
+        $stmt->execute();
+    }
 }

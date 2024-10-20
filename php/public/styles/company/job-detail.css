@@ -47,7 +47,15 @@
 
     .job-description {
         margin-top: 1rem;
+     
     }
+    
+    .job-description ol,
+    .job-description ul {
+        padding-left: 20px; 
+        margin-left: 0;
+    }
+    
 
     .applicants h2 {
         font-size: 1.2rem;
@@ -91,7 +99,7 @@
         flex-direction: column;
     }
 
-    .job-actions h2 {
+    h2 {
         font-size: 1.2rem;
         margin-bottom: 1rem;
     }
@@ -106,11 +114,14 @@
         width: 100%;
         height: auto;
         border-radius: 0.5rem;
+        max-height: 500px;
+        object-fit: contain;
+
     }
 
     .thumbnails {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(6, 1fr);
         gap: 0.5rem;
     }
 
@@ -129,23 +140,73 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: opacity 0.3s ease;
     }
 
-    .thumbnail:focus {
-        outline: 2px solid var(--color-primary);
+    .thumbnail img:hover {
+        opacity: 0.6; 
+       
     }
-
-    
-
-  
-
-    /* Responsive design */
-    @media (max-width: 768px) {
-        main {
+   
+    @media screen and (max-width: 1024px) {
+        .content {
+            max-width: 70vw;
             flex-direction: column;
+            align-items: center;
+        }
+    
+        .right-container {
+            width: 95%;
+            min-width: unset;
+            order: -1;
+        }
+    
+        .job-details, .applicants {
+            margin-left: 15px;
+            width: 95%;
+        }
+    
+        .thumbnails {
+            grid-template-columns: repeat(4, 1fr);
         }
 
         .job-actions {
-            order: -1;
+            width: 100%;
+            gap: 0.5rem;
+            display: flex;
+            flex-direction: row;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        .content {
+            max-width: 90vw;
+        }
+    
+        .job-details, .applicants {
+            margin-left: 10px;
+            width: 95%;
+        }
+    
+        .job-details h1 {
+            font-size: 1.2rem;
+        }
+    
+        .job-meta,
+        .applicant-status {
+            font-size: 0.8rem;
+        }
+    
+        .applicant {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    
+        .view-details {
+            margin-top: 0.5rem;
+        }
+    
+        .thumbnails {
+            grid-template-columns: repeat(3, 1fr);
         }
     }
