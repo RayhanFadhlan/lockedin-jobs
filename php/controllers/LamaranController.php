@@ -26,8 +26,7 @@ class LamaranController extends Controller {
 
     public function getLamaran(Request $request) {
         try {
-            // $userId = $_SESSION('user_id') ?? -999;
-            $userId = 1;
+            $userId = $_SESSION['user']['id'] ?? -999;
             if ($userId === -999) {return new UnauthorizedException('Login untuk melihat riwayat lamaran');}
 
             $search = $request->getBody('search') ?? '';
