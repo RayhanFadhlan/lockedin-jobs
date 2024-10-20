@@ -3,11 +3,11 @@
 namespace models;
 
 class LamaranModel extends Model {
-    public function getLamaranByLowonganId($lowongan_id, $lamaran_id){
-        $query = 'SELECT * FROM "Lamaran" WHERE lamaran_id = :lamaranID AND lowongan_id = :lowonganID';
+    public function getLamaranByUserId($user_id, $lamaran_id){
+        $query = 'SELECT * FROM "Lamaran" WHERE user_id = :userID AND lamaran_id = :lamaranID';
         $stmt = $this->db->prepare($query);
 
-        $stmt->bindValue(':lowonganID', $lowongan_id);
+        $stmt->bindValue(':userID', $user_id);
         $stmt->bindValue(':lamaranID', $lamaran_id);
 
         $stmt->execute();
