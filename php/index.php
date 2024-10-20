@@ -32,4 +32,7 @@ $app->router->post('/company', ['HomeController', 'deleteLowonganCompany']);
 // Lamaran
 $app->router->get('/lamaran/riwayat', ['LamaranController', 'viewHistory']);
 $app->router->get('/lamaran/datariwayat', ['LamaranController', 'getLamaran']);
+
+// Lowongan
+$app->router->get('/lowongan/:id', ['LamaranController', 'viewHistory']);
 $app->run();

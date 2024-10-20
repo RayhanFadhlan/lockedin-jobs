@@ -87,7 +87,7 @@ document.querySelectorAll('.dropdown-btn').forEach(button => {
                     <pre>Posisi                 : ${lamar.posisi}</pre>
                     <pre>Submitted on : ${lamar.created_at}</pre>
                     <pre>Status                : <b id="status-${lamar.status}">${lamar.status.toUpperCase()}</b></pre>
-                    <a href="/lowongan/${lamar.lowongan_id}">>>> Lihat detail lamaran...</a>
+                    <a href="/lowongan?lowongan_id=${lamar.lowongan_id}">>>> Lihat detail lamaran...</a>
                 `;
                 rightContent.appendChild(jobContainer);
             });
