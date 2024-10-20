@@ -3,7 +3,17 @@
 namespace models;
 
 class LamaranModel extends Model {
+    public function getLamaranByLowonganId($lowongan_id, $lamaran_id){
+        $query = 'SELECT * FROM "Lamaran" WHERE lamaran_id = :lamaranID AND lowongan_id = :lowonganID';
+        $stmt = $this->db->prepare($query);
 
+        $stmt->bindValue(':lowonganID', $lowongan_id);
+        $stmt->bindValue(':lamaranID', $lamaran_id);
+
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
+    }
     public function getDetailLamaran($user_id, $search = '', $status = [], $sort = 'asc', $offset = 0, $limit = 10) {
         $query = 'SELECT lm.lowongan_id, lm.status, lm.created_at, lw.posisi, u.nama FROM "Lamaran" lm JOIN "Lowongan" lw ON lm.lowongan_id = lw.lowongan_id JOIN "User" u ON lw.company_id = u.user_id WHERE lm.user_id = :userID';
         $params = [];

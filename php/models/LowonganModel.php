@@ -4,6 +4,16 @@ namespace models;
 
 class LowonganModel extends Model {
 
+    public function getLowonganById($id) {
+        $query = 'SELECT * FROM "Lowongan" WHERE lowongan_id = :lowonganID';
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindValue(':lowonganID', $id);
+
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
+    }
     public function getFilteredLowongan($search = '', $jobType = [], $locationType = [], $sort = 'asc', $offset = 0, $limit = 10) {
         $query = 'SELECT * FROM "Lowongan" WHERE is_open = TRUE';
         $params = [];
