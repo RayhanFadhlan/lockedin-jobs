@@ -12,27 +12,27 @@
         </div>
         <p class="job-details"><?php echo $deskripsi?></p>
 
-        <?php if (!$is_open) : ?>
-            <div class="actions">
-                <p class="btn btn-disable">Lowongan Ditutup</p>
-            </div>
-        <?php elseif ($lamaran_id == null) : ?>
-            <div <?php if (!$is_login) {echo 'title = "Login terlebih dahulu untuk apply"';}?> class="actions">
-                <a href="/lamaran/<?php echo $lowongan_id?>" class="btn btn-primary <?php if (!$is_login) {echo 'disabled';}?>">Easy Apply</a>
-            </div>
-        <?php else : ?>
+        <?php if ($lamaran_id != null): ?>
             <div class="status">
                 <img src="../public/images/<?php echo $status?>.svg" alt="status-icon" class="icon">
                 <p><b><?php echo strtoupper($status) ?></b></p>
-                <?php if ($status_reason != null) : ?>
-                    <p><?php echo strtoupper($status) ?></p>
-                <?php endif; ?>
             </div>
+            <?php if ($status_reason != null) : ?>
+                <p class="alasan"><?php echo $status_reason ?></p>
+            <?php endif; ?>
             <div class="actions">
                 <a title="Lihat CV terlampir" href="<?php echo $cv_path ?>" class="btn btn-primary">Lihat CV</a>
                 <?php if ($video_path != null) : ?>
                     <a title="Lihat video perkenalan terlampir" href="<?php echo $video_path ?>" class="btn btn-secondary">Lihat Video</a>
                 <?php endif; ?>
+            </div>
+        <?php elseif (!$is_open) : ?>
+            <div class="actions">
+                <p class="btn btn-disable">Lowongan Ditutup</p>
+            </div>
+        <?php else: ?>
+            <div <?php if (!$is_login) {echo 'title = "Login terlebih dahulu untuk apply"';}?> class="actions">
+                <a href="/lamaran/<?php echo $lowongan_id?>" class="btn btn-primary <?php if (!$is_login) {echo 'disabled';}?>">Easy Apply</a>
             </div>
         <?php endif; ?>
     </div>
@@ -50,6 +50,10 @@
             <div class="show-less hidden" id="showLessBtn">Lihat lebih sedikit</div>
         </div>
     <?php endif; ?>
+    <div class="job-card">
+        <h2>About <?php echo $nama_company ?></h2>
+        <p class="job-details"><?php echo $about ?></p>
+    </div>
 </div>
 
 <?php if ($attachments != null) : ?>

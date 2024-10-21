@@ -32,11 +32,21 @@ body {
     font-size: 24px;
     font-weight: bold;
 }
-.job-details, .company-location {
+.job-details, .company-location, .alasan {
     color: #666;
     margin-bottom: 15px;
 }
-.job-type, .status {
+
+.alasan {
+    margin-left: 30px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+}
+
+.job-type {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
@@ -63,6 +73,7 @@ body {
     white-space: nowrap;
 }
 .actions {
+    margin-top: 10px;
     display: flex;
     gap: 10px;
 }
@@ -107,11 +118,14 @@ body {
     justify-items: center;
 }
 
+h2 {
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
 .image-card h2 {
     grid-column: 1 / -1;
     justify-self: left;
-    line-height: 1;
-    margin-bottom: 10px;
 }
 
 .image-card.collapsed {
