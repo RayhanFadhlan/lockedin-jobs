@@ -148,3 +148,18 @@ iframe {
 .status {
     margin-bottom: 8px;
 }
+
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+        align-items: center;
+        min-width: none;
+    }
+    .container-lamaran {
+        width: 90%;
+    }
+    .job-details {
+        width: 90%;
+        margin-bottom: 2rem;
+    }
+}

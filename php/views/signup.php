@@ -44,7 +44,7 @@
                 <button type="submit" class="primary-btn">Agree & Join</button>
             </form>
 
-            <p class="box-link">Already on FindIn? <a href="/login">Sign in</a></p>
+            <p class="box-link">Already on Lockedin? <a href="/login">Sign in</a></p>
         </div>
     </div>
 <script src="/public/scripts/signup.js" defer></script>

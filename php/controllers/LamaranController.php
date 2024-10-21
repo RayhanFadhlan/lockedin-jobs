@@ -2,6 +2,7 @@
 namespace controllers;
 
 use exceptions\UnauthorizedException;
+use helpers\HTMLSanitizer;
 use models\LamaranModel;
 use helpers\Redirect;
 use core\Request;
@@ -125,6 +126,8 @@ class LamaranController extends Controller {
         if($lowongan['company_id'] !== $currentUser){
             return Redirect::withToast('/company', 'Unauthorized');
         }
+        $HTMLSanitizer = new HTMLSanitizer();
+
 
         return $this->views('company/lamaran-detail', [
             'email' => $user['email'],
@@ -133,7 +136,7 @@ class LamaranController extends Controller {
             'video_path' => '/' . $lamaran['video_path'],
             'status' => $lamaran['status'],
             'lowongan' => $lowongan,
-            'status_reason' => $lamaran['status_reason']
+            'status_reason' => $HTMLSanitizer->sanitize($lamaran['status_reason'])
         ]);
     }
 

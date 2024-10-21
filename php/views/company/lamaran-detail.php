@@ -55,12 +55,6 @@
             <?=($data['status_reason']) ?>
         </div>
         <?php endif; ?>
-        <!-- <div class="feedback-reason-accepted">
-            <h3>Application Feedback</h3>
-            <p class="status"><strong>Status:</strong> Rejected</p>
-            
-            <p> While we appreciate your interest and the skills you've demonstrated, we've decided to move forward with other candidates whose experience more closely aligns with our current needs. We encourage you to apply for future positions that match your qualifications.</p>
-        </div> -->
     </div>
     <aside class="job-details">
         <h3>Job Details</h3>
