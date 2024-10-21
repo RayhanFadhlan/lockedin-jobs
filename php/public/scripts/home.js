@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
         jobContainer.addEventListener("click", function () {
-          window.location.href = `/detail-lowongan/${job.lowongan_id}`;
+          window.location.href = `/lowongan/${job.lowongan_id}`;
         });
 
         rightContent.appendChild(jobContainer);

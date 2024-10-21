@@ -34,8 +34,8 @@ $app->router->delete('/company/job', ['JobController', 'deleteLowonganCompany'])
 $app->router->patch('/company/job/changeopen', ['JobController', 'changeopenlowongan']);
 
 // Lamaran
-$app->router->get('/lamaran/riwayat', ['LamaranController', 'viewHistory']);
-$app->router->get('/lamaran/datariwayat', ['LamaranController', 'getLamaran']);
+$app->router->get('/lamaran/riwayat', ['LamaranController', 'viewHistory'], ['JobSeekerMiddleware']);
+$app->router->get('/lamaran/datariwayat', ['LamaranController', 'getLamaran'], ['JobSeekerMiddleware']);
 $app->router->get('/lamaran/:id', ['LamaranController', 'viewCreateLamaran']);
 $app->router->post('/lamaran/:id', ['LamaranController', 'createLamaran']);
 
@@ -61,7 +61,7 @@ $app->router->post('/profile/edit', ['CompanyProfileController', 'editCompanyPro
 $app->router->get('/notfound', ['HomeController', 'viewError']);
 
 // Lowongan
-$app->router->get('/detail-lowongan/:id', ['LowonganController', 'getDetailLowongan']);
+$app->router->get('/lowongan/:id', ['LowonganController', 'getDetailLowongan'], ['JobSeekerMiddleware']);
 $app->run();
 
 
