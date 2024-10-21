@@ -39,6 +39,5 @@ $app->router->post('/lamaran/:id', ['LamaranController', 'createLamaran']);
 
 
 // Lowongan
-$app->router->get('/lowongan/:id', ['LowonganController', 'getDetailLowongan']);
-$app->router->get('/datalowongan/:id', ['LowonganController', 'getDetailLowongan']);
+$app->router->get('/detail-lowongan/:id', ['LowonganController', 'getDetailLowongan']);
 $app->run();
