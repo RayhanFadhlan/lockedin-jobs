@@ -32,28 +32,13 @@
         </section>
 
         <section class="applicants">
-            <h2>Applicants</h2>
-            <!-- <div class="applicant">
-                <div>
-                    <div class="applicant-name">John Doe</div>
-                    <div class="applicant-status">Accepted</div>
-                </div>
-                <a href="#" class="view-details">View Details</a>
+            <div class="applicants-header">
+                <h2>Applicants</h2>
+                <a target="_blank" href="/company/job/<?= htmlspecialchars($data['jobId']) ?>/download">
+                    <button id="export-btn" class="primary-btn">Export Data</button>
+                </a>
             </div>
-            <div class="applicant">
-                <div>
-                    <div class="applicant-name">Jane Smith</div>
-                    <div class="applicant-status">Rejected</div>
-                </div>
-                <a href="#" class="view-details">View Details</a>
-            </div>
-            <div class="applicant">
-                <div>
-                    <div class="applicant-name">Bob Johnson</div>
-                    <div class="applicant-status">Waiting</div>
-                </div>
-                <a href="#" class="view-details">View Details</a>
-            </div> -->
+           
             <?php foreach (($data['lamarans']) as $lamaran): ?>
                 <div class="applicant">
                     <div>

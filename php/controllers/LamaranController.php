@@ -1,6 +1,7 @@
 <?php
 namespace controllers;
 
+
 use exceptions\UnauthorizedException;
 use helpers\HTMLSanitizer;
 use models\LamaranModel;
@@ -10,6 +11,7 @@ use core\Response;
 use helpers\Storage;
 use models\LowonganModel;
 use models\UserModel;
+use helpers\CSVExport;
 
 class LamaranController extends Controller {
     protected $lamaranModel;
@@ -192,4 +194,47 @@ class LamaranController extends Controller {
             ], 400)->send();
         }
     }
+
+    private function getBaseUrl() {
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $host = $_SERVER['HTTP_HOST'];
+        return $protocol . $host;
+    }
+
+    public function exportLamaranCSV(Request $request, $id){
+
+        try {
+            $currentUser = $_SESSION['user']['id'];
+            
+            $lowongan = new LowonganModel();
+            $lowongan = $lowongan->getLowonganById($id);
+
+            if($lowongan['company_id'] !== $currentUser){
+                return Redirect::withToast('/company', 'Unauthorized');
+            }
+
+
+            $lamaranModel = new LamaranModel();
+            $lamarans = $lamaranModel->getLamaranForCSV($id);
+
+            $baseUrl = $this->getBaseUrl();
+            $processedLamarans = [];
+            foreach ($lamarans as $lamaran) {
+                $lamaran['cv_path'] = $baseUrl . '/' . $lamaran['cv_path'];
+                $lamaran['video_path'] = $baseUrl . '/' . $lamaran['video_path'];
+                $processedLamarans[] = $lamaran;
+            }
+        
+            
+            $headers = ['nama', 'posisi', 'tanggal_melamar', 'cv_path', 'video_path', 'status'];
+        
+            
+            $csvExport = new CSVExport($processedLamarans, $headers);
+            
+            $csvExport->export('lamaran_' . $id . '.csv');
+        } catch (\Exception $e) {
+            return Redirect::withToast('/company', $e->getMessage());
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace models;
+use PDO;
 
 class LamaranModel extends Model {
 
@@ -121,5 +122,17 @@ class LamaranModel extends Model {
         $stmt = $this->db->prepare('SELECT u.nama, l.status, l.lamaran_id FROM "Lamaran" l JOIN "User" u ON l.user_id = u.user_id WHERE l.lowongan_id = ?');
         $stmt->execute([$lowonganId]);
         return $stmt->fetchAll();
+    }
+
+    public function getLamaranForCSV($lowonganId){
+        $stmt = $this->db->prepare(
+            'SELECT u.nama, lw.posisi, l.created_at, l.cv_path, l.video_path, l.status 
+             FROM "Lamaran" l 
+             JOIN "User" u ON l.user_id = u.user_id 
+             JOIN "Lowongan" lw ON l.lowongan_id = lw.lowongan_id 
+             WHERE l.lowongan_id = ?'
+        );
+        $stmt->execute([$lowonganId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

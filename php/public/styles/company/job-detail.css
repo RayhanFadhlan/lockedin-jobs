@@ -25,6 +25,17 @@
         width: 95%;
     }
 
+    .applicants-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        flex-direction: row;
+    }
+    #export-btn {
+        max-width: 100px;
+    }
+
     .right-container {
         background-color: #ffffff;
         border-radius: 8px;

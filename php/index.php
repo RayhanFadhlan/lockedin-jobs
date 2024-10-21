@@ -47,6 +47,9 @@ $app->router->get('/company/lamaran/:id',
 $app->router->post('/company/lamaran/:id/status',
 ['LamaranController', 'changeLamaranStatus'], ['CompanyMiddleware']  
 );
+$app->router->get('/company/job/:id/download',
+['LamaranController', 'exportLamaranCSV'] , ['CompanyMiddleware']
+);
 
 
 // Company Profile
