@@ -20,16 +20,21 @@
         <div class="left-content">
             <div class="profile-card">
                 <div class="profile-header">
-                <img src="../public/images/profile.png" alt="Profile Picture" class="profile-picture">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" id="company-accent-4">
+                        <path fill="#e7e2dc" d="M0 0h128v128H0z"/>
+                        <path fill="#9db3c8" d="M48 16h64v112H48z"/>
+                        <path fill="#788fa5" d="M16 80h32v48H16z"/>
+                        <path fill="#56687a" d="M48 80h32v48H48z"/>
+                    </svg>
                 </div>
                 <div class="profile-info">
                     <?php if (isset($_SESSION['user'])) : ?>
-                        <h2 class="profile-name"><?php echo $_SESSION['user']['name']?></h2>
+                        <h2 class="profile-name"><?= htmlspecialchars($_SESSION['user']['name']) ?></h2>
                     <?php else : ?>
                         <h2 class="profile-name">Guest</h2>
                     <?php endif; ?>
                     <?php if (isset($_SESSION['user'])) : ?>
-                        <p class="profile-title"><?php echo $_SESSION['user']['role']?></p>
+                        <p class="profile-title"><?= htmlspecialchars($_SESSION['user']['role']) ?></p>
                     <?php else : ?>
                         <p class="profile-title">No Role</p>
                     <?php endif; ?>

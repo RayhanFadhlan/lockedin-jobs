@@ -97,5 +97,9 @@ class HomeController extends Controller {
         }
     }
 
+    public function viewError(){
+        $this->views('error');
+    }
+
 
 }

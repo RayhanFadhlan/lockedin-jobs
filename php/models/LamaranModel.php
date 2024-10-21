@@ -1,6 +1,7 @@
 <?php
 
 namespace models;
+use PDO;
 
 class LamaranModel extends Model {
     public function getLamaranByUserId($user_id, $lamaran_id){
@@ -107,5 +108,35 @@ class LamaranModel extends Model {
         $stmt = $this->db->prepare('SELECT * FROM "Lamaran" WHERE lowongan_id = ? ORDER BY created_at DESC');
         $stmt->execute([$lowonganId]);
         return $stmt->fetchAll();
+    }
+
+    public function getLamaranByLamaranId($lamaranId){
+        $stmt = $this->db->prepare('SELECT * FROM "Lamaran" WHERE lamaran_id = ?');
+        $stmt->execute([$lamaranId]);
+        return $stmt->fetch();
+    }
+
+    public function updateStatus($lamaranId, $status, $statusReason = '') {
+        $stmt = $this->db->prepare('UPDATE "Lamaran" SET status = ?, status_reason = ? WHERE lamaran_id = ?');
+        $stmt->execute([$status, $statusReason, $lamaranId]);
+        
+    }
+
+    public function getLamaransNameStatus($lowonganId){
+        $stmt = $this->db->prepare('SELECT u.nama, l.status, l.lamaran_id FROM "Lamaran" l JOIN "User" u ON l.user_id = u.user_id WHERE l.lowongan_id = ?');
+        $stmt->execute([$lowonganId]);
+        return $stmt->fetchAll();
+    }
+
+    public function getLamaranForCSV($lowonganId){
+        $stmt = $this->db->prepare(
+            'SELECT u.nama, lw.posisi, l.created_at, l.cv_path, l.video_path, l.status 
+             FROM "Lamaran" l 
+             JOIN "User" u ON l.user_id = u.user_id 
+             JOIN "Lowongan" lw ON l.lowongan_id = lw.lowongan_id 
+             WHERE l.lowongan_id = ?'
+        );
+        $stmt->execute([$lowonganId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

@@ -93,10 +93,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     <line x1="14" x2="14" y1="11" y2="17"/>
                 </svg>
             </button>
-            <h3>${job.posisi}</h3>
-            <p>Location: ${job.jenis_lokasi}</p>
-            <p>Job Type: ${job.jenis_pekerjaan}</p>
-            <p>Posted on: ${formattedDate}</p>
+           <div class="job-item">
+            <div class="job-svg">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" id="company-accent-4">
+                <path fill="#e7e2dc" d="M0 0h128v128H0z"/>
+                <path fill="#9db3c8" d="M48 16h64v112H48z"/>
+                <path fill="#788fa5" d="M16 80h32v48H16z"/>
+                <path fill="#56687a" d="M48 80h32v48H48z"/>
+              </svg>
+            </div>
+            <div class="job-details">
+              <h3>${job.posisi}</h3>
+              <p>Location: ${job.jenis_lokasi}</p>
+              <p>Job Type: ${job.jenis_pekerjaan}</p>
+              <p>Posted on: ${formattedDate}</p>
+            </div>
+          </div>
             <button class="update-button" data-id="${job.lowongan_id}">
                 Edit
             </button>

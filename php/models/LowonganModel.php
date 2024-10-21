@@ -15,7 +15,7 @@ class LowonganModel extends Model {
         return $stmt->fetch();
     }
     public function getFilteredLowongan($search = '', $jobType = [], $locationType = [], $sort = 'asc', $offset = 0, $limit = 10) {
-        $query = 'SELECT * FROM "Lowongan" WHERE is_open = TRUE';
+        $query = 'SELECT * FROM "Lowongan" WHERE 1=1';
         $params = [];
 
         if (!empty($search)) {
@@ -57,7 +57,7 @@ class LowonganModel extends Model {
     }
 
     public function getTotalFilteredJobs($search = '', $jobType = [], $locationType = []) {
-        $query = 'SELECT COUNT(*) FROM "Lowongan" WHERE is_open = TRUE';
+        $query = 'SELECT COUNT(*) FROM "Lowongan" WHERE 1=1';
         $params = [];
 
         if (!empty($search)) {
@@ -93,7 +93,7 @@ class LowonganModel extends Model {
     }
 
     public function getFilteredLowonganCompany($companyId, $search = '', $jobType = [], $locationType = [], $sort = 'asc', $offset = 0, $limit = 10) {
-        $query = 'SELECT * FROM "Lowongan" WHERE company_id = :companyId AND is_open = TRUE';
+        $query = 'SELECT * FROM "Lowongan" WHERE company_id = :companyId';
         $params = [':companyId' => $companyId];
     
         if (!empty($search)) {
@@ -135,7 +135,7 @@ class LowonganModel extends Model {
     }
 
     public function getTotalFilteredJobsCompany($companyId, $search = '', $jobType = [], $locationType = []) {
-        $query = 'SELECT COUNT(*) FROM "Lowongan" WHERE company_id = :companyId AND is_open = TRUE';
+        $query = 'SELECT COUNT(*) FROM "Lowongan" WHERE company_id = :companyId ';
         $params = [':companyId' => $companyId];
     
         if (!empty($search)) {

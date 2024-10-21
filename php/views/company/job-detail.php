@@ -18,7 +18,9 @@
                 <?= ($data['description'])?>
             </div>
             <div class="image-gallery">
+            <?php if (isset($data['images'][0])): ?>
                 <img src="<?= htmlspecialchars($data['images'][0]) ?>" alt="Lowongan Image" class="main-image">
+            <?php endif; ?>
                 <div class="thumbnails">
                     <?php foreach (($data['images']) as $thumbnail): ?>
                         <div class="thumbnail" tabindex="0">
@@ -30,28 +32,22 @@
         </section>
 
         <section class="applicants">
-            <h2>Applicants</h2>
-            <div class="applicant">
-                <div>
-                    <div class="applicant-name">John Doe</div>
-                    <div class="applicant-status">Accepted</div>
-                </div>
-                <a href="#" class="view-details">View Details</a>
+            <div class="applicants-header">
+                <h2>Applicants</h2>
+                <a target="_blank" href="/company/job/<?= htmlspecialchars($data['jobId']) ?>/download">
+                    <button id="export-btn" class="primary-btn">Export Data</button>
+                </a>
             </div>
-            <div class="applicant">
-                <div>
-                    <div class="applicant-name">Jane Smith</div>
-                    <div class="applicant-status">Rejected</div>
+           
+            <?php foreach (($data['lamarans']) as $lamaran): ?>
+                <div class="applicant">
+                    <div>
+                        <div class="applicant-name"><?= htmlspecialchars($lamaran['nama']) ?></div>
+                        <div class="applicant-status"><?= htmlspecialchars($lamaran['status']) ?></div>
+                    </div>
+                    <a href="/company/lamaran/<?= htmlspecialchars($lamaran['lamaran_id']) ?>" class="view-details">View Details</a>
                 </div>
-                <a href="#" class="view-details">View Details</a>
-            </div>
-            <div class="applicant">
-                <div>
-                    <div class="applicant-name">Bob Johnson</div>
-                    <div class="applicant-status">Waiting</div>
-                </div>
-                <a href="#" class="view-details">View Details</a>
-            </div>
+            <?php endforeach; ?>
         </section>
     </div>
     <div class="right-container">

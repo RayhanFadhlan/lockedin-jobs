@@ -25,18 +25,31 @@
         width: 95%;
     }
 
+    .applicants-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        flex-direction: row;
+    }
+    #export-btn {
+        max-width: 100px;
+    }
+
     .right-container {
         background-color: #ffffff;
         border-radius: 8px;
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
         padding: 1.5rem;
         margin-bottom: 1.5rem;
-        min-width: 25%;
+        min-width: 20%;
+        /* max-width: 240px; */
     }
 
     .job-details h1 {
         font-size: 1.5rem;
         margin-bottom: 0.5rem;
+        font-weight: 600;
     }
 
     .job-meta {
@@ -59,6 +72,7 @@
 
     .applicants h2 {
         font-size: 1.2rem;
+        font-weight: 600;
         margin-bottom: 1rem;
     }
 
@@ -74,8 +88,12 @@
         border-bottom: none;
     }
 
+    .strong {
+        font-weight: 600;
+    }
+
     .applicant-name {
-        font-weight: bold;
+        font-weight: 600;
     }
 
     .applicant-status {
@@ -102,10 +120,12 @@
     h2 {
         font-size: 1.2rem;
         margin-bottom: 1rem;
+        font-weight: 600;
     }
     .image-gallery {
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
         gap: 1rem;
         margin-top: 2rem;
     }
@@ -116,7 +136,7 @@
         border-radius: 0.5rem;
         max-height: 500px;
         object-fit: contain;
-
+        object-position: left;
     }
 
     .thumbnails {
@@ -148,65 +168,39 @@
        
     }
    
-    @media screen and (max-width: 1024px) {
-        .content {
-            max-width: 70vw;
-            flex-direction: column;
-            align-items: center;
-        }
-    
-        .right-container {
-            width: 95%;
-            min-width: unset;
-            order: -1;
-        }
-    
-        .job-details, .applicants {
-            margin-left: 15px;
-            width: 95%;
-        }
-    
-        .thumbnails {
-            grid-template-columns: repeat(4, 1fr);
-        }
 
-        .job-actions {
+    @media(max-width: 768px) {
+        .content {
+            flex-direction: column;
+            min-width: 90%;    
+        }
+        .job-details, .applicants, .right-container {
             width: 100%;
-            gap: 0.5rem;
-            display: flex;
+        }
+        .job-actions a,
+        .job-actions button {
+            flex: 1;
+            text-align: center; 
+        }
+         
+    }
+    @media(max-width: 1024px){
+        .content {
+            flex-direction: column;
+            min-width: 90%;    
+        }
+        .job-actions {
             flex-direction: row;
+            
+        }
+        .job-actions a,
+        .job-actions button {
+            flex: 1;
+            text-align: center; 
+        }
+        .job-details, .applicants, .right-container {
+            width: 100%;
         }
     }
 
-    @media screen and (max-width: 400px) {
-        .content {
-            max-width: 90vw;
-        }
     
-        .job-details, .applicants {
-            margin-left: 10px;
-            width: 95%;
-        }
-    
-        .job-details h1 {
-            font-size: 1.2rem;
-        }
-    
-        .job-meta,
-        .applicant-status {
-            font-size: 0.8rem;
-        }
-    
-        .applicant {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-    
-        .view-details {
-            margin-top: 0.5rem;
-        }
-    
-        .thumbnails {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }

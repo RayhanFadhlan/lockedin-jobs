@@ -2,6 +2,7 @@
 namespace core;
 use Exception;
 use core\Request;
+use helpers\Redirect;
 class Router
 {
     private $routes = [];
@@ -67,8 +68,9 @@ class Router
             }
         }
 
-        header("HTTP/1.0 404 Not Found");
-        echo "404 Not Found";
+        // header("HTTP/1.0 404 Not Found");
+        // echo "404 Not Found";
+        Redirect::to('/notfound');
     }
 
     private function getPatternFromUri($uri)

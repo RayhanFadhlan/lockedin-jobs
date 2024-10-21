@@ -7,6 +7,8 @@ use core\App;
 $app = new App();
 
 
+
+
 $app->router->get('/', ['HomeController', 'index']);
 $app->router->get('/about', ['AboutController', 'index']);
 
@@ -38,6 +40,29 @@ $app->router->get('/lamaran/:id', ['LamaranController', 'viewCreateLamaran']);
 $app->router->post('/lamaran/:id', ['LamaranController', 'createLamaran']);
 
 
+// Lamaran Company
+$app->router->get('/company/lamaran/:id',
+['LamaranController', 'viewLamaranCompany'], ['CompanyMiddleware']  
+);
+$app->router->post('/company/lamaran/:id/status',
+['LamaranController', 'changeLamaranStatus'], ['CompanyMiddleware']  
+);
+$app->router->get('/company/job/:id/download',
+['LamaranController', 'exportLamaranCSV'] , ['CompanyMiddleware']
+);
+
+
+// Company Profile
+$app->router->get('/profile', ['CompanyProfileController', 'viewCompanyProfile'], ['CompanyMiddleware']);
+$app->router->get('/profile/edit', ['CompanyProfileController', 'viewCompanyProfileEdit'], ['CompanyMiddleware']);
+$app->router->post('/profile/edit', ['CompanyProfileController', 'editCompanyProfile'], ['CompanyMiddleware']);
+
+// 404
+$app->router->get('/notfound', ['HomeController', 'viewError']);
+
 // Lowongan
 $app->router->get('/detail-lowongan/:id', ['LowonganController', 'getDetailLowongan']);
 $app->run();
+
+
+
