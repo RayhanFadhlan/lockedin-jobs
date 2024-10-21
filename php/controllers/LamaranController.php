@@ -7,6 +7,8 @@ use helpers\Redirect;
 use core\Request;
 use core\Response;
 use helpers\Storage;
+use models\LowonganModel;
+use models\UserModel;
 
 class LamaranController extends Controller {
     protected $lamaranModel;
@@ -98,8 +100,88 @@ class LamaranController extends Controller {
             'success' => false,
             'message' => $e->getMessage()
         ], 400)->send();
+        }
+
     }
-}
+    
+    public function viewLamaranCompany(Request $request, $id){
+
+        $currentUser = $_SESSION['user']['id'];
 
 
+        $lamaran = $this->lamaranModel->getLamaranByLamaranId($id);
+
+        if (!$lamaran) {
+            return Redirect::withToast('/company', 'Job not found');
+        }
+
+        $userModel = new UserModel();
+
+        $user = $userModel->find($lamaran['user_id']);
+
+        $lowonganModel = new LowonganModel();
+        $lowongan = $lowonganModel->getLowonganById($lamaran['lowongan_id']);
+
+        if($lowongan['company_id'] !== $currentUser){
+            return Redirect::withToast('/company', 'Unauthorized');
+        }
+
+        return $this->views('company/lamaran-detail', [
+            'email' => $user['email'],
+            'name' => $user['nama'],
+            'cv_path' => '/' . $lamaran['cv_path'],
+            'video_path' => '/' . $lamaran['video_path'],
+            'status' => $lamaran['status'],
+            'lowongan' => $lowongan,
+            'status_reason' => $lamaran['status_reason']
+        ]);
+    }
+
+    public function changeLamaranStatus(Request $request, $id){
+        try {
+        $currentUser = $_SESSION['user']['id'];
+        
+        
+        $request->validate([
+            'status' => ['required'],
+        ]);
+
+        $status = $request->getBody('status');
+        $status_reason = $request->getBody('status_reason');
+
+        $lamaran = $this->lamaranModel->getLamaranByLamaranId($id);
+
+        if (!$lamaran) {
+            return Redirect::withToast('/company', 'Lamaran not found');
+        }
+
+        $lowonganModel = new LowonganModel();
+        $lowongan = $lowonganModel->getLowonganById($lamaran['lowongan_id']);
+
+        if($lowongan['company_id'] !== $currentUser){
+            return Redirect::withToast('/company', 'Unauthorized');
+        }
+
+        if (!$lamaran) {
+            Response::json([
+                'success' => false,
+                'message' => 'Lamaran not found'
+            ], 404)->send();
+        }
+
+        $this->lamaranModel->updateStatus($id, $status, $status_reason);
+
+        Response::json([
+            'success' => true,
+            'message' => 'Status updated successfully'
+        ])->send();
+
+
+        } catch (\Exception $e) {
+            Response::json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 400)->send();
+        }
+    }
 }

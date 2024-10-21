@@ -11,13 +11,12 @@ function toast(message = '') {
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+    if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
     return null;
 }
 
 function setCookie(name, value) {
-   
-    document.cookie = name + "=" + (value || "")  + "; path=/";
+    document.cookie = `${name}=${encodeURIComponent(value)}; path=/`;
 }
 
 

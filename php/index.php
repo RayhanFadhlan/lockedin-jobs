@@ -7,6 +7,8 @@ use core\App;
 $app = new App();
 
 
+
+
 $app->router->get('/', ['HomeController', 'index']);
 $app->router->get('/about', ['AboutController', 'index']);
 
@@ -36,5 +38,13 @@ $app->router->get('/lamaran/riwayat', ['LamaranController', 'viewHistory']);
 $app->router->get('/lamaran/datariwayat', ['LamaranController', 'getLamaran']);
 $app->router->get('/lamaran/:id', ['LamaranController', 'viewCreateLamaran']);
 $app->router->post('/lamaran/:id', ['LamaranController', 'createLamaran']);
+
+// Lamaran Company
+$app->router->get('/company/lamaran/:id',
+['LamaranController', 'viewLamaranCompany'], ['CompanyMiddleware']  
+);
+$app->router->post('/company/lamaran/:id/status',
+['LamaranController', 'changeLamaranStatus'], ['CompanyMiddleware']  
+);
 
 $app->run();

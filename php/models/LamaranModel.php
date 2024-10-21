@@ -104,4 +104,16 @@ class LamaranModel extends Model {
         $stmt->execute([$lowonganId]);
         return $stmt->fetchAll();
     }
+
+    public function getLamaranByLamaranId($lamaranId){
+        $stmt = $this->db->prepare('SELECT * FROM "Lamaran" WHERE lamaran_id = ?');
+        $stmt->execute([$lamaranId]);
+        return $stmt->fetch();
+    }
+
+    public function updateStatus($lamaranId, $status, $statusReason = '') {
+        $stmt = $this->db->prepare('UPDATE "Lamaran" SET status = ?, status_reason = ? WHERE lamaran_id = ?');
+        $stmt->execute([$status, $statusReason, $lamaranId]);
+        
+    }
 }
