@@ -21,11 +21,12 @@
                 <p class="alasan"><?php echo $status_reason ?></p>
             <?php endif; ?>
             <div class="actions">
-                <a title="Lihat CV terlampir" href="<?php echo $cv_path ?>" class="btn btn-primary">Lihat CV</a>
+                <a title="Lihat CV terlampir" href="<?php echo '../'.$cv_path ?>" class="btn btn-primary">Lihat CV</a>
                 <?php if ($video_path != null) : ?>
-                    <a title="Lihat video perkenalan terlampir" href="<?php echo $video_path ?>" class="btn btn-secondary">Lihat Video</a>
+                    <a title="Lihat video perkenalan terlampir" href="../<?php echo $video_path ?>" class="btn btn-secondary">Lihat Video</a>
                 <?php endif; ?>
             </div>
+            <p class="job-details">Submitted At: <?php echo $created_at?></p>
         <?php elseif (!$is_open) : ?>
             <div class="actions">
                 <p class="btn btn-disable">Lowongan Ditutup</p>
@@ -40,8 +41,8 @@
         <div class="image-card collapsed" id="imageCard">
             <h2>Image Lowongan</h2>
             <?php foreach ($attachments as $attachment): ?>
-                <a href="<?php echo $attachment['file_path'] ?>">
-                    <img src="<?php echo $attachment['file_path'] ?>" alt="Gambar <?php echo $attachment['attachment_id'] ?>">
+                <a href="../<?php echo $attachment['file_path'] ?>">
+                    <img src="../<?php echo $attachment['file_path'] ?>" alt="Gambar <?php echo $attachment['attachment_id'] ?>">
                 </a>
             <?php endforeach; ?>            
             
