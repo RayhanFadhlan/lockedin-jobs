@@ -93,16 +93,22 @@ class JobController extends Controller
             
             $user_id = $_SESSION['user']['id'];
 
-            $storage = new Storage();
             $lowonganModel = new LowonganModel();
-
+            
             
             
             $lowonganId = $lowonganModel->insertLowongan($user_id, $jobPosition, $jobType, $jobLocation, $jobDescription);
             
-            $attachmentPaths = $storage->store($_FILES);
+            
+            if(!empty($_FILES['attachments']['name'][0])) {
+                $storage = new Storage('storage/uploads/', ['image/jpeg', 'image/png', 'image/jpg']);
 
-            $lowonganModel->insertAttachmentLowongan($lowonganId, $attachmentPaths);
+                $attachmentPaths = $storage->store($_FILES);
+    
+                $lowonganModel->insertAttachmentLowongan($lowonganId, $attachmentPaths);
+            }
+    
+            
 
             
             Response::json([
@@ -256,7 +262,7 @@ class JobController extends Controller
 
 
             $attachments = $lowonganModel->getAttachments($id);
-            $storage = new Storage();
+            $storage = new Storage('storage/uploads/', ['image/jpeg', 'image/png', 'image/jpg']);
 
             foreach ($attachments as $attachment) {
                 $storage->delete($attachment['file_path']);
@@ -264,10 +270,14 @@ class JobController extends Controller
 
             $lowonganModel->deleteAttachments($id);
 
+            if(!empty($_FILES['attachments']['name'][0])) {
+                $attachmentPaths = $storage->store($_FILES);
+    
+                $lowonganModel->insertAttachmentLowongan($id, $attachmentPaths);
+            }
+            // $attachmentPaths = $storage->store($_FILES);
 
-            $attachmentPaths = $storage->store($_FILES);
-
-            $lowonganModel->insertAttachmentLowongan($id, $attachmentPaths);
+            // $lowonganModel->insertAttachmentLowongan($id, $attachmentPaths);
 
 
 
