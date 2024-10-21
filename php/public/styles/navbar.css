@@ -200,7 +200,7 @@
 }
 
 /* Mobile styles */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 400px) {
     .navbar-container {
         justify-content: space-between;
     }
@@ -241,7 +241,6 @@
     .dropdown-menu {
         position: static;
         box-shadow: none;
-        padding-left: 20px;
     }
 
     .btn {

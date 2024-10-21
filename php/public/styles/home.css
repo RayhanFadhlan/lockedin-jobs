@@ -88,10 +88,14 @@
 
 .profile-header {
   height: 60px;
-  background-color: #a0b4b7;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 552 138" id="person-default" data-supported-dps="2048x512"><path fill="none" d="M0 0h552v138H0z"/><path fill="%23d9e5e7" d="M0 0h552v138H0z"/><path fill="%23bfd3d6" d="M380 0h172v138H380z"/><path d="M333.22 0H0v138h333.22a207.93 207.93 0 000-138z" fill="%23a0b4b7"/></svg>');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
   position: relative;
 }
-.profile-picture {
+
+.profile-header svg {
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -101,15 +105,18 @@
   left: 20px;
   object-fit: cover;
 }
+
 .profile-info {
   padding: 50px 20px 20px;
 }
+
 .profile-name {
   font-size: 18px;
   font-weight: 600;
   margin: 0 0 5px;
   color: #000;
 }
+
 .profile-title {
   font-size: 14px;
   color: #666;
@@ -186,6 +193,40 @@
 .job-container p {
   margin: 5px 0;
   font-size: 15px;
+  color: #6b7280;
+}
+
+.job-item {
+  display: flex;
+  align-items: center;
+  gap: 30px; 
+}
+
+.job-svg {
+  flex-shrink: 0; 
+  width: 60px;
+  height: 60px; 
+  margin-bottom: 40px;
+}
+
+.job-details {
+  flex: 1; 
+}
+
+.job-details h3 {
+  font-size: 18px;
+  margin: 0;
+  color: #0A66c2;
+  cursor: pointer;
+}
+
+.job-details h3:hover {
+  text-decoration: underline;
+}
+
+.job-details p {
+  margin: 5px 0;
+  font-size: 14px;
   color: #6b7280;
 }
 
