@@ -1,39 +1,39 @@
 <div>
     <div class="job-card">
         <div class="company-info">
-            <img src="../public/images/company-logo-placeholder.svg" alt="<?php echo $nama_company?> logo" class="company-logo">
-            <span class="company-name"><?php echo $nama_company?></span>
+            <img src="../public/images/company-logo-placeholder.svg" alt="<?= htmlspecialchars($nama_company)?> logo" class="company-logo">
+            <span class="company-name"><?= htmlspecialchars($nama_company)?></span>
         </div>
-        <h1 class="job-title"><?php echo $posisi?></h1>
-        <p class="company-location"><?php echo $lokasi?></p>
+        <h1 class="job-title"><?= htmlspecialchars($posisi)?></h1>
+        <p class="company-location"><?= htmlspecialchars($lokasi)?></p>
         <div class="job-type">
             <img src="../public/images/job-icon.svg" alt="job-icon" class="icon">
-            <span><?php echo $jenis_pekerjaan.' · '.$jenis_lokasi?></span>
+            <span><?= htmlspecialchars($jenis_pekerjaan).' · '.htmlspecialchars($jenis_lokasi)?></span>
         </div>
-        <p class="job-details"><?php echo $deskripsi?></p>
+        <p class="job-details"><?= htmlspecialchars($deskripsi)?></p>
 
         <?php if ($lamaran_id != null): ?>
             <div class="status">
-                <img src="../public/images/<?php echo $status?>.svg" alt="status-icon" class="icon">
-                <p><b><?php echo strtoupper($status) ?></b></p>
+                <img src="../public/images/<?= htmlspecialchars($status)?>.svg" alt="status-icon" class="icon">
+                <p><b><?= strtoupper(htmlspecialchars($status)) ?></b></p>
             </div>
             <?php if ($status_reason != null) : ?>
-                <p class="alasan"><?php echo $status_reason ?></p>
+                <p class="alasan"><?= htmlspecialchars($status_reason) ?></p>
             <?php endif; ?>
             <div class="actions">
-                <a title="Lihat CV terlampir" href="<?php echo '../'.$cv_path ?>" class="btn btn-primary">Lihat CV</a>
+                <a title="Lihat CV terlampir" href="../<?= htmlspecialchars($cv_path) ?>" class="btn btn-primary">Lihat CV</a>
                 <?php if ($video_path != null) : ?>
-                    <a title="Lihat video perkenalan terlampir" href="../<?php echo $video_path ?>" class="btn btn-secondary">Lihat Video</a>
+                    <a title="Lihat video perkenalan terlampir" href="../<?= htmlspecialchars($video_path) ?>" class="btn btn-secondary">Lihat Video</a>
                 <?php endif; ?>
             </div>
-            <p class="job-details">Submitted At: <?php echo $created_at?></p>
+            <p class="job-details">Submitted At: <?= htmlspecialchars($created_at)?></p>
         <?php elseif (!$is_open) : ?>
             <div class="actions">
                 <p class="btn btn-disable">Lowongan Ditutup</p>
             </div>
         <?php else: ?>
             <div <?php if (!$is_login) {echo 'title = "Login terlebih dahulu untuk apply"';}?> class="actions">
-                <a href="/lamaran/<?php echo $lowongan_id?>" class="btn btn-primary <?php if (!$is_login) {echo 'disabled';}?>">Easy Apply</a>
+                <a href="/lamaran/<?= htmlspecialchars($lowongan_id)?>" class="btn btn-primary <?php if (!$is_login) {echo 'disabled';}?>">Easy Apply</a>
             </div>
         <?php endif; ?>
     </div>
@@ -41,8 +41,8 @@
         <div class="image-card collapsed" id="imageCard">
             <h2>Image Lowongan</h2>
             <?php foreach ($attachments as $attachment): ?>
-                <a href="../<?php echo $attachment['file_path'] ?>">
-                    <img src="../<?php echo $attachment['file_path'] ?>" alt="Gambar <?php echo $attachment['attachment_id'] ?>">
+                <a href="../<?= htmlspecialchars($attachment['file_path']) ?>">
+                    <img src="../<?= htmlspecialchars($attachment['file_path']) ?>" alt="Gambar <?= htmlspecialchars($attachment['attachment_id']) ?>">
                 </a>
             <?php endforeach; ?>            
             
@@ -52,8 +52,8 @@
         </div>
     <?php endif; ?>
     <div class="job-card">
-        <h2>About <?php echo $nama_company ?></h2>
-        <p class="job-details"><?php echo $about ?></p>
+        <h2>About <?= htmlspecialchars($nama_company) ?></h2>
+        <p class="job-details"><?= htmlspecialchars($about) ?></p>
     </div>
 </div>
 

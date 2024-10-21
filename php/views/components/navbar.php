@@ -52,7 +52,7 @@
                             Me
                         </a>
                         <div class="dropdown-menu" id="profileDropdownMenu">
-                        <div class="dropdown-name"><?php echo htmlspecialchars($_SESSION['user']['name'])?></div>
+                        <div class="dropdown-name"><?= htmlspecialchars($_SESSION['user']['name'])?></div>
                             <a href="/signout" class="dropdown-item">Sign Out</a>
                         </div>
                     </div>
