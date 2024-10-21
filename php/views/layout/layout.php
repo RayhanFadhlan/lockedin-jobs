@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/public/styles/main.css">
     <link rel="stylesheet" href="/public/styles/navbar.css">
     <link rel="stylesheet" href="/public/styles/toaster.css">
+    <link rel="stylesheet" href="/public/styles/footer.css">
     <?php
         $cssPath = "/public/styles/{$view}.css";
         if (file_exists($_SERVER['DOCUMENT_ROOT'] . $cssPath)) {
@@ -27,6 +28,8 @@
             <?php include __DIR__ . '/../components/toaster.php'; ?> 
             <?= $content ?>
         </main>
+        <?php include __DIR__ . '/../components/footer.php'; ?>
+
     </div>
     <script src="/public/scripts/toaster.js" defer></script>
     <script src="/public/scripts/navbar.js" defer></script>
