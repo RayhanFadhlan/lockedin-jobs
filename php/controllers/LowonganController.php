@@ -39,14 +39,18 @@ class LowonganController extends Controller {
                 'status_reason' => null,
                 'cv_path' => null,
                 'video_path' => null,
+                "created_at" => null
             ];
             if ($lamaran != null) {
+                $createdAt = new \DateTime($lamaran['created_at']);
+                $formattedCreatedAt = $createdAt->format('F j, Y, g:i a');
                 $data_lamaran = [
                     'lamaran_id' => $lamaran['lamaran_id'],
                     'status' => $lamaran['status'],
                     'status_reason' => $lamaran['status_reason'],
                     'cv_path' => $lamaran['cv_path'],
                     'video_path' => $lamaran['video_path'],
+                    'created_at' => $formattedCreatedAt,
                 ];
             }
             $data = $data_lamaran + [
@@ -60,7 +64,6 @@ class LowonganController extends Controller {
                 'jenis_pekerjaan' => $lowongan['jenis_pekerjaan'],
                 'jenis_lokasi' => $lowongan['jenis_lokasi'],
                 'is_open' => $lowongan['is_open'],
-                'created_at' => $lowongan['created_at'],
                 'is_login' => isset($_SESSION['user']),
             ];
 
