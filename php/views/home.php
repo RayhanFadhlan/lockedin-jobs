@@ -20,12 +20,12 @@
                 </div>
                 <div class="profile-info">
                     <?php if (isset($_SESSION['user'])) : ?>
-                        <h2 class="profile-name"><?php echo $_SESSION['user']['name']?></h2>
+                        <h2 class="profile-name"><?= htmlspecialchars($_SESSION['user']['name'], ENT_QUOTES, 'UTF-8') ?></h2>
                     <?php else : ?>
                         <h2 class="profile-name">Guest</h2>
                     <?php endif; ?>
                     <?php if (isset($_SESSION['user'])) : ?>
-                        <p class="profile-title"><?php echo $_SESSION['user']['role']?></p>
+                        <p class="profile-title"><?= htmlspecialchars($_SESSION['user']['role'], ENT_QUOTES, 'UTF-8') ?></p>
                     <?php else : ?>
                         <p class="profile-title">No Role</p>
                     <?php endif; ?>
