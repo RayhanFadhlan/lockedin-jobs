@@ -5,7 +5,7 @@ use PDO;
 class LowonganModel extends Model {
 
     public function getFilteredLowongan($search = '', $jobType = [], $locationType = [], $sort = 'asc', $offset = 0, $limit = 10) {
-        $query = 'SELECT * FROM "Lowongan"';
+        $query = 'SELECT * FROM "Lowongan" WHERE 1=1';
         $params = [];
 
         if (!empty($search)) {
@@ -47,7 +47,7 @@ class LowonganModel extends Model {
     }
 
     public function getTotalFilteredJobs($search = '', $jobType = [], $locationType = []) {
-        $query = 'SELECT COUNT(*) FROM "Lowongan"';
+        $query = 'SELECT COUNT(*) FROM "Lowongan" WHERE 1=1';
         $params = [];
 
         if (!empty($search)) {

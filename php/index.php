@@ -56,4 +56,18 @@ $app->router->get('/company/job/:id/download',
 $app->router->get('/profile', ['CompanyProfileController', 'viewCompanyProfile'], ['CompanyMiddleware']);
 $app->router->get('/profile/edit', ['CompanyProfileController', 'viewCompanyProfileEdit'], ['CompanyMiddleware']);
 $app->router->post('/profile/edit', ['CompanyProfileController', 'editCompanyProfile'], ['CompanyMiddleware']);
+
+
+
+
+
+
+// 404
+$app->router->get('/notfound', ['HomeController', 'viewError']);
+
+
+
 $app->run();
+
+
+
