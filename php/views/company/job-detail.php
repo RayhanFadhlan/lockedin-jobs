@@ -31,7 +31,7 @@
 
         <section class="applicants">
             <h2>Applicants</h2>
-            <div class="applicant">
+            <!-- <div class="applicant">
                 <div>
                     <div class="applicant-name">John Doe</div>
                     <div class="applicant-status">Accepted</div>
@@ -51,7 +51,16 @@
                     <div class="applicant-status">Waiting</div>
                 </div>
                 <a href="#" class="view-details">View Details</a>
-            </div>
+            </div> -->
+            <?php foreach (($data['lamarans']) as $lamaran): ?>
+                <div class="applicant">
+                    <div>
+                        <div class="applicant-name"><?= htmlspecialchars($lamaran['nama']) ?></div>
+                        <div class="applicant-status"><?= htmlspecialchars($lamaran['status']) ?></div>
+                    </div>
+                    <a href="/company/lamaran/<?= htmlspecialchars($lamaran['lamaran_id']) ?>" class="view-details">View Details</a>
+                </div>
+            <?php endforeach; ?>
         </section>
     </div>
     <div class="right-container">

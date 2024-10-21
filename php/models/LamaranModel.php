@@ -116,4 +116,10 @@ class LamaranModel extends Model {
         $stmt->execute([$status, $statusReason, $lamaranId]);
         
     }
+
+    public function getLamaransNameStatus($lowonganId){
+        $stmt = $this->db->prepare('SELECT u.nama, l.status, l.lamaran_id FROM "Lamaran" l JOIN "User" u ON l.user_id = u.user_id WHERE l.lowongan_id = ?');
+        $stmt->execute([$lowonganId]);
+        return $stmt->fetchAll();
+    }
 }
