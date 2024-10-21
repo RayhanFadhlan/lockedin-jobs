@@ -55,8 +55,8 @@
         </section>
     </div>
     <div class="right-container">
+        <h2>Job Actions</h2>
         <aside class="job-actions">
-            <h2>Job Actions</h2>
             <a href="/company/job/<?= $jobId ?>/editjob" >
                 <button class="primary-btn" id="edit-button">Edit Job</button>
             </a>

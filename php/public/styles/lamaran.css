@@ -119,3 +119,8 @@ input[type="email"] {
 
 
 
+@media screen and (max-width: 400px) {
+    .form-container{
+        width: 90%;
+    }
+}
