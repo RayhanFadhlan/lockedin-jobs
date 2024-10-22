@@ -90,6 +90,7 @@
     width: 100%;
   max-width: 350px;
     color: #2c3e50;
+    margin-top: 20px;
     padding: 20px;
   }
 
@@ -184,7 +185,7 @@
     flex: 1;
     width: 100%;
     max-width: 600px;
-    margin-top: 20px;
+    margin-top: 40px;
     padding: 10px;
     scrollbar-width: none;
     margin-bottom: 40px;
@@ -390,6 +391,7 @@
   }
 
   .right-content {
+    margin-top: 20px;
     order: 2;
   }
 
