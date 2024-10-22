@@ -100,8 +100,8 @@ class JobController extends Controller
             $lowonganId = $lowonganModel->insertLowongan($user_id, $jobPosition, $jobType, $jobLocation, $jobDescription);
             
             
-            if(!empty($_FILES['attachments']['name'][0])) {
-                $storage = new Storage('storage/uploads/', ['image/jpeg', 'image/png', 'image/jpg']);
+            $storage = new Storage('storage/uploads/', ['image/jpeg', 'image/png', 'image/jpg']);
+            if(isset($_FILES['attachment'])) {
 
                 $attachmentPaths = $storage->store($_FILES);
     
@@ -109,7 +109,6 @@ class JobController extends Controller
             }
     
             
-
             
             Response::json([
                 'success' => true,
@@ -270,7 +269,7 @@ class JobController extends Controller
 
             $lowonganModel->deleteAttachments($id);
 
-            if(!empty($_FILES['attachments']['name'][0])) {
+            if(isset($_FILES['attachment'])) {
                 $attachmentPaths = $storage->store($_FILES);
     
                 $lowonganModel->insertAttachmentLowongan($id, $attachmentPaths);

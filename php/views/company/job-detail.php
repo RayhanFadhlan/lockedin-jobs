@@ -15,20 +15,10 @@
                 <span>Created at : <?= htmlspecialchars($data['created_at'])?>
             </div>
             <div class="job-description">
+                <h2>Job Description : </h2>
                 <?= ($data['description'])?>
             </div>
-            <div class="image-gallery">
-            <?php if (isset($data['images'][0])): ?>
-                <img src="<?= htmlspecialchars($data['images'][0]) ?>" alt="Lowongan Image" class="main-image">
-            <?php endif; ?>
-                <div class="thumbnails">
-                    <?php foreach (($data['images']) as $thumbnail): ?>
-                        <div class="thumbnail" tabindex="0">
-                            <img src="<?= htmlspecialchars($thumbnail) ?>" alt="Thumbnail">
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
+            <?php include __DIR__ . '/../components/image-gallery.php'; ?>
         </section>
 
         <section class="applicants">

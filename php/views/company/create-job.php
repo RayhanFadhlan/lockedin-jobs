@@ -1,4 +1,4 @@
-<div class="container">
+<div class="main-container">
     <div class="job-form-box">
         <h1 class="form-title">Create a Job Posting</h1>
         <form id="jobPostingForm" method="POST" action="/company/createjob">

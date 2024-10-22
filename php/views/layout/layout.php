@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?= $description ?? 'Find the best job listings and career opportunities on Lockedin.' ?>">
+    <meta name="description" content="<?= 'Find the best job listings and career opportunities on Lockedin.' ?>">
     <title><?= $title ?? 'Lockedin' ?></title>
     <link rel="icon" href="/public/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/public/styles/main.css">

@@ -1,4 +1,5 @@
-<div class="container">
+<link rel="stylesheet" href="/public/styles/company/create-job.css">
+<div class="main-container">
     <div class="job-form-box">
         <h1 class="form-title">Edit a Job Posting</h1>
         <form id="jobEditForm">
@@ -45,5 +46,4 @@
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
     <script src="/public/scripts/company/edit-job.js" defer></script>
-    <link rel="stylesheet" href="/public/styles/company/create-job.css">
 

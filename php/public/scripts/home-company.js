@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
         updateButton.addEventListener("click", function (e) {
             e.stopPropagation();
             const lowonganId = updateButton.getAttribute("data-id");
-            window.location.href = `/company/edit-lowongan/${lowonganId}`;
+            window.location.href = `/company/job/${lowonganId}/editjob`;
         });
 
         jobContainer.addEventListener("click", function () {

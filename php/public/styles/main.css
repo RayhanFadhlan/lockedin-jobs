@@ -90,3 +90,10 @@ body {
   background-color: #d9534f;
   transition: background-color 0.3s;
 }
+
+.main-box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+}

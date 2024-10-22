@@ -10,13 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeButton = document.getElementById('close-button');
 
 
-    thumbnails.forEach(thumbnail => {
-        thumbnail.addEventListener('click', function() {
-      
-            mainImage.src = thumbnail.src;
-        });
-    });
-
+  
     deleteButtopn.addEventListener('click', function() {
         const confirmation = confirm('Are you sure you want to delete this Job?');
 

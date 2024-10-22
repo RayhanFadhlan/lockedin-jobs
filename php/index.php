@@ -61,7 +61,7 @@ $app->router->post('/profile/edit', ['CompanyProfileController', 'editCompanyPro
 $app->router->get('/notfound', ['HomeController', 'viewError']);
 
 // Lowongan
-$app->router->get('/lowongan/:id', ['LowonganController', 'getDetailLowongan'], ['JobSeekerMiddleware']);
+$app->router->get('/lowongan/:id', ['LowonganController', 'getDetailLowongan']);
 $app->run();
 
 
