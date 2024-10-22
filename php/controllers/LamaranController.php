@@ -27,7 +27,7 @@ class LamaranController extends Controller {
         if ($request->getMethod() === 'GET' && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             $this->getLamaran($request);
         } else {
-            $this->views('history', ['css' => 'home']);
+            $this->views('history', ['css' => 'history']);
         }
     }
 

@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="left-content">
+    <div class="top-bar">
         <div class="search-box">
             <input type="text" placeholder="Cari Riwayat Lamaran" class="search-input">
         </div>
@@ -11,26 +11,29 @@
                 <option value="desc">Descending</option>
             </select>
         </div>
-
-        <div class="filter-by">
-            <div class="dropdown">
-                <button class="dropdown-btn" data-dropdown-id="status">Status Lamaran</button>
-                <div class="dropdown-content">
-                    <label><input type="checkbox" value="accepted"> Accepted</label>
-                    <label><input type="checkbox" value="rejected"> Rejected</label>
-                    <label><input type="checkbox" value="waiting"> Waiting</label>
+    </div>
+    <div class="main-content">
+        <div class="left-content">
+            <div class="filter-by">
+                <div class="dropdown">
+                    <button class="dropdown-btn" data-dropdown-id="status">Status Lamaran</button>
+                    <div class="dropdown-content">
+                        <label><input type="checkbox" value="accepted"> Accepted</label>
+                        <label><input type="checkbox" value="rejected"> Rejected</label>
+                        <label><input type="checkbox" value="waiting"> Waiting</label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="right-content"> 
+        <div class="right-content"> 
 
-        <div class="pagination">
-            <button class="pagination-button" id="prev-page" disabled>&lt;</button>
-            <div class="page-numbers">
+            <div class="pagination">
+                <button class="pagination-button" id="prev-page" disabled>&lt;</button>
+                <div class="page-numbers">
+                </div>
+                <button class="pagination-button" id="next-page">&gt;</button>
             </div>
-            <button class="pagination-button" id="next-page">&gt;</button>
         </div>
     </div>
 </div>
