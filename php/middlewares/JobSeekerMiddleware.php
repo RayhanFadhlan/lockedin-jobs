@@ -5,7 +5,7 @@ use helpers\Redirect;
 
 
 // protect routes so only company can access
-class CompanyMiddleware extends Middleware
+class JobSeekerMiddleware extends Middleware
 {
     public function handle($request, $next)
     {

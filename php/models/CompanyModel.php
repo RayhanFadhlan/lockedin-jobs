@@ -5,7 +5,7 @@ namespace models;
 class CompanyModel extends Model {
 
     public function getCompany($id) {
-        $stmt = $this->db->prepare('SELECT * FROM "Company" WHERE user_id = ?');
+        $stmt = $this->db->prepare('SELECT * FROM "CompanyDetail" WHERE user_id = ?');
         $stmt->execute([$id]);
         return $stmt->fetch();
     }

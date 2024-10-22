@@ -4,6 +4,16 @@ namespace models;
 use PDO;
 class LowonganModel extends Model {
 
+    public function getLowonganById($id) {
+        $query = 'SELECT * FROM "Lowongan" WHERE lowongan_id = :lowonganID';
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindValue(':lowonganID', $id);
+
+        $stmt->execute();
+        
+        return $stmt->fetch();
+    }
     public function getFilteredLowongan($search = '', $jobType = [], $locationType = [], $sort = 'asc', $offset = 0, $limit = 10) {
         $query = 'SELECT * FROM "Lowongan" WHERE 1=1';
         $params = [];
@@ -188,15 +198,6 @@ class LowonganModel extends Model {
         $stmt = $this->db->prepare('SELECT * FROM "AttachmentLowongan" WHERE lowongan_id = ?');
         $stmt->execute([$id]);
         return $stmt->fetchAll();
-    }
-
-    public function getLowonganById($lowonganId) {
-        $query = 'SELECT * FROM "Lowongan" WHERE lowongan_id = :lowonganId';
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':lowonganId', $lowonganId);
-        $stmt->execute();
-        
-        return $stmt->fetch();
     }
 
     public function closeLowongan($lowonganId) {

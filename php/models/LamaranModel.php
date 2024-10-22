@@ -4,7 +4,17 @@ namespace models;
 use PDO;
 
 class LamaranModel extends Model {
+    public function getLamaranByUserId($user_id, $lamaran_id){
+        $query = 'SELECT * FROM "Lamaran" WHERE user_id = :userID AND lamaran_id = :lamaranID';
+        $stmt = $this->db->prepare($query);
 
+        $stmt->bindValue(':userID', $user_id);
+        $stmt->bindValue(':lamaranID', $lamaran_id);
+
+        $stmt->execute();
+        
+        return $stmt->fetch();
+    }
     public function getDetailLamaran($user_id, $search = '', $status = [], $sort = 'asc', $offset = 0, $limit = 10) {
         $query = 'SELECT lm.lowongan_id, lm.status, lm.created_at, lw.posisi, u.nama FROM "Lamaran" lm JOIN "Lowongan" lw ON lm.lowongan_id = lw.lowongan_id JOIN "User" u ON lw.company_id = u.user_id WHERE lm.user_id = :userID';
         $params = [];
@@ -86,12 +96,6 @@ class LamaranModel extends Model {
                                     VALUES (?, ?, ?, ?, ?, NOW())');
         $stmt->execute([$userId, $lowonganId, $cvPath, $videoPath, 'waiting']);
         return $this->db->lastInsertId();
-    }
-    
-    public function getLamaranByUserId($userId) {
-        $stmt = $this->db->prepare('SELECT * FROM "Lamaran" WHERE user_id = ? ORDER BY created_at DESC');
-        $stmt->execute([$userId]);
-        return $stmt->fetchAll();
     }
 
     public function getLamaranById($id) {

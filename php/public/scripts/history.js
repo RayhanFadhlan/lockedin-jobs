@@ -64,6 +64,7 @@ document.querySelectorAll('.dropdown-btn').forEach(button => {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 console.log(xhr.responseText);
                 const response = JSON.parse(xhr.responseText);
+                console.log(response);
                 updateLamaranList(response.lamaran);
                 updatePagination(response.currentPage, response.totalPages);
             }
@@ -80,12 +81,24 @@ document.querySelectorAll('.dropdown-btn').forEach(button => {
         rightContent.innerHTML = '';
         if (lamaran.length > 0) {
             lamaran.forEach(lamar => {
+                const date = new Date(lamar.created_at);
+                const options = {
+                    month: 'long',  
+                    day: 'numeric', 
+                    year: 'numeric', 
+                    hour: 'numeric', 
+                    minute: 'numeric',
+                    hour12: true    
+                };
+                
+                const formattedDate = date.toLocaleString('en-US', options);
+
                 const jobContainer = document.createElement('div');
                 jobContainer.classList.add('job-container');
                 jobContainer.innerHTML = `
                     <h3>${lamar.nama}</h3>
                     <pre>Posisi                 : ${lamar.posisi}</pre>
-                    <pre>Submitted on : ${lamar.created_at}</pre>
+                    <pre>Submitted on : ${formattedDate}</pre>
                     <pre>Status                : <b id="status-${lamar.status}">${lamar.status.toUpperCase()}</b></pre>
                     <a href="/lowongan/${lamar.lowongan_id}">>>> Lihat detail lamaran...</a>
                 `;

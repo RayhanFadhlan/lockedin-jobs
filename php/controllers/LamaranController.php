@@ -33,9 +33,7 @@ class LamaranController extends Controller {
 
     public function getLamaran(Request $request) {
         try {
-            // $userId = $_SESSION('user_id') ?? -999;
-            $userId = 1;
-            if ($userId === -999) {return new UnauthorizedException('Login untuk melihat riwayat lamaran');}
+            $userId = $_SESSION['user']['id'];
 
             $search = $request->getBody('search') ?? '';
             $status = isset($_GET['status']) ? explode(',', $_GET['status']) : [];
@@ -55,7 +53,7 @@ class LamaranController extends Controller {
                 'totalPages' => $totalPages
             ]);
         } catch (\Exception $e) {
-            return Redirect::withToast('/login', $e->getMessage());
+            $this->views('/login');
         }
     }
 
