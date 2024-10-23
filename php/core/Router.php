@@ -75,7 +75,7 @@ class Router
 
     private function getPatternFromUri($uri)
     {
-        return '@^' . preg_replace('/:[a-zA-Z0-9\_\-]+/', '([a-zA-Z0-9\-\_]+)', $uri) . '$@D';
+        return '@^' . preg_replace('/:[a-zA-Z0-9\_\-]+/', '([a-zA-Z0-9\-\_\.]+)', $uri) . '$@D';
     }
 
     private function callHandler($handler, $params)

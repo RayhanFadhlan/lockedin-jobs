@@ -61,6 +61,12 @@ $app->router->get('/notfound', ['HomeController', 'viewError']);
 
 // Lowongan Jobseeker
 $app->router->get('/lowongan/:id', ['LowonganController', 'getDetailLowongan']);
+
+// Storage Files For Private files
+$app->router->get('/storage/videos/:name', ['StorageController', 'servePrivate']);
+$app->router->get('/storage/cv/:name', ['StorageController', 'servePrivate']);
+
+
 $app->run();
 
 

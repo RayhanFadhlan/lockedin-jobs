@@ -113,13 +113,15 @@ class LamaranController extends Controller {
 
         $userId = $_SESSION['user']['id'];
 
-        $storage = new Storage();
+        $storageCv = new Storage('storage/cv/');
 
-        $cvPath = $storage->store(['attachment' => $_FILES['pdf-file']])[0];
+        $cvPath = $storageCv->store(['attachment' => $_FILES['pdf-file']])[0];
+
+        $storageVideos = new Storage('storage/videos/');
 
         $videoPath = null;
         if (isset($_FILES['video-file']) && $_FILES['video-file']['error'] === UPLOAD_ERR_OK) {
-            $videoPath = $storage->store(['attachment' => $_FILES['video-file']])[0];
+            $videoPath = $storageVideos->store(['attachment' => $_FILES['video-file']])[0];
         }
 
         $lamaranId = $lamaranModel->insertLamaran($userId, $lowonganId, $cvPath, $videoPath);

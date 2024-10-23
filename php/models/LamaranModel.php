@@ -139,4 +139,10 @@ class LamaranModel extends Model {
         $stmt->execute([$lowonganId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getLamaranByFile($fileName){
+        $stmt = $this->db->prepare('SELECT * FROM "Lamaran" WHERE cv_path = ? OR video_path = ?');
+        $stmt->execute([$fileName, $fileName]);
+        return $stmt->fetch();
+    }
 }
