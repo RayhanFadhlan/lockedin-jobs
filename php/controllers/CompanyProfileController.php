@@ -52,9 +52,9 @@ class CompanyProfileController extends Controller {
             $this->companyProfileModel->setCompanyProfile($userId, $companyName, $location, $about);
             $_SESSION['user']['name'] = $request->getBody('company_name');
 
-            Redirect::withToast('/profile', 'Company edited successfully');
+            Redirect::withToast('/profile', 'Company edited successfully', 'success');
         } catch (\Exception $e) {
-            return Redirect::withToast('/profile', $e->getMessage());
+            return Redirect::withToast('/profile', $e->getMessage(), 'error');
         }
     }
 

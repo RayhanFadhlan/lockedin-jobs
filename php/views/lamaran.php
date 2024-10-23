@@ -1,6 +1,6 @@
 <div class="container">
     <div class="form-container">
-        <h1> Apply to <?php echo "tes company"; ?></h1>
+        <h1> Apply to <?= htmlspecialchars($data['posisi'])  ?></h1>
         <form id="application-form" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="email">Email*</label>

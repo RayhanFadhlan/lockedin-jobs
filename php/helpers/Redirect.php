@@ -13,10 +13,11 @@ class Redirect
         self::to($_SERVER['HTTP_REFERER'] ?? '/');
     }
 
-    public static function withToast($url, $message)
+    public static function withToast($url, $message, $type = 'default')
     {
     
         setcookie('toastMessage', $message, time() + 60, '/');
+        setcookie('toastType', $type, time() + 60, '/');
         self::to($url);
     }
 }

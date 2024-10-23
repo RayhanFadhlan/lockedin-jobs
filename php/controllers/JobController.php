@@ -65,7 +65,7 @@ class JobController extends Controller
         ] );
         }
         catch (Exception $e) {
-            Redirect::withToast('/', $e->getMessage());
+            Redirect::withToast('/', $e->getMessage(), 'error');
         }
     }
     public function viewCreateJob()
@@ -100,8 +100,8 @@ class JobController extends Controller
             $lowonganId = $lowonganModel->insertLowongan($user_id, $jobPosition, $jobType, $jobLocation, $jobDescription);
             
             
-            $storage = new Storage('storage/uploads/', ['image/jpeg', 'image/png', 'image/jpg']);
-            if(isset($_FILES['attachment'])) {
+            if(isset($_FILES['attachment']) && !empty($_FILES['attachment']['name'][0])) {
+                $storage = new Storage('storage/uploads/', ['image/jpeg', 'image/png', 'image/jpg']);
 
                 $attachmentPaths = $storage->store($_FILES);
     
@@ -235,7 +235,7 @@ class JobController extends Controller
 
         }
         catch (Exception $e) {
-            Redirect::withToast('/', $e->getMessage());
+            Redirect::withToast('/', $e->getMessage(), 'error');
         }
 
     }
@@ -269,7 +269,7 @@ class JobController extends Controller
 
             $lowonganModel->deleteAttachments($id);
 
-            if(isset($_FILES['attachment'])) {
+            if(isset($_FILES['attachment']) && !empty($_FILES['attachment']['name'][0])) {
                 $attachmentPaths = $storage->store($_FILES);
     
                 $lowonganModel->insertAttachmentLowongan($id, $attachmentPaths);

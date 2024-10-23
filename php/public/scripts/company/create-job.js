@@ -84,7 +84,7 @@ form.addEventListener("submit", function (event) {
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
                 window.location.href = "/company";
-                showToast(response.message);
+                showToast(response.message, "success");
             } else {
                 console.error("Error creating job:", response.message);
                 showToast(response.message);
@@ -92,7 +92,7 @@ form.addEventListener("submit", function (event) {
         } catch (e) {
             console.error("Failed to parse JSON response:", e);
             console.error("Response text:", xhr.responseText);
-            showToast("An error occured.");
+            showToast("An error occured.", "error");
         }
     };
 

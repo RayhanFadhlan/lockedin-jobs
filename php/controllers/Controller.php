@@ -12,6 +12,9 @@ class Controller {
         if(isset($data['toastMessage'])) {
             setcookie('toastMessage', $data['toastMessage'], time() + 60, '/');
         }
+        if(isset($data['toastType'])) {
+            setcookie('toastType', $data['toastType'], time() + 60, '/');
+        }
 
         $content = $this->renderView($view, $data);
         $this->renderLayout($content, $view, $data);

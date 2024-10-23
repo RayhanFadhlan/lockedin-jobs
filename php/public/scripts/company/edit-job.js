@@ -85,7 +85,7 @@ editform.addEventListener("submit", function (event) {
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
                 window.location.href = "/company";
-                showToast(response.message);
+                showToast(response.message, "success");
             } else {
                 console.error("Error updating job:", response.message);
                 showToast(response.message);

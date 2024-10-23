@@ -132,6 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const response = JSON.parse(xhr.responseText);
                 if (response.success) {
                   jobContainer.remove();
+                  showToast("Job listing deleted successfully.", "success");
                 } else {
                   console.error(response.message);
                   alert("Failed to delete job listing.");

@@ -31,7 +31,7 @@ class AuthController extends Controller {
 
     public function signout() {
         session_destroy();
-        Redirect::to('/');
+        Redirect::withToast('/', 'Logout successful', 'success');
     }
 
     public function register(Request $request) {
@@ -77,7 +77,7 @@ class AuthController extends Controller {
                 ];
 
 
-                Redirect::withToast('/', 'User created successfully');
+                Redirect::withToast('/', 'User created successfully', 'success');
 
             }
             else if($role === 'company'){
@@ -119,13 +119,13 @@ class AuthController extends Controller {
                     'role' => $user['role'],
                 ];
 
-                Redirect::withToast('/', 'Company created successfully');
+                Redirect::withToast('/', 'Company created successfully', 'success');
             }
            
                    
         
         } catch (\Exception $e) {
-            return Redirect::withToast('/signup', $e->getMessage());
+            return Redirect::withToast('/signup', $e->getMessage(), 'error');
         }
       
     }
@@ -157,10 +157,10 @@ class AuthController extends Controller {
                 'role' => $user['role'],
             ];
 
-            Redirect::withToast('/', 'Login successful');
+            Redirect::withToast('/', 'Login successful', 'success');
 
         } catch (\Exception $e) {
-            return Redirect::withToast('/login', $e->getMessage());
+            return Redirect::withToast('/login', $e->getMessage(), 'error');
         }
     }
 

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const response = JSON.parse(xhr.responseText);
                     if(response.success){
                         window.location.href = '/company';
-                        showToast("Job listing deleted successfully.");
+                        showToast("Job listing deleted successfully.", "success");
                     } else {
                         console.error(response.message);
                         showToast(response.message);
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const response = JSON.parse(xhr.responseText);
                 if(response.success){
                     window.location.href = `/company/job/${jobId}`;
-                    showToast(response.message);
+                    showToast(response.message, 'success');
                 } else {
                     console.error(response.message);
                     showToast(response.message);

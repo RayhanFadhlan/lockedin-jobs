@@ -74,11 +74,12 @@ class LamaranController extends Controller {
         $lamaran = $lamaranModel->getLamaranByUserId($_SESSION['user']['id'], $lowonganId);
 
         if ($lamaran) {
-            return Redirect::withToast('/', 'You have already applied for this job');
+            return Redirect::withToast('/', 'You have already applied for this job', 'error');
         }
 
         return $this->views("lamaran", [
-            'lowonganId' => $lowonganId
+            'lowonganId' => $lowonganId,
+            'posisi' => $lowongan['posisi'],
         ]);
     }
 
@@ -126,19 +127,20 @@ class LamaranController extends Controller {
 
         $lamaranId = $lamaranModel->insertLamaran($userId, $lowonganId, $cvPath, $videoPath);
 
-        Redirect::withToast('/', 'Application submitted successfully');
+        Redirect::withToast('/', 'Application submitted successfully', 'success');
 
-        Response::json([
-            'success' => true,
-            'message' => 'Application submitted successfully',
+        // Response::json([
+        //     'success' => true,
+        //     'message' => 'Application submitted successfully',
             
-        ])->send();
+        // ])->send();
 
     } catch (\Exception $e) {
-        Response::json([
-            'success' => false,
-            'message' => $e->getMessage()
-        ], 400)->send();
+        // Response::json([
+        //     'success' => false,
+        //     'message' => $e->getMessage()
+        // ], 400)->send();
+        Redirect::withToast('/', $e->getMessage(), 'error');
         }
 
     }

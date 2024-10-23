@@ -88,6 +88,7 @@ class Storage
 
     private function generateFileName($originalName)
     {
+        $sanitizedOriginalName = str_replace(' ', '_', $originalName);
         return uniqid() . '_' . $originalName;
     }
 }

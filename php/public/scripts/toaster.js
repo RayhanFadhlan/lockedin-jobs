@@ -1,11 +1,11 @@
-function toast(message = '') {
-    var toast = document.getElementById("toast");
-    toast.textContent = message;
-    toast.className = "show";
-    setTimeout(function () {
-        toast.className = toast.className.replace("show", "hide");
+function toast(message, type = 'default') {
+    const toast = document.getElementById('toast');
+    toast.className = 'toast ' + type + ' show';
+    toast.querySelector('.toast-message').textContent = message;
+
+    setTimeout(() => {
+        toast.className = toast.className.replace('show', '');
     }, 3000);
-    
 }
 
 function getCookie(name) {
@@ -26,16 +26,24 @@ function deleteCookie(name) {
 
 
 //PAKE INI KALO MAU NAMPILIN TOAST DARI JS
-function showToast(message){
+function showToast(message, type = 'default'){
     setCookie('toastMessage', message, 1);
-    toast(message);
+    setCookie('toastType', type, 1);
+    toast(message, type);
 }
 
 window.onload = function() {
     
     const toastMessage = getCookie('toastMessage');
+    const toastType = getCookie('toastType');
     if(toastMessage){
-        toast(toastMessage);
+        if(toastType){
+            toast(toastMessage, toastType);
+            deleteCookie('toastType');
+        }
+        else {
+            toast(toastMessage);
+        }
         deleteCookie('toastMessage');
     }
 };
