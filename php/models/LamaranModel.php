@@ -4,12 +4,12 @@ namespace models;
 use PDO;
 
 class LamaranModel extends Model {
-    public function getLamaranByUserId($user_id, $lamaran_id){
-        $query = 'SELECT * FROM "Lamaran" WHERE user_id = :userID AND lamaran_id = :lamaranID';
+    public function getLamaranByUserId($user_id, $lowongan_id) {
+        $query = 'SELECT * FROM "Lamaran" WHERE user_id = :user_id AND lowongan_id = :lowongan_id';
         $stmt = $this->db->prepare($query);
 
-        $stmt->bindValue(':userID', $user_id);
-        $stmt->bindValue(':lamaranID', $lamaran_id);
+        $stmt->bindValue(':user_id', $user_id);
+        $stmt->bindValue(':lowongan_id', $lowongan_id);
 
         $stmt->execute();
         

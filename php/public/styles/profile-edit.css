@@ -17,8 +17,9 @@
 
 .card-title {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 600;
     margin: 0 0 8px 0;
+    
 }
 
 .card-description {
@@ -28,12 +29,15 @@
 
 .form-group {
     margin-bottom: 20px;
+    
+
 }
 
 label {
     display: block;
     margin-bottom: 8px;
-    font-weight: bold;
+    font-weight: 600;
+    color : #333;
 }
 
 input[type="text"], textarea {
@@ -67,12 +71,22 @@ textarea {
 .button-primary {
     background-color: #0a66c2;
     color: white;
+    border-radius: 16px;
 }
 .button-secondary {
     background-color: #fff;
     color: #0a66c2;
     border: 1px solid #0a66c2;
+    border-radius: 16px;
 }
+
+.button-primary:hover, .button-secondary:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s;
+
+}
+
+
 
 @media screen and (max-width: 400px) {
     .card {

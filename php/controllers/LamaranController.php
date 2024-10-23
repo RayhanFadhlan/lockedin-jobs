@@ -57,8 +57,26 @@ class LamaranController extends Controller {
         }
     }
 
-    public function viewCreateLamaran($lowonganId)
+    public function viewCreateLamaran(Request $request,$lowonganId)
     {
+        $lowonganModel = new LowonganModel();
+        $lowongan = $lowonganModel->getLowonganById($lowonganId);
+
+        if (!$lowongan) {
+            return Redirect::withToast('/', 'Job not found');
+        }
+        
+        if($lowongan['is_open'] == 0){
+            return Redirect::withToast('/', 'Job is closed');
+        }
+
+        $lamaranModel = new LamaranModel();
+        $lamaran = $lamaranModel->getLamaranByUserId($_SESSION['user']['id'], $lowonganId);
+
+        if ($lamaran) {
+            return Redirect::withToast('/', 'You have already applied for this job');
+        }
+
         return $this->views("lamaran", [
             'lowonganId' => $lowonganId
         ]);
@@ -66,6 +84,25 @@ class LamaranController extends Controller {
 
     public function createLamaran(Request $request, $lowonganId){
     try {
+        $lowonganModel = new LowonganModel();
+        $lowongan = $lowonganModel->getLowonganById($lowonganId);
+
+        if (!$lowongan) {
+            throw new \Exception('Job not found');
+        }
+        
+        if($lowongan['is_open'] == 0){
+            throw new \Exception('Job is closed');
+        }
+
+        $lamaranModel = new LamaranModel();
+        $lamaran = $lamaranModel->getLamaranByUserId($_SESSION['user']['id'], $lowonganId);
+
+        if ($lamaran) {
+            throw new \Exception('You have already applied for this job');
+        }
+
+
         if (empty($request->getBody('email')) || !filter_var($request->getBody('email'), FILTER_VALIDATE_EMAIL)) {
             throw new \Exception('Email is required and must be a valid email.');
         }
@@ -85,7 +122,6 @@ class LamaranController extends Controller {
             $videoPath = $storage->store(['attachment' => $_FILES['video-file']])[0];
         }
 
-        $lamaranModel = new LamaranModel();
         $lamaranId = $lamaranModel->insertLamaran($userId, $lowonganId, $cvPath, $videoPath);
 
         Redirect::withToast('/', 'Application submitted successfully');
@@ -113,7 +149,7 @@ class LamaranController extends Controller {
         $lamaran = $this->lamaranModel->getLamaranByLamaranId($id);
 
         if (!$lamaran) {
-            return Redirect::withToast('/company', 'Job not found');
+            return Redirect::withToast('/company', 'Lamaran not found');
         }
 
         $userModel = new UserModel();
@@ -160,14 +196,14 @@ class LamaranController extends Controller {
         $lamaran = $this->lamaranModel->getLamaranByLamaranId($id);
 
         if (!$lamaran) {
-            return Redirect::withToast('/company', 'Lamaran not found');
+           throw new \Exception('Lamaran not found');
         }
 
         $lowonganModel = new LowonganModel();
         $lowongan = $lowonganModel->getLowonganById($lamaran['lowongan_id']);
 
         if($lowongan['company_id'] !== $currentUser){
-            return Redirect::withToast('/company', 'Unauthorized');
+           throw new \Exception('Unauthorized');
         }
 
         if (!$lamaran) {
