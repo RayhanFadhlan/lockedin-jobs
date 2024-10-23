@@ -234,4 +234,19 @@ class LowonganModel extends Model {
         $stmt->bindParam(':lowonganId', $lowonganId);
         $stmt->execute();
     }
+
+    public function getRecommendationJob() {
+        $stmt = $this->db->prepare('
+            SELECT l.lowongan_id, l.posisi, l.jenis_pekerjaan, l.jenis_lokasi, l.created_at, COUNT(lm.lamaran_id) AS pelamar_count
+            FROM "Lowongan" l
+            JOIN "Lamaran" lm ON l.lowongan_id = lm.lowongan_id
+            WHERE lm.created_at BETWEEN l.created_at AND l.created_at + INTERVAL \'7 days\' AND l.created_at > NOW() - INTERVAL \'7 days\'
+            GROUP BY l.lowongan_id, l.posisi, l.jenis_pekerjaan, l.jenis_lokasi, l.created_at
+            ORDER BY pelamar_count DESC
+            LIMIT 5;
+        ');
+
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }

@@ -41,6 +41,7 @@ class HomeController extends Controller {
 
             $lowonganList = $this->lowonganModel->getFilteredLowongan($search, $jobType, $locationType, $sort, $offset, $this->itemsPerPage);
             $totalJobs = $this->lowonganModel->getTotalFilteredJobs($search, $jobType, $locationType);
+            $trendingLowongan = $this->lowonganModel->getRecommendationJob();
 
             $totalPages = ceil($totalJobs / $this->itemsPerPage);
 
@@ -48,7 +49,8 @@ class HomeController extends Controller {
             echo json_encode([
                 'jobs' => $lowonganList,
                 'currentPage' => $page,
-                'totalPages' => $totalPages
+                'totalPages' => $totalPages,
+                'trendingJobs' => $trendingLowongan
             ]);
         } catch (\Exception $e) {
             header('Content-Type: application/json', true, 500);
@@ -82,7 +84,7 @@ class HomeController extends Controller {
 
             $lowonganList = $this->lowonganModel->getFilteredLowonganCompany($companyId, $search, $jobType, $locationType, $sort, $offset, $this->itemsPerPage);
             $totalJobs = $this->lowonganModel->getTotalFilteredJobsCompany($companyId, $search, $jobType, $locationType);
-
+            
             $totalPages = ceil($totalJobs / $this->itemsPerPage);
 
             header('Content-Type: application/json');

@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const response = JSON.parse(xhr.responseText);
         updateJobListings(response.jobs);
         updatePagination(response.currentPage, response.totalPages);
+        updateTrendingJobs(response.trendingJobs);
       }
     };
 
@@ -68,6 +69,43 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     xhr.send();
+  }
+
+  function updateTrendingJobs(trendingJobs) {
+    const trendingContainer = document.getElementById("trending-jobs-list");
+    trendingContainer.innerHTML = "";
+
+    if (trendingJobs && trendingJobs.length > 0) {
+      trendingJobs.forEach((job) => {
+        const jobContainer = document.createElement("div");
+        jobContainer.classList.add("trending-job-container");
+
+        const date = new Date(job.created_at);
+        const formattedDate = new Intl.DateTimeFormat("en-US", {
+          dateStyle: "medium",
+        }).format(date);
+
+        jobContainer.innerHTML = `
+                <div class="trending-job-item">
+                    <div class="trending-job-details">
+                        <h2>${job.posisi}</h2>
+                        <p>Location: ${job.jenis_lokasi}</p>
+                        <p>Job Type: ${job.jenis_pekerjaan}</p>
+                        <p>Applicants: ${job.pelamar_count}</p>
+                        <p>Posted on: ${formattedDate}</p>
+                    </div>
+                </div>
+            `;
+
+        jobContainer.addEventListener("click", function () {
+          window.location.href = `/lowongan/${job.lowongan_id}`;
+        });
+
+        trendingContainer.appendChild(jobContainer);
+      });
+    } else {
+      trendingContainer.innerHTML = "<p>No trending jobs at the moment.</p>";
+    }
   }
 
   function updateJobListings(jobs) {
@@ -124,12 +162,47 @@ document.addEventListener("DOMContentLoaded", function () {
     );
     paginationContainer.appendChild(prevButton);
 
-    for (let i = 1; i <= totalPages; i++) {
-      const pageButton = createPaginationButton(i, i);
-      if (i === currentPage) {
-        pageButton.classList.add("active");
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
+        const pageButton = createPaginationButton(i, i);
+        if (i === currentPage) {
+          pageButton.classList.add("active");
+        }
+        paginationContainer.appendChild(pageButton);
       }
-      paginationContainer.appendChild(pageButton);
+    } else {
+      const firstPageButton = createPaginationButton(1, 1);
+      if (1 === currentPage) {
+        firstPageButton.classList.add("active");
+      }
+      paginationContainer.appendChild(firstPageButton);
+
+      if (currentPage > 3) {
+        const ellipsis = createPaginationEllipsis(1);
+        paginationContainer.appendChild(ellipsis);
+      }
+
+      const startPage = Math.max(2, currentPage - 1);
+      const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+      for (let i = startPage; i <= endPage; i++) {
+        const pageButton = createPaginationButton(i, i);
+        if (i === currentPage) {
+          pageButton.classList.add("active");
+        }
+        paginationContainer.appendChild(pageButton);
+      }
+
+      if (currentPage < totalPages - 2) {
+        const ellipsis = createPaginationEllipsis(totalPages);
+        paginationContainer.appendChild(ellipsis);
+      }
+
+      const lastPageButton = createPaginationButton(totalPages, totalPages);
+      if (totalPages === currentPage) {
+        lastPageButton.classList.add("active");
+      }
+      paginationContainer.appendChild(lastPageButton);
     }
 
     const nextButton = createPaginationButton(
@@ -139,6 +212,18 @@ document.addEventListener("DOMContentLoaded", function () {
     paginationContainer.appendChild(nextButton);
 
     rightContent.appendChild(paginationContainer);
+  }
+
+  function createPaginationEllipsis(lastPage) {
+    const ellipsis = document.createElement("button");
+    ellipsis.textContent = "...";
+    ellipsis.classList.add("pagination-button");
+    ellipsis.addEventListener("click", () => {
+      currentPage = lastPage;
+      fetchData();
+      window.scrollTo(0, 0);
+    });
+    return ellipsis;
   }
 
   function createPaginationButton(text, page) {

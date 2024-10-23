@@ -200,6 +200,11 @@
   transition: box-shadow 0.3s ease;
   position: relative;
   }
+
+  .job-container:hover{
+    box-shadow: 2px 0 0 #004c33 inset;
+    background-color: #edf3f8;
+}
   
   .delete-button {
     position: absolute;

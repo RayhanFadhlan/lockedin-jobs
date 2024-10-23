@@ -66,6 +66,12 @@
                 <button class="pagination-button" id="next-page">&gt;</button>
             </div>
         </div>
+
+        <div class="trending-jobs">
+            <h3>Trending Jobs</h3>
+            <div id="trending-jobs-list">
+            </div>
+        </div>
     </div>
 </div>
 
