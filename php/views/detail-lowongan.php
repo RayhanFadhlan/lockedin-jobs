@@ -37,7 +37,7 @@
         <div class="application-title">
             <h2>Your Application : </h2>
             <div class="download-links">
-                <a href="<?= '/' . $data['cv_path']?>" class="download-btn" target="_blank">
+                <a aria-label="Cv Download" href="<?= '/' . $data['cv_path']?>" class="download-btn" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#0073b1" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-file-user">
@@ -47,7 +47,7 @@
                         <circle cx="12" cy="13" r="2" />
                     </svg>
                 </a>
-                <a href="<?= '/' . $data['video_path']?>" class="download-btn" target="_blank">
+                <a aria-label="Video Download"href="<?= '/' . $data['video_path']?>" class="download-btn" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="#0073b1" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-video">

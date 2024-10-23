@@ -229,7 +229,7 @@
     position: absolute;
     bottom: 20px;
     right: 10px;
-    background-color: #a0b4b7;
+    background-color: #0A66C2;
     color: white;
     border: none;
     border-radius: 15px;
@@ -238,7 +238,7 @@
   }
   
   .update-button:hover {
-    background-color: black;
+    background-color: #2980b9;
   }
 
   .job-container h3 {

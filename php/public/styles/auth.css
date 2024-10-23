@@ -42,13 +42,14 @@ input:focus, textarea:focus {
 
 .box-link {
     margin-top: 15px;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
     color: #333;
     text-align: center;
 }
 
 .box-link a {
-    color: #0073b1;
+    color: #0a66c2;
     text-decoration: none;
 }
 
