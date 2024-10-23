@@ -4,6 +4,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const statusCheckboxes = document.querySelectorAll('input[type="checkbox"]');
     const rightContent = document.querySelector('.right-content');
     let currentPage = 1;
+    let debounceTimer;
+
+    function debounce(func, delay) {
+      return function (...args) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
 
 document.querySelectorAll('.dropdown-btn').forEach(button => {
     button.addEventListener('click', function() {
@@ -96,11 +104,23 @@ document.querySelectorAll('.dropdown-btn').forEach(button => {
                 const jobContainer = document.createElement('div');
                 jobContainer.classList.add('job-container');
                 jobContainer.innerHTML = `
-                    <h3>${lamar.nama}</h3>
-                    <pre>Posisi                 : ${lamar.posisi}</pre>
-                    <pre>Submitted on : ${formattedDate}</pre>
-                    <pre>Status                : <b id="status-${lamar.status}">${lamar.status.toUpperCase()}</b></pre>
-                    <a href="/lowongan/${lamar.lowongan_id}">>>> Lihat detail lamaran...</a>
+                    <div class="job-item">
+                        <div class="job-svg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" id="company-accent-4">
+                            <path fill="#e7e2dc" d="M0 0h128v128H0z"/>
+                            <path fill="#9db3c8" d="M48 16h64v112H48z"/>
+                            <path fill="#788fa5" d="M16 80h32v48H16z"/>
+                            <path fill="#56687a" d="M48 80h32v48H48z"/>
+                        </svg>
+                        </div>
+                        <div class="job-details">
+                        <h3>${lamar.nama}</h3>
+                        <p>Position: ${lamar.posisi}</p>
+                        <p>Submitted on: ${formattedDate}</p>
+                        <p>Status: ${lamar.status}</p>
+                        <a href="/lowongan/${lamar.lowongan_id}" class="button-lowongan">Detail Job Vacancy</a>
+                        </div>
+                    </div>
                 `;
                 rightContent.appendChild(jobContainer);
             });
@@ -173,10 +193,11 @@ document.querySelectorAll('.dropdown-btn').forEach(button => {
     fetchData();
 
     // Event listeners
-    searchInput.addEventListener('input', () => {
+    searchInput.addEventListener('input', debounce(() => {
         currentPage = 1;
         fetchData();
-    });
+    }, 500)
+    );
     sortSelect.addEventListener('change', () => {
         currentPage = 1;
         fetchData();
