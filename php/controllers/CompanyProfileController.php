@@ -45,9 +45,7 @@ class CompanyProfileController extends Controller {
             $location = $request->getBody('location');
             $about = $request->getBody('about');
 
-            if($this->userModel->checkUsernameExists($companyName)) {
-                throw new \Exception('Name already exists');
-            }
+            
 
             $this->companyProfileModel->setCompanyProfile($userId, $companyName, $location, $about);
             $_SESSION['user']['name'] = $request->getBody('company_name');

@@ -56,10 +56,7 @@ class AuthController extends Controller {
                     throw new \Exception('Email already exists');
                 }
     
-                if($this->userModel->checkUsernameExists($name)) {
-                    throw new \Exception('Name already exists');
-                }
-                
+            
                 
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     
