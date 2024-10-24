@@ -40,22 +40,23 @@ git clone https://github.com/Labpro-21/if3110-tubes-2024-k02-05.git
    docker compose build
    docker compose up
    ```
-4. If this is your first time running, make a database migrations :
+4. If this is your first time running this website, make a database migrations :
    ```bash
    docker exec -it php-apache php  setup/run_migrations.php
    ```
 
-4. Migrate database (Only for Initialize)
-```bash
-docker exec -it php-apache php  setup/run_migrations.php
-```
 
-5. Seeding data (if needed)
-```bash
-docker exec -it php-apache php  database/migrations/seeding.php
-```
+5. Seed data (optional)
+   ```bash
+   docker exec -it php-apache php setup/seed.php
+   ```
 
-6. Open the browser http://localhost:8000
+6. Open http://localhost:8000
+
+7. To stop docker from running : 
+   ```bash
+   docker compose down
+   ```
 
 ## UI Page
 ### Login Page

@@ -3,6 +3,8 @@ namespace controllers;
 use core\Request;
 use core\Response;
 use Exception;
+use exceptions\NotFoundException;
+use exceptions\UnauthorizedException;
 use helpers\HTMLSanitizer;
 use helpers\Redirect;
 use helpers\Storage;
@@ -203,10 +205,10 @@ class JobController extends Controller
             $lowonganModel = new LowonganModel();
             $lowongan = $lowonganModel->getLowonganById($lowonganId);
             if (!$lowongan) {
-                throw new Exception('Job not found');
+                throw new NotFoundException('Job not found');
             }
             if($lowongan['company_id'] != $userId) {
-                throw new Exception('You are not authorized to perform this action');
+                throw new UnauthorizedException('You are not authorized to perform this action');
             }
             return true;
         } catch (Exception $e) {

@@ -2,11 +2,13 @@
 
 namespace controllers;
 
+use exceptions\InternalServerErrorException;
 use models\UserModel;
 use models\CompanyModel;
 use core\Request;
 use core\Response;
 use helpers\Redirect;
+use exceptions\BadRequestException;
 
 class AuthController extends Controller {
     protected $userModel;
@@ -53,7 +55,7 @@ class AuthController extends Controller {
                 $password = $request->getBody('password');
     
                 if($this->userModel->checkEmailExists($email)) {
-                    throw new \Exception('Email already exists');
+                    throw new BadRequestException('Email already exists');
                 }
     
             
@@ -63,7 +65,7 @@ class AuthController extends Controller {
                 $user = $this->userModel->createUser($email, $name, $hashedPassword, $role);
 
                 if (!$user) {
-                    throw new \Exception('Failed to create user');
+                    throw new InternalServerErrorException('Failed to create user');
                 }
 
                 $_SESSION['user'] = [
@@ -92,19 +94,19 @@ class AuthController extends Controller {
                     'password' => ['required', ['min', 8]],
                 ]);
                 if($this->userModel->checkEmailExists($companyEmail)) {
-                    throw new \Exception('Email already exists');
+                    throw new BadRequestException('Email already exists');
                 }
     
-                if($this->userModel->checkUsernameExists($companyName)) {
-                    throw new \Exception('Name already exists');
-                }
+                // if($this->userModel->checkUsernameExists($companyName)) {
+                //     throw new \Exception('Name already exists');
+                // }
 
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
                 $user = $this->userModel->createUser($companyEmail, $companyName, $hashedPassword, $role);
 
                 if (!$user) {
-                    throw new \Exception('Failed to create user');
+                    throw new InternalServerErrorException('Failed to create user');
                 }
                 
                 $this->companyModel->createCompany($user['user_id'], $location, $about);
@@ -140,11 +142,11 @@ class AuthController extends Controller {
             $user = $this->userModel->checkEmailExists($email);
 
             if (!$user) {
-                throw new \Exception('User not found');
+                throw new BadRequestException('User not found');
             }
 
             if (!password_verify($password, $user['password'])) {
-                throw new \Exception('Invalid password');
+                throw new BadRequestException('Invalid password');
             }
 
             $_SESSION['user'] = [

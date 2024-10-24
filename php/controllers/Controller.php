@@ -1,6 +1,8 @@
 <?php
 namespace controllers;
 
+use exceptions\NotFoundException;
+
 class Controller {
     
     public function views($view, $data = []) {
@@ -27,7 +29,7 @@ class Controller {
         if (file_exists($viewPath)) {
             include $viewPath;
         } else {
-            throw new \Exception("View file not found: " . $viewPath);
+            throw new NotFoundException("View file not found: " . $viewPath);
         }
         return ob_get_clean();
     }
@@ -38,7 +40,7 @@ class Controller {
         if (file_exists($layoutPath)) {
             include $layoutPath;
         } else {
-            throw new \Exception("Layout file not found: " . $layoutPath);
+            throw new NotFoundException("Layout file not found: " . $layoutPath);
         }
     }
 }

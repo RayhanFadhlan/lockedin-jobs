@@ -28,6 +28,10 @@ class LowonganController extends Controller {
             $lowongan = $this->lowonganModel->getLowonganById( $lowongan_id );
             $attachments = $this->lowonganModel->getAttachments($lowongan_id);
             
+            if (!$lowongan) {
+                return Redirect::withToast('/', 'Lowongan tidak ditemukan');
+            }
+
             $lamaran = null;
             if (isset($_SESSION['user'])) {
                 $userId = $_SESSION['user']['id'];

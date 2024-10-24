@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../../autoload.php';
+require __DIR__ . '/../autoload.php';
 
 use database\Database;
 
@@ -40,7 +40,7 @@ try {
     (2, 3, \'storage/cv/cv_3.pdf\', \'storage/videos/video_3.mp4\', \'rejected\', \'Candidate did not meet qualifications\', \'2024-09-15 10:30:00\'),
     (2, 4, \'storage/cv/cv_4.pdf\', \'storage/videos/video_4.mp4\', \'waiting\', \'Pending final decision\', \'2024-09-10 11:45:00\');';
     
-    // $db->exec($user);
+    $db->exec($user);
     $db->exec($comp_det);
     $db->exec($lowongan);
     $db->exec($attc_low);

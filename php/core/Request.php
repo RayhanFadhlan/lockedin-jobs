@@ -2,6 +2,7 @@
 
 namespace core;
 use Exception;
+use exceptions\BadRequestException;
 use services\ValidationService;
 class Request {
     private $method;
@@ -38,7 +39,7 @@ class Request {
     public function validate($rules)
     {
         if (!$this->validationService->validate($this->params, $rules)) {
-            throw new Exception( $this->validationService->getStringErrors());
+            throw new BadRequestException( $this->validationService->getStringErrors());
         }
         return true;
     }
