@@ -37,12 +37,16 @@ git clone https://github.com/Labpro-21/if3110-tubes-2024-k02-05.git
 2. Copy the .env.example file into .env file
 
 3. Run the docker:
-```bash
-docker compose build
-docker compose up
-```
+   ```bash
+   docker compose build
+   docker compose up
+   ```
+4. If this is your first time running, make a database migrations :
+   ```bash
+   docker exec -it php-apache php  setup/run_migrations.php
+   ```
 
-4. Open the browser http://localhost:8000 
+5. Open the browser http://localhost:8000 
 
 ## Task Distribution
 | Name | Student-ID | Client-side | Server-side |
