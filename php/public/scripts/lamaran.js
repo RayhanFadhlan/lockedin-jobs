@@ -48,7 +48,7 @@ document.getElementById('application-form').addEventListener('submit', function 
     } else if (!cvFile.files[0].name.toLowerCase().endsWith('.pdf')) {
         document.getElementById('pdf-error').textContent = 'Please upload a valid PDF file';
         isValid = false;
-    } else if (cvFile.size > maxPdfSize) {
+    } else if (cvFile.files[0].size > maxPdfSize) {
         document.getElementById('pdf-error').textContent = 'PDF file must be less than 10 MB';
         isValid = false;
     } else {
@@ -58,7 +58,7 @@ document.getElementById('application-form').addEventListener('submit', function 
     if (videoFile.files.length > 0 && !videoFile.files[0].type.startsWith('video/')) {
         document.getElementById('video-error').textContent = 'Please upload a valid video file';
         isValid = false;
-    } else if (videoFile.size > maxVideoSize) {
+    } else if (videoFile.files[0].size > maxVideoSize) {
         document.getElementById('video-error').textContent = 'Video file must be less than 250 MB';
         isValid = false;
     } else {
