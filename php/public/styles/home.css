@@ -169,6 +169,7 @@
   background-color: #fff;
   flex: 1;
   width: 100%;
+  height: 100%;
   max-width: 600px;
   margin-top: 40px;
   padding: 10px;
@@ -235,6 +236,7 @@
   font-size: 14px;
   color: #6b7280;
 }
+
 
 .pagination {
   display: flex;
@@ -366,13 +368,13 @@
   .search-box {
     width: 300px;
   }
-  .pagination-button {
+  /* .pagination-button {
     font-size: 12px;
     padding: 5px 10px;
     margin: 2px;
     width: auto; 
     height: auto;
-  }
+  } */
 }
 
 
