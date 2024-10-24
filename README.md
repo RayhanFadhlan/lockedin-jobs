@@ -29,7 +29,6 @@ LockedIn is a web-based platform designed to assist job seekers and companies in
 git clone https://github.com/Labpro-21/if3110-tubes-2024-k02-05.git
 ```
 
-
 ## How to run the server
 
 1. Make .env file on root
@@ -42,7 +41,69 @@ docker compose build
 docker compose up
 ```
 
-4. Open the browser http://localhost:8000 
+4. Migrate database (Only for Initialize)
+```bash
+docker exec -it php-apache php  setup/run_migrations.php
+```
+
+5. Seeding data (if needed)
+```bash
+docker exec -it php-apache php  database/migrations/seeding.php
+```
+
+5. Open the browser http://localhost:8000
+
+## UI Page
+### Login Page
+![Login Page](./photo_readme/ui/SignIn.png)
+### Register Page
+![Register Page](./photo_readme/ui/Register.png)
+### Home Page (Job Seeker)
+![Home Page (Job Seeker)](./photo_readme/ui/HomeJSeeker.png)
+### Home Page (Company)
+![Home Page (Company)](./photo_readme/ui/HomeCompany.png)
+### TambahLowongan Page (Company)
+![TambahLowongan Page (Company)](./photo_readme/ui/CreateJob.png)
+### DetailLowongan Page (Company)
+![DetailLowongan Page (Company)](./photo_readme/ui/LowonganCompany.png)
+### DetailLamaran Page (Company)
+![DetailLamaran Page (Company)](./photo_readme/ui/LamaranCompany.png)
+### EditLowongan Page (Company)
+![EditLowongan Page (Company)](./photo_readme/ui/EditJob.png)
+### DetailLowongan Page (Job Seeker)
+![DetailLowongan Page (Job Seeker)](./photo_readme/ui/LowonganJSeeker.png)
+### Lamaran Page (Job Seeker)
+![Lamaran Page (Job Seeker)](./photo_readme/ui/ApplyJob.png)
+### Riwayat Page (Job Seeker)
+![Riwayat Page (Job Seeker)](./photo_readme/ui/RiwayatLamaran.png)
+### Profil Page (Company)
+![Profil Page (Company)](./photo_readme/ui/ProfileCompany.png)
+
+## Lighthouse
+### Login Page
+![Login Page](./photo_readme/lighthouse/SignIn.png)
+### Register Page
+![Register Page](./photo_readme/lighthouse/Register.png)
+### Home Page (Job Seeker)
+![Home Page (Job Seeker)](./photo_readme/lighthouse/HomeJSeeker.png)
+### Home Page (Company)
+![Home Page (Company)](./photo_readme/lighthouse/HomeCompany.png)
+### TambahLowongan Page (Company)
+![TambahLowongan Page (Company)](./photo_readme/lighthouse/CreateJob.png)
+### DetailLowongan Page (Company)
+![DetailLowongan Page (Company)](./photo_readme/lighthouse/LowonganCompany.png)
+### DetailLamaran Page (Company)
+![DetailLamaran Page (Company)](./photo_readme/lighthouse/LamaranCompany.png)
+### EditLowongan Page (Company)
+![EditLowongan Page (Company)](./photo_readme/lighthouse/EditJob.png)
+### DetailLowongan Page (Job Seeker)
+![DetailLowongan Page (Job Seeker)](./photo_readme/lighthouse/LowonganJSeeker.png)
+### Lamaran Page (Job Seeker)
+![Lamaran Page (Job Seeker)](./photo_readme/lighthouse/ApplyJob.png)
+### Riwayat Page (Job Seeker)
+![Riwayat Page (Job Seeker)](./photo_readme/lighthouse/RiwayatLamaran.png)
+### Profil Page (Company)
+![Profil Page (Company)](./photo_readme/lighthouse/ProfileCompany.png)
 
 ## Task Distribution
 | Name | Student-ID | Client-side | Server-side |
