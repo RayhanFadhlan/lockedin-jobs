@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     } else {
       rightContent.innerHTML =
-        "<p>No job listings found matching your criteria.</p>";
+        "<h4>No job listings found matching your criteria.</h4>";
     }
   }
 
