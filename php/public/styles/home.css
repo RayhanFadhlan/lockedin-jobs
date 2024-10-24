@@ -318,6 +318,14 @@
     color: #0A66c2;
     cursor: pointer;
   }
+
+  h4 {
+    font-size: 14px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: black;
+    text-align: center;
+  }
   
   .trending-job-details h2:hover {
     text-decoration: underline;
@@ -407,11 +415,12 @@
 
   .left-content {
     order: 1; 
+    padding: 0;
   }
 
   .trending-jobs {
     order: 2; 
-    margin-top: 20px;
+    margin-top: 20px; 
   }
 
   .pagination-button {

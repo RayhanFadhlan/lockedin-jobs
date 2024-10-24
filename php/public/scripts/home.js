@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
         trendingContainer.appendChild(jobContainer);
       });
     } else {
-      trendingContainer.innerHTML = "<p>No trending jobs at the moment.</p>";
+      trendingContainer.innerHTML = "<h4>No trending jobs at the moment.</h4>";
     }
   }
 
