@@ -453,6 +453,7 @@
     }
   
     .left-content {
+      padding: 0;
       order: 1;
     }
   }
